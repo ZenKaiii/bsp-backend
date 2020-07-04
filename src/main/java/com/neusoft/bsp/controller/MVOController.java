@@ -1,6 +1,8 @@
 package com.neusoft.bsp.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.neusoft.bsp.MVO.entity.Brand;
+import com.neusoft.bsp.MVO.service.BrandService;
 import com.neusoft.bsp.common.base.BaseController;
 import com.neusoft.bsp.common.base.BaseModel;
 import com.neusoft.bsp.common.base.BaseModelJson;
@@ -8,33 +10,29 @@ import com.neusoft.bsp.common.exception.BusinessException;
 import com.neusoft.bsp.common.validationGroup.DeleteGroup;
 import com.neusoft.bsp.common.validationGroup.InsertGroup;
 import com.neusoft.bsp.common.validationGroup.UpdateGroup;
-import com.neusoft.bsp.User.entity.User;
-import com.neusoft.bsp.User.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/user")
-public class UserController extends BaseController {
+@RequestMapping("/brand")
+public class MVOController extends BaseController {
 
     @Autowired
-    UserService userService;
+    BrandService brandService;
 
-    @PostMapping("/addUser")
-    public BaseModel addUser(@Validated({InsertGroup.class}) @RequestBody User user, BindingResult bindingResult) {
+    @PostMapping("/addBrand")
+    public BaseModel addBrand(@Validated({InsertGroup.class}) @RequestBody Brand brand, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw BusinessException.INSERT_FAIL.newInstance(this.getErrorResponse(bindingResult),
-                    new Object[]{user.toString()});
+                    new Object[]{brand.toString()});
         } else {
             BaseModel result = new BaseModel();
-            int i = userService.insert(user);
+            int i = brandService.insert(brand);
             if(i==1){
                 result.code = 200;
                 return result;
@@ -44,25 +42,10 @@ public class UserController extends BaseController {
         }
     }
 
-    @PostMapping("/checkUser")
-    public BaseModel checkUser(@RequestBody User user) {
-        Map<String,Object> map = new HashMap<>();
-        map.put("username",user.getUsername());
-        map.put("password",user.getPassword());
-        List<User> users = userService.getAllByFilter(map);
-        if(users.size()==0){
-            throw BusinessException.USERNAME_NOT_EXISTS;
-        }else{
-            BaseModel result = new BaseModel();
-            result.code = 200;
-            return result;
-        }
-    }
-
-    @PostMapping("/userList")
-    public BaseModelJson<PageInfo<User>> getUserList(Integer pageNum, Integer pageSize,
+    @PostMapping("/brandList")
+    public BaseModelJson<PageInfo<Brand>> getBrandList(Integer pageNum, Integer pageSize,
                                                      @RequestParam Map<String,Object> map) {
-        BaseModelJson<PageInfo<User>> result = new BaseModelJson();
+        BaseModelJson<PageInfo<Brand>> result = new BaseModelJson();
         if(pageNum == null){
             pageNum = 1;
         }
@@ -70,18 +53,18 @@ public class UserController extends BaseController {
             pageSize = 10;
         }
         result.code = 200;
-        result.data = userService.getAllByFilter(pageNum,pageSize,map);
+        result.data = brandService.getAllByFilter(pageNum,pageSize,map);
         return result;
     }
 
-    @PostMapping("/deleteUser")
-    public BaseModel deleteUser(@Validated({DeleteGroup.class}) @RequestBody User user, BindingResult bindingResult) throws Exception {
+    @PostMapping("/deleteBrand")
+    public BaseModel deleteBrand(@Validated({DeleteGroup.class}) @RequestBody Brand brand, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             throw BusinessException.USERID_NULL_ERROR.newInstance(this.getErrorResponse(bindingResult),
-                    new Object[]{user.toString()});
+                    new Object[]{brand.toString()});
         } else {
             BaseModel result = new BaseModel();
-            int i = userService.delete(user.getId());
+            int i = brandService.delete(brand.getBrd_id());
             if (i == 1) {
                 result.code = 200;
                 return result;
@@ -90,14 +73,14 @@ public class UserController extends BaseController {
             }
         }
     }
-    @PostMapping("/updateUser")
-    public BaseModel updateUser(@Validated({UpdateGroup.class}) @RequestBody User user, BindingResult bindingResult) {  //bindingResult用于获得validate的反馈信息
+    @PostMapping("/updateBrand")
+    public BaseModel updateBrand(@Validated({UpdateGroup.class}) @RequestBody Brand brand, BindingResult bindingResult) {  //bindingResult用于获得validate的反馈信息
         if (bindingResult.hasErrors()) {
             throw BusinessException.USERID_NULL_ERROR.newInstance(this.getErrorResponse(bindingResult),
-                    new Object[]{user.toString()});
+                    new Object[]{brand.toString()});
         } else {
             BaseModel result = new BaseModel();
-            int i =userService.update(user);
+            int i =brandService.update(brand);
             if(i==1){
                 result.code = 200;
                 return result;
