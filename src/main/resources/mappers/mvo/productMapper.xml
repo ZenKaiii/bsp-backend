@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neusoft.bsp.MVO.mapper.ProductMapper">
+
+    <insert id="insert" parameterType="Brand">
+        insert into pro values(
+        #{pro_id},#{sku_cd},#{pro_id},#{man_id},#{title},#{upc},#{ean},
+        #{model},#{warranty_day},#{retail_price},#{created_by},
+        #{creation_date},#{last_update_by},#{last_update_date},#{call_cnt},
+        #{remark},#{sts_cd},#{mininum_retail_price},#{replenishment_period},
+        #{key_words},#{warranty},#{time_unit},#{stockseting}
+        )
+    </insert>
+
+    <update id="update" parameterType="Brand">
+        update pro set
+        sku_cd = #{sku_cd},`pro_id` = #{pro_id},man_id = #{man_id},
+        title = #{title},upc= #{upc} ,ean = #{ean},model = #{model},
+        warranty_day = #{warranty_day},retail_price = #{retail_price},
+        created_by = #{created_by},creation_date = #{creation_date},
+        last_update_by = #{last_update_by},last_update_date = #{last_update_date},
+        call_cnt = #{call_cnt},remark = #{remark},sts_cd = #{sts_cd},
+        mininum_retail_price = #{mininum_retail_price},
+        replenishment_period = #{replenishment_period}, key_words = #{key_words},
+        warranty = #{warranty},time_unit = #{time_unit},stockseting = #{stockseting}
+        where pro_id = #{pro_id}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.String">
+        delete from pro where pro_id = #{pro_id}
+    </delete>
+
+    <select id="getById" parameterType="java.lang.String" resultType="Brand" >
+        select * from pro where pro_id = #{pro_id}
+    </select>
+
+    <select id="getAll" resultType="Brand">
+        select * from pro
+    </select>
+
+    <select id="getAllByFilter" parameterType="java.util.Map" resultType="Brand">
+        select * from pro <!--where username = #{username} and password = #{password}-->
+    </select>
+</mapper>
