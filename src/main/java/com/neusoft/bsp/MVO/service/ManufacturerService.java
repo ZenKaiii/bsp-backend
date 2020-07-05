@@ -3,12 +3,13 @@ package com.neusoft.bsp.MVO.service;
 import com.github.pagehelper.PageInfo;
 import com.neusoft.bsp.MVO.entity.Manufacturer;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public interface ManufacturerService {
 
-    int insert(Manufacturer manufacturer);
+    int insert(Map<String, Object> map);
 
     int update(Manufacturer manufacturer);
 

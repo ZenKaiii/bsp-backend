@@ -18,8 +18,8 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     ManufacturerMapper manufacturerMapper;
 
     @Override
-    public int insert(Manufacturer manufacturer) {
-       return manufacturerMapper.insert(manufacturer);
+    public int insert(Map<String, Object> map) {
+        return manufacturerMapper.insert(map);
     }
 
     @Override
