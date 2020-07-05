@@ -5,6 +5,7 @@ public class BusinessException extends RuntimeException {
     public static final BusinessException PASSWORD_WRONG = new BusinessException(504, "password is wrong", new Object[0]);
     public static final BusinessException INSERT_FAIL = new BusinessException(504, "add operation failed", new Object[0]);
     public static final BusinessException USERID_NOT_EXISTS = new BusinessException(504, "user id doesn't exist", new Object[0]);
+    public static final BusinessException MANID_NOT_EXISTS = new BusinessException(504, "manufacturer id doesn't exist", new Object[0]);
     public static final BusinessException UPDATE_FAIL = new BusinessException(504, "update operation failed", new Object[0]);
     public static final BusinessException USERID_NULL_ERROR = new BusinessException(504, "user id shouldn't be null", new Object[0]);
     public static final BusinessException BRDID_NULL_ERROR = new BusinessException(504, "brand id shouldn't be null", new Object[0]);
