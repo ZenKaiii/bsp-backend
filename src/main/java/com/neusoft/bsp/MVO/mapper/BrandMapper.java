@@ -5,6 +5,6 @@ import com.neusoft.bsp.common.base.BaseMapper;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BrandMapper extends BaseMapper<String, Brand> {
+public interface BrandMapper extends BaseMapper<Integer, Brand> {
 
 }

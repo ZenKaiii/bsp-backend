@@ -2,9 +2,8 @@ package com.neusoft.bsp.Wallet.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.neusoft.bsp.GVO.entity.Code;
-import com.neusoft.bsp.GVO.mapper.CodeMapper;
-import com.neusoft.bsp.GVO.service.CodeService;
+import com.neusoft.bsp.Wallet.entiity.Wallet;
+import com.neusoft.bsp.Wallet.mapper.WalletMapper;
 import com.neusoft.bsp.Wallet.service.WalletService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,50 +12,51 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service ("codeService")
+@Service ("WalletService")
 public class WalletServiceImpl implements WalletService {
    @Autowired
-   CodeMapper codeMapper;
+   WalletMapper walletMapper;
 
-   @Override
-   public int insert(Code code) {
-       return codeMapper.insert(code);
+
+    @Override
+    public int insert(Wallet wallet) {
+        return walletMapper.insert(wallet);
+    }
+
+    @Override
+    public int update(Wallet wallet) {
+        return walletMapper.update(wallet);
+    }
+
+    @Override
+   public int delete(String walletid) {
+       return walletMapper.delete(walletid);
    }
 
    @Override
-   public int update(Code code) {
-       return codeMapper.update(code);
+   public Wallet getById(String walletid) {
+       return walletMapper.getById(walletid);
    }
 
    @Override
-   public int delete(String codeid) {
-       return codeMapper.delete(codeid);
+   public List<Wallet> getAll() {
+       return walletMapper.getAll();
    }
 
    @Override
-   public Code getById(String codeid) {
-       return codeMapper.getById(codeid);
+   public List<Wallet> getAllByFilter(Map<String, Object> map) {
+       return walletMapper.getAllByFilter(map);
    }
 
    @Override
-   public List<Code> getAll() {
-       return codeMapper.getAll();
-   }
-
-   @Override
-   public List<Code> getAllByFilter(Map<String, Object> map) {
-       return codeMapper.getAllByFilter(map);
-   }
-
-   @Override
-   public PageInfo<Code> getAllByFilter(Integer pageNum, Integer pageSize) {
+   public PageInfo<Wallet> getAllByFilter(Integer pageNum, Integer pageSize) {
        return this.getAllByFilter(pageNum,pageSize,new HashMap());
    }
 
    @Override
-   public PageInfo<Code> getAllByFilter(Integer pageNum, Integer pageSize, Map<String, Object> map) {
+   public PageInfo<Wallet> getAllByFilter(Integer pageNum, Integer pageSize, Map<String, Object> map) {
        PageHelper.startPage(pageNum,pageSize,true);
-       List<Code> Codes = codeMapper.getAllByFilter(map);
-       return new PageInfo<>(Codes);
+       List<Wallet> Wallets = walletMapper.getAllByFilter(map);
+       return new PageInfo<>(Wallets);
    }
 }

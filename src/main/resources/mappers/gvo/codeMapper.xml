@@ -8,30 +8,31 @@
 <!--        select * from user where t_id = #{tid} and t_password = #{tpassword}-->
 <!--    </select>-->
 
-    <insert id="insert" parameterType="User">
-        insert into sys_user values(#{user_id},#{username},#{password},#{name},#{rights},#{role_id},#{last_login}
-            ,#{ip},#{status},#{bz},#{skin},#{email},#{number},#{phone},#{man_buyer_id})
+    <insert id="insert" parameterType="Code">
+        insert into cdm values(#{cdm_id},#{code_type},#{description},#{type_cd},#{code_val},#{seq_no},#{created_by},
+        #{creation_date},#{last_update_by},#{last_update_date},#{call_cnt},#{remark},#{sts_cd})
     </insert>
 
-    <update id="update" parameterType="User">
-        update sys_user set username = #{username},password = #{password},`name` = #{name},rights = #{rights},role_id = #{role_id},
-         last_login= #{last_login} ,ip = #{ip},status = #{status},bz = #{bz},skin = #{skin},email = #{email}
-          ,`number` = #{number},phone = #{phone} ,man_buyer_id = #{man_buyer_id} where user_id = #{user_id}
+    <update id="update" parameterType="Code">
+        update cdm set cdm_id=#{cdm_id},code_type=#{code_type},`description`=#{description},type_cd=#{type_cd},
+        code_val=#{code_val},seq_no=#{seq_no},created_by=#{created_by},creation_date=#{creation_date},
+        last_update_by=#{last_update_by},last_update_date=#{last_update_date},call_cnt=#{call_cnt},remark=#{remark},
+        sts_cd=#{sts_cd}} where cdm_id = #{cdm_id}
     </update>
 
     <delete id="delete" parameterType="java.lang.String">
-        delete from sys_user where user_id = #{user_id}
+        update cdm set sts_cd = 0 where cdm_id = #{cdm_id}
     </delete>
 
-    <select id="getById" parameterType="java.lang.String" resultType="User" >
-        select * from sys_user where user_id = #{userid}
+    <select id="getById" parameterType="java.lang.String" resultType="Code" >
+        select * from cdm where cdm_id = #{cdm_id}
     </select>
 
-    <select id="getAll" resultType="User">
-        select * from sys_user
+    <select id="getAll" resultType="Code">
+        select * from cdm
     </select>
 
-    <select id="getAllByFilter" parameterType="java.util.Map" resultType="User">
-        select * from sys_user <!--where username = #{username} and password = #{password}-->
+    <select id="getAllByFilter" parameterType="java.util.Map" resultType="Code">
+        select * from cdm <!--where username = #{username} and password = #{password}-->
     </select>
 </mapper>

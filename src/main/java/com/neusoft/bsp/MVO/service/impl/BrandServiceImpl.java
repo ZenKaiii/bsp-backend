@@ -27,15 +27,19 @@ public class BrandServiceImpl implements BrandService {
        return brandMapper.update(brand);
    }
 
-   @Override
-   public int delete(String brandid) {
-       return brandMapper.delete(brandid);
-   }
 
-   @Override
-   public Brand getById(String brandid) {
-       return brandMapper.getById(brandid);
-   }
+
+    @Override
+    public int delete(int brandid) {
+        return brandMapper.delete(brandid);
+    }
+
+    @Override
+    public Brand getById(int brandid) {
+        return brandMapper.getById(brandid);
+    }
+
+
 
    @Override
    public List<Brand> getAll() {

@@ -1,7 +1,7 @@
-package com.neusoft.bsp.User.service;
+package com.neusoft.bsp.System.service;
 
 import com.github.pagehelper.PageInfo;
-import com.neusoft.bsp.User.entity.User;
+import com.neusoft.bsp.System.entity.User;
 
 import java.util.List;
 import java.util.Map;
