@@ -44,7 +44,7 @@ public class LoginController extends BaseController {
             subject.login(token);
             User user = (User)subject.getPrincipal();
             BaseModelJson<User> result = new BaseModelJson<User>();
-            result.code = 200;
+            result.code = 20000;
             result.data = user;
             return result;
 
