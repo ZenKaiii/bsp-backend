@@ -29,7 +29,7 @@ public class ManufacturerController extends BaseController {
 
     @PostMapping("/addManufacturer")
     public BaseModel addManufacturer(@Validated({InsertGroup.class}) @RequestBody Manufacturer manufacturer,
-                                     @RequestParam String user, BindingResult bindingResult) {
+                                     @RequestParam String userId, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw BusinessException.INSERT_FAIL.newInstance(this.getErrorResponse(bindingResult),
                     new Object[]{manufacturer.toString()});
@@ -48,7 +48,7 @@ public class ManufacturerController extends BaseController {
             map.put("call_cnt",manufacturer.getCall_cnt());
             map.put("remark",manufacturer.getRemark());
             map.put("sts_cd",manufacturer.getSts_cd());
-            map.put("user_id",user);
+            map.put("user_id",userId);
 
             BaseModel result = new BaseModel();
             int i = manufacturerService.insert(map);

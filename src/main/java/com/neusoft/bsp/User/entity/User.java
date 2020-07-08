@@ -1,11 +1,13 @@
 package com.neusoft.bsp.User.entity;
 
+import com.neusoft.bsp.MVO.entity.Manufacturer;
 import com.neusoft.bsp.common.base.BaseEntity;
 import com.neusoft.bsp.common.validationGroup.InsertGroup;
 import com.neusoft.bsp.common.validationGroup.SelectGroup;
 import com.neusoft.bsp.common.validationGroup.UpdateGroup;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 public class User implements BaseEntity<String> {
     @NotNull(message = "The userid shouldn't be null",groups = {InsertGroup.class, UpdateGroup.class, SelectGroup.class})  //addUser  user_id shouldn't be null updateuser selectsuer deleteuser

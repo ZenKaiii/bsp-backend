@@ -32,6 +32,6 @@
     </select>
 
     <select id="getAllByFilter" parameterType="java.util.Map" resultType="User">
-        select * from sys_user <!--where username = #{username} and password = #{password}-->
+        select * from sys_user where username = #{username} and password = #{password}
     </select>
 </mapper>
