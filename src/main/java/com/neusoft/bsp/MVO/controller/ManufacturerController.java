@@ -3,7 +3,7 @@ package com.neusoft.bsp.MVO.controller;
 import com.github.pagehelper.PageInfo;
 import com.neusoft.bsp.MVO.entity.Manufacturer;
 import com.neusoft.bsp.MVO.service.ManufacturerService;
-import com.neusoft.bsp.User.entity.User;
+import com.neusoft.bsp.System.entity.User;
 import com.neusoft.bsp.common.base.BaseController;
 import com.neusoft.bsp.common.base.BaseModel;
 import com.neusoft.bsp.common.base.BaseModelJson;

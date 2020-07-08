@@ -1,4 +1,4 @@
-package com.neusoft.bsp.User.entity;
+package com.neusoft.bsp.System.entity;
 
 import com.neusoft.bsp.MVO.entity.Manufacturer;
 import com.neusoft.bsp.common.base.BaseEntity;

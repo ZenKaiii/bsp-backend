@@ -1,10 +1,10 @@
-package com.neusoft.bsp.User.service.impl;
+package com.neusoft.bsp.System.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.neusoft.bsp.User.entity.User;
-import com.neusoft.bsp.User.mapper.UserMapper;
-import com.neusoft.bsp.User.service.UserService;
+import com.neusoft.bsp.System.entity.User;
+import com.neusoft.bsp.System.mapper.UserMapper;
+import com.neusoft.bsp.System.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
