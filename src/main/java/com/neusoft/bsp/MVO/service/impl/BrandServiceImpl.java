@@ -14,20 +14,18 @@ import java.util.Map;
 
 @Service ("brandService")
 public class BrandServiceImpl implements BrandService {
-   @Autowired
-   BrandMapper brandMapper;
+    @Autowired
+    BrandMapper brandMapper;
 
-   @Override
-   public int insert(Brand brand) {
+    @Override
+    public int insert(Brand brand) {
        return brandMapper.insert(brand);
-   }
+    }
 
-   @Override
-   public int update(Brand brand) {
+    @Override
+    public int update(Brand brand) {
        return brandMapper.update(brand);
-   }
-
-
+    }
 
     @Override
     public int delete(int brandid) {
@@ -41,24 +39,31 @@ public class BrandServiceImpl implements BrandService {
 
 
 
-   @Override
-   public List<Brand> getAll() {
+    @Override
+    public List<Brand> getAll() {
        return brandMapper.getAll();
-   }
+    }
 
-   @Override
-   public List<Brand> getAllByFilter(Map<String, Object> map) {
+    @Override
+    public List<Brand> getAllByUserId(Map<String, Object> map) {
+        return brandMapper.getAllByUserId(map);
+    }
+
+    @Override
+    public List<Brand> getAllByFilter(Map<String, Object> map) {
        return brandMapper.getAllByFilter(map);
-   }
+    }
 
-   @Override
-   public PageInfo<Brand> getAllByFilter(Integer pageNum, Integer pageSize) {
-       return this.getAllByFilter(pageNum,pageSize,new HashMap());
-   }
+    @Override
+    public PageInfo<Brand> getAll(Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum,pageSize,true);
+        List<Brand> Brands = brandMapper.getAll();
+        return new PageInfo<>(Brands);
+    }
 
-   @Override
-   public PageInfo<Brand> getAllByFilter(Integer pageNum, Integer pageSize, Map<String, Object> map) {
+    @Override
+    public PageInfo<Brand> getAllByUserID(Integer pageNum, Integer pageSize, Map<String, Object> map) {
        PageHelper.startPage(pageNum,pageSize,true);
-       List<Brand> Brands = brandMapper.getAllByFilter(map);
+       List<Brand> Brands = brandMapper.getAllByUserId(map);
        return new PageInfo<>(Brands);
-   }}
+    }}

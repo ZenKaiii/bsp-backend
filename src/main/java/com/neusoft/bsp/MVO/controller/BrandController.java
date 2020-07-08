@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @CrossOrigin
@@ -44,7 +45,9 @@ public class BrandController extends BaseController {
 
     @PostMapping("/brandList")
     public BaseModelJson<PageInfo<Brand>> getBrandList(Integer pageNum, Integer pageSize,
-                                                     @RequestParam Map<String,Object> map) {
+                                                     @RequestParam String userId) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("user_id",userId);
         BaseModelJson<PageInfo<Brand>> result = new BaseModelJson();
         if(pageNum == null){
             pageNum = 1;
@@ -53,7 +56,7 @@ public class BrandController extends BaseController {
             pageSize = 10;
         }
         result.code = 200;
-        result.data = brandService.getAllByFilter(pageNum,pageSize,map);
+        result.data = brandService.getAllByUserID(pageNum,pageSize,map);
         return result;
     }
 

@@ -1,6 +1,7 @@
 package com.neusoft.bsp.MVO.entity;
 
 import java.util.Date;
+import java.util.List;
 
 public class Manufacturer {
     int man_id;
@@ -16,6 +17,8 @@ public class Manufacturer {
     int call_cnt;
     String remark;
     char sts_cd;
+
+
 
     @Override
     public String toString() {

@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -13,7 +14,7 @@ import java.util.Iterator;
 
 public class BaseController {
     Logger logger = LoggerFactory.getLogger(BusinessException.class);
-
+    @CrossOrigin
     @ExceptionHandler
     @ResponseBody
     public BaseModel exp(HttpServletRequest request,Exception exception){
