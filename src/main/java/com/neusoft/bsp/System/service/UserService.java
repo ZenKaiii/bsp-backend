@@ -23,4 +23,6 @@ public interface UserService {
     PageInfo<User> getAllByFilter(Integer pageNum,Integer pageSize);
 
     PageInfo<User> getAllByFilter(Integer pageNum,Integer pageSize,Map<String,Object> map);
+
+    User getUserByName(String username);
 }

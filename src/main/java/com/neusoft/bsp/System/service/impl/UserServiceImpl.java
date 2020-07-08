@@ -58,4 +58,17 @@ public class UserServiceImpl implements UserService {
         List<User> users = userMapper.getAllByFilter(map);
         return new PageInfo<>(users);
     }
+
+    @Override
+    public User getUserByName(String username) {
+//        Map map = new HashMap();
+//        map.put("username",username);
+//        List<User> users = getAllByFilter(map);
+//        if(users.size()==0){
+//            return null;
+//        }else{
+//            return users.get(0);
+//        }
+        return userMapper.getUserByName(username);
+    }
 }

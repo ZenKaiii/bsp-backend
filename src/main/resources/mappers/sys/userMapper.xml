@@ -31,7 +31,16 @@
         select * from sys_user
     </select>
 
+
     <select id="getAllByFilter" parameterType="java.util.Map" resultType="User">
-        select * from sys_user <!--where username = #{username} and password = #{password}-->
+        select * from sys_user where username = "${username}" and password = ${password}
     </select>
+
+    <select id="getUserByName" resultType="User">
+        select * from sys_user where username = #{username}
+    </select>
+
+    <insert id="login_log" parameterType="User">
+    </insert>
+
 </mapper>
