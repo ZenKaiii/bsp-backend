@@ -1,6 +1,7 @@
 package com.neusoft.bsp.common.exception;
 
 public class BusinessException extends RuntimeException {
+    public static final BusinessException RELOGIN = new BusinessException(504, "please login again", new Object[0]);
     public static final BusinessException USERNAME_NOT_EXISTS = new BusinessException(504, "user doesn't exist", new Object[0]);
     public static final BusinessException PASSWORD_WRONG = new BusinessException(504, "password is wrong", new Object[0]);
     public static final BusinessException INSERT_FAIL = new BusinessException(504, "add operation failed", new Object[0]);

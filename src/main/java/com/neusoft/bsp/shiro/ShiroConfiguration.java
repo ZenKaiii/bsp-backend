@@ -20,11 +20,12 @@ public class ShiroConfiguration {
         Map<String,String> filtetMap = new LinkedHashMap<>();
         filtetMap.put("/","anon");
 
-        filtetMap.put("/user/relogin","anon");
+        filtetMap.put("/login/relogin","anon");
         filtetMap.put("/login/checkUser","anon");
-        filtetMap.put("/user/logout","anon");
+        filtetMap.put("/login/getInfo","anon");
+        filtetMap.put("/login/logout","anon");
 
-        filtetMap.put("/user/userlist","perms[user:userlist]");
+        filtetMap.put("/login/userlist","perms[user:userlist]");
 
         filtetMap.put("/swagger-ui.html","anon");
         filtetMap.put("/swagger-resources/**","anon");
@@ -33,7 +34,7 @@ public class ShiroConfiguration {
 
         filtetMap.put("/**","authc");
 
-        shiroFilterFactoryBean.setLoginUrl("/user/relogin");
+        shiroFilterFactoryBean.setLoginUrl("/login/relogin");
 
         shiroFilterFactoryBean.setUnauthorizedUrl("/unauth");
 

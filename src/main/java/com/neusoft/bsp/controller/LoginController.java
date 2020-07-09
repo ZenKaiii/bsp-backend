@@ -40,11 +40,10 @@ public class LoginController extends BaseController {
         UsernamePasswordToken token = new UsernamePasswordToken(username,password);
 
         try{
-//          System.out.println("----------");
             subject.login(token);
             User user = (User)subject.getPrincipal();
             BaseModelJson<User> result = new BaseModelJson<User>();
-            result.code = 20000;
+            result.code = 200;
             result.data = user;
             return result;
 
@@ -88,6 +87,33 @@ public class LoginController extends BaseController {
         result.total = userService.getAllByFilter(page, limit, map).getSize();
 
         return result;
+    }
+
+    @GetMapping("/getInfo")
+    public BaseModelJson<Map> getInfoForVue() {
+        //System.out.println();
+        Map<String, Object> map = new HashMap<>();
+        map.put("roles", new String[]{"admin-token"});
+        map.put("introduction", "I am a super administrator");
+        map.put("avatar", "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
+        map.put("name", "Super Admin");
+
+        BaseModelJson<Map> result = new BaseModelJson();
+        result.code = 200;
+        result.data = map;
+        return result;
+    }
+
+    @GetMapping("/relogin")
+    public BaseModelJson<String> relogin() {
+        throw BusinessException.RELOGIN;
+    }
+
+    @PostMapping("/logout")
+    public void logout() {
+        BaseModelJson<String> result = new BaseModelJson();
+        result.code = 200;
+        result.data = "success";
     }
 
 }
