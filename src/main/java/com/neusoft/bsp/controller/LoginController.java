@@ -33,18 +33,20 @@ public class LoginController extends BaseController {
     @Autowired
     UserService userService;
 
+
     @PostMapping("/checkUser")
     public BaseModelJson<User> checkUser(@RequestParam String username, @RequestParam String password) {
 
         Subject subject = SecurityUtils.getSubject();
-        UsernamePasswordToken token = new UsernamePasswordToken(username,password);
+        UsernamePasswordToken uptoken = new UsernamePasswordToken(username,password);
 
         try{
-            subject.login(token);
+            subject.login(uptoken);
             User user = (User)subject.getPrincipal();
             BaseModelJson<User> result = new BaseModelJson<User>();
             result.code = 200;
             result.data = user;
+            result.message = username;
             return result;
 
         }catch(IncorrectCredentialsException e){
@@ -90,23 +92,40 @@ public class LoginController extends BaseController {
     }
 
     @GetMapping("/getInfo")
-    public BaseModelJson<Map> getInfoForVue() {
-        //System.out.println();
+    public BaseModelJson<Map> getInfoForVue(@RequestParam String token) {
+        //System.out.println(token);
         Map<String, Object> map = new HashMap<>();
         map.put("roles", new String[]{"admin-token"});
         map.put("introduction", "I am a super administrator");
         map.put("avatar", "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
-        map.put("name", "Super Admin");
+        map.put("name", token);
 
         BaseModelJson<Map> result = new BaseModelJson();
         result.code = 200;
         result.data = map;
         return result;
     }
+//    @GetMapping("/getInfo")
+//    public BaseModelJson<Map> getInfoForVue() {
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("roles", new String[]{"admin-token"});
+//        map.put("introduction", "I am a super administrator");
+//        map.put("avatar", "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
+//        map.put("name", "Super Admin");
+//
+//        BaseModelJson<Map> result = new BaseModelJson();
+//        result.code = 200;
+//        result.data = map;
+//        return result;
+//    }
 
     @GetMapping("/relogin")
-    public BaseModelJson<String> relogin() {
-        throw BusinessException.RELOGIN;
+    public BaseModelJson<User> relogin() {
+        try{
+            return this.checkUser("zhx","171024");
+        }catch(Exception e){
+            throw BusinessException.RELOGIN;
+        }
     }
 
     @PostMapping("/logout")
