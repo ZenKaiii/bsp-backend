@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Map;
 
 @Repository
-public interface ManufacturerMapper extends BaseMapper<String, Manufacturer> {
+public interface ManufacturerMapper extends BaseMapper<Integer, Manufacturer> {
     int insert(Map map);
+
+    int selectManIdByUserId(String userId);
 }

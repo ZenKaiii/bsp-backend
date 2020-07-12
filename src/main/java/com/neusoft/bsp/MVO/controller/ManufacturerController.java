@@ -27,9 +27,9 @@ public class ManufacturerController extends BaseController {
     @Autowired
     ManufacturerService manufacturerService;
 
-    @PostMapping("/addManufacturer")
+  @PostMapping("/addManufacturer")
     public BaseModel addManufacturer(@Validated({InsertGroup.class}) @RequestBody Manufacturer manufacturer,
-                                     @RequestParam String userId, BindingResult bindingResult) {
+                                     @RequestParam User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw BusinessException.INSERT_FAIL.newInstance(this.getErrorResponse(bindingResult),
                     new Object[]{manufacturer.toString()});
@@ -48,7 +48,7 @@ public class ManufacturerController extends BaseController {
             map.put("call_cnt",manufacturer.getCall_cnt());
             map.put("remark",manufacturer.getRemark());
             map.put("sts_cd",manufacturer.getSts_cd());
-            map.put("user_id",userId);
+            map.put("user_id",user.getUser_id());
 
             BaseModel result = new BaseModel();
             int i = manufacturerService.insert(map);
@@ -113,12 +113,17 @@ public class ManufacturerController extends BaseController {
         }
     }
     @PostMapping("/updateManufacturer")
-    public BaseModel updateManufacturer(@Validated({UpdateGroup.class}) @RequestBody Manufacturer manufacturer, BindingResult bindingResult) {  //bindingResult用于获得validate的反馈信息
+    public BaseModel updateManufacturer(@Validated({UpdateGroup.class}) @RequestBody Map<String, Object> map, BindingResult bindingResult) {  //bindingResult用于获得validate的反馈信息
         if (bindingResult.hasErrors()) {
             throw BusinessException.MANID_NULL_ERROR.newInstance(this.getErrorResponse(bindingResult),
-                    new Object[]{manufacturer.toString()});
+                    new Object[]{map.toString()});
         } else {
             BaseModel result = new BaseModel();
+            Manufacturer manufacturer=new Manufacturer();
+            manufacturer.setMan_id(manufacturerService.selectManIdByUserId((String)map.get("userId")));
+            manufacturer.setName_cn((String)map.get("cName_zh"));
+            manufacturer.setName_en((String)map.get("cName_en"));
+            manufacturer.setDescription((String)map.get("content1"));
             int i =manufacturerService.update(manufacturer);
             if(i==1){
                 result.code = 200;
