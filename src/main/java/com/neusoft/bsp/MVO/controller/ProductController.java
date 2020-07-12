@@ -1,9 +1,7 @@
 package com.neusoft.bsp.MVO.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.neusoft.bsp.MVO.entity.Manufacturer;
 import com.neusoft.bsp.MVO.entity.Product;
-import com.neusoft.bsp.MVO.service.ManufacturerService;
 import com.neusoft.bsp.MVO.service.ProductService;
 import com.neusoft.bsp.common.base.BaseController;
 import com.neusoft.bsp.common.base.BaseModel;
@@ -11,7 +9,6 @@ import com.neusoft.bsp.common.base.BaseModelJson;
 import com.neusoft.bsp.common.exception.BusinessException;
 import com.neusoft.bsp.common.validationGroup.DeleteGroup;
 import com.neusoft.bsp.common.validationGroup.InsertGroup;
-import com.neusoft.bsp.common.validationGroup.SelectGroup;
 import com.neusoft.bsp.common.validationGroup.UpdateGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -27,7 +24,6 @@ public class ProductController extends BaseController {
 
     @Autowired
     ProductService productService;
-    ManufacturerService manufacturerService;
 
     @PostMapping("/addProduct")
     public BaseModel addProduct(@Validated({InsertGroup.class}) @RequestBody Product product, BindingResult bindingResult) {
@@ -48,7 +44,7 @@ public class ProductController extends BaseController {
 
     @PostMapping("/productList")
     public BaseModelJson<PageInfo<Product>> getProductList(Integer pageNum, Integer pageSize,
-                                                           @Validated(SelectGroup.class) @RequestBody String userId, BindingResult bindingResult) {
+                                                     @RequestParam Map<String,Object> map) {
         BaseModelJson<PageInfo<Product>> result = new BaseModelJson();
         if(pageNum == null){
             pageNum = 1;
@@ -56,22 +52,19 @@ public class ProductController extends BaseController {
         if(pageSize == null){
             pageSize = 10;
         }
-        int manId=manufacturerService.selectManIdByUserId(userId);
         result.code = 200;
-        result.data = productService.getAllByFilter(pageNum,pageSize,manId);
+        result.data = productService.getAllByFilter(pageNum,pageSize,map);
         return result;
     }
 
     @PostMapping("/deleteProduct")
-    public BaseModel deleteProduct(@Validated({UpdateGroup.class}) @RequestBody int proId, BindingResult bindingResult) throws Exception {
+    public BaseModel deleteProduct(@Validated({DeleteGroup.class}) @RequestBody Product product, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
-            throw BusinessException.PROID_NULL_ERROR.newInstance(this.getErrorResponse(bindingResult),
-                    new Object[]{proId});
+            throw BusinessException.USERID_NULL_ERROR.newInstance(this.getErrorResponse(bindingResult),
+                    new Object[]{product.toString()});
         } else {
             BaseModel result = new BaseModel();
-            Product product=productService.getById(proId);
-            product.setSts_cd('D');
-            int i = productService.update(product);
+            int i = productService.delete(product.getPro_id());
             if (i == 1) {
                 result.code = 200;
                 return result;
@@ -96,45 +89,6 @@ public class ProductController extends BaseController {
             }
         }
     }
-
-    @PostMapping("/offProduct")
-    public BaseModel offProduct(@Validated({UpdateGroup.class}) @RequestBody int proId, BindingResult bindingResult) throws Exception {
-        if (bindingResult.hasErrors()) {
-            throw BusinessException.PROID_NULL_ERROR.newInstance(this.getErrorResponse(bindingResult),
-                    new Object[]{proId});
-        } else {
-            BaseModel result = new BaseModel();
-            Product product=productService.getById(proId);
-            product.setSts_cd('I');
-            int i = productService.update(product);
-            if (i == 1) {
-                result.code = 200;
-                return result;
-            } else {
-                throw BusinessException.OFF_FAIL;
-            }
-        }
-    }
-
-    @PostMapping("/onProduct")
-    public BaseModel onProduct(@Validated({UpdateGroup.class}) @RequestBody int proId, BindingResult bindingResult) throws Exception {
-        if (bindingResult.hasErrors()) {
-            throw BusinessException.PROID_NULL_ERROR.newInstance(this.getErrorResponse(bindingResult),
-                    new Object[]{proId});
-        } else {
-            BaseModel result = new BaseModel();
-            Product product=productService.getById(proId);
-            product.setSts_cd('A');
-            int i = productService.update(product);
-            if (i == 1) {
-                result.code = 200;
-                return result;
-            } else {
-                throw BusinessException.OFF_FAIL;
-            }
-        }
-    }
-
 
 
 

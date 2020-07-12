@@ -44,29 +44,18 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public PageInfo<Product> getAllByManId(Integer pageNum, Integer pageSize, int manId) {
-        PageHelper.startPage(pageNum,pageSize,true);
-        List<Product> Products = productMapper.getAllByManId(manId);
-        return new PageInfo<>(Products);
-    }
-
-    @Override
-    public List<Product> getAllByManId(int manId) {
-        return productMapper.getAllByManId(manId);
-    }
-
-
-    @Override
     public List<Product> getAllByFilter(Map<String, Object> map) {
        return productMapper.getAllByFilter(map);
     }
 
+    @Override
+    public PageInfo<Product> getAllByFilter(Integer pageNum, Integer pageSize) {
+       return this.getAllByFilter(pageNum,pageSize,new HashMap());
+    }
 
     @Override
-    public PageInfo<Product> getAllByFilter(Integer pageNum, Integer pageSize, int manId) {
+    public PageInfo<Product> getAllByFilter(Integer pageNum, Integer pageSize, Map<String, Object> map) {
        PageHelper.startPage(pageNum,pageSize,true);
-       HashMap<String,Object> map=new HashMap<>();
-       map.put("manId",manId);
        List<Product> Products = productMapper.getAllByFilter(map);
        return new PageInfo<>(Products);
     }}
