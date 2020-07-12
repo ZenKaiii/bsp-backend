@@ -1,3 +1,4 @@
+<!--
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace=".dao.SdiDao">
@@ -20,7 +21,7 @@
         <result property="preferDate" column="PREFER_DATE" jdbcType="TIMESTAMP"/>
     </resultMap>
 
-    <!--查询单个-->
+    &lt;!&ndash;查询单个&ndash;&gt;
     <select id="queryById" resultMap="SdiMap">
         select
           DIL_ID, PRO_ID, STR_ID, STORE_RETENTION, DROPSHIP_PRICE, DROPSHIP_STATUS, CREATED_BY, CREATION_DATE, LAST_UPDATE_BY, CALL_CNT, LAST_UPDATE_DATE, REMARK, STS_CD, SHELF_STOCK, PREFER_DATE
@@ -28,7 +29,7 @@
         where DIL_ID = #{dilId}
     </select>
 
-    <!--查询指定行数据-->
+    &lt;!&ndash;查询指定行数据&ndash;&gt;
     <select id="queryAllByLimit" resultMap="SdiMap">
         select
           DIL_ID, PRO_ID, STR_ID, STORE_RETENTION, DROPSHIP_PRICE, DROPSHIP_STATUS, CREATED_BY, CREATION_DATE, LAST_UPDATE_BY, CALL_CNT, LAST_UPDATE_DATE, REMARK, STS_CD, SHELF_STOCK, PREFER_DATE
@@ -36,7 +37,7 @@
         limit #{offset}, #{limit}
     </select>
 
-    <!--通过实体作为筛选条件查询-->
+    &lt;!&ndash;通过实体作为筛选条件查询&ndash;&gt;
     <select id="queryAll" resultMap="SdiMap">
         select
         DIL_ID, PRO_ID, STR_ID, STORE_RETENTION, DROPSHIP_PRICE, DROPSHIP_STATUS, CREATED_BY, CREATION_DATE,
@@ -91,13 +92,13 @@
         </where>
     </select>
 
-    <!--新增所有列-->
+    &lt;!&ndash;新增所有列&ndash;&gt;
     <insert id="insert" keyProperty="dilId" useGeneratedKeys="true">
         insert into bsp.sdi(PRO_ID, STR_ID, STORE_RETENTION, DROPSHIP_PRICE, DROPSHIP_STATUS, CREATED_BY, CREATION_DATE, LAST_UPDATE_BY, CALL_CNT, LAST_UPDATE_DATE, REMARK, STS_CD, SHELF_STOCK, PREFER_DATE)
         values (#{proId}, #{strId}, #{storeRetention}, #{dropshipPrice}, #{dropshipStatus}, #{createdBy}, #{creationDate}, #{lastUpdateBy}, #{callCnt}, #{lastUpdateDate}, #{remark}, #{stsCd}, #{shelfStock}, #{preferDate})
     </insert>
 
-    <!--通过主键修改数据-->
+    &lt;!&ndash;通过主键修改数据&ndash;&gt;
     <update id="update">
         update bsp.sdi
         <set>
@@ -147,9 +148,9 @@
         where DIL_ID = #{dilId}
     </update>
 
-    <!--通过主键删除-->
+    &lt;!&ndash;通过主键删除&ndash;&gt;
     <delete id="deleteById">
         delete from bsp.sdi where DIL_ID = #{dilId}
     </delete>
 
-</mapper>
+</mapper>-->
