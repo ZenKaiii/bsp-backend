@@ -1,7 +1,7 @@
 package com.neusoft.bsp.Wallet.service;
 
 import com.github.pagehelper.PageInfo;
-import com.neusoft.bsp.GVO.entity.Code;
+import com.neusoft.bsp.System.entity.Code;
 import com.neusoft.bsp.Wallet.entiity.Wallet;
 
 import java.util.List;

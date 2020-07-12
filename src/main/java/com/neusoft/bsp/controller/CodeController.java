@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 @RestController
 @RequestMapping("/gvo")
-public class GVOController {
+public class CodeController {
 
 }

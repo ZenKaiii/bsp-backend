@@ -1,6 +1,6 @@
-package com.neusoft.bsp.GVO.mapper;
+package com.neusoft.bsp.System.mapper;
 
-import com.neusoft.bsp.GVO.entity.Code;
+import com.neusoft.bsp.System.entity.Code;
 import com.neusoft.bsp.common.base.BaseMapper;
 import org.springframework.stereotype.Repository;
 

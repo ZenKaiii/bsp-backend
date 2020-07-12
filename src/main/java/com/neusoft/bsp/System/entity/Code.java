@@ -1,4 +1,4 @@
-package com.neusoft.bsp.GVO.entity;
+package com.neusoft.bsp.System.entity;
 
 import com.neusoft.bsp.common.base.BaseEntity;
 import com.neusoft.bsp.common.validationGroup.InsertGroup;
