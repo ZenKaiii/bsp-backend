@@ -10,10 +10,10 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class User implements BaseEntity<String> {
-    @NotNull(message = "The userid shouldn't be null",groups = {InsertGroup.class, UpdateGroup.class, SelectGroup.class})  //addUser  user_id shouldn't be null updateuser selectsuer deleteuser
     String user_id;
     @NotNull(message = "The username shouldn't be null",groups = {InsertGroup.class, UpdateGroup.class})
     String username;
+    @NotNull(message = "The password shouldn't be null",groups = {InsertGroup.class, UpdateGroup.class})
     String password;
     String name;
     String rights;

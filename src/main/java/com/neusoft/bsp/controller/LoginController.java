@@ -1,4 +1,9 @@
 package com.neusoft.bsp.controller;
+/**
+ * @author: 张晗修
+ * @version: V3.0
+ * @date: 2020年7月10日
+ */
 
 import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.PageInfo;
@@ -13,6 +18,7 @@ import com.neusoft.bsp.common.util.TokenUtil;
 import com.neusoft.bsp.common.validationGroup.DeleteGroup;
 import com.neusoft.bsp.common.validationGroup.InsertGroup;
 import com.neusoft.bsp.common.validationGroup.UpdateGroup;
+import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -28,6 +34,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,7 +76,8 @@ public class LoginController extends BaseController {
             subject.login(uptoken);
             User user = (User)subject.getPrincipal();
             user.setIp(ip);
-            //Session session = subject.getSession();
+            user.setLast_login(new Timestamp(System.currentTimeMillis()).toString());
+            userService.update(user);
             BaseModelJson<User> result = new BaseModelJson<User>();
             result.code = 200;
             result.data = user;
