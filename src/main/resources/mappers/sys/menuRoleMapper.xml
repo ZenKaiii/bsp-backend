@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neusoft.bsp.System.mapper.MenuRoleMapper">
+
+    <!--    <select id="insert" parameterType="User">-->
+    <!--        select * from user where t_id = #{tid} and t_password = #{tpassword}-->
+    <!--    </select>-->
+
+    <insert id="insertMenu" parameterType="Menu">
+        insert sys_menu set
+    </insert>
+
+    <update id="updateMenu" parameterType="Menu">
+        update sys_menu set menu_name = #{menu_name}, menu_index = #{menu_index},parent_id = #{parent_id},
+        menu_order = #{menu_order},menu_icon = #{menu_icon},menu_type = #{menu_type}
+        where menu_id = #{menu_id}
+    </update>
+
+    <delete id="deleteMenu" parameterType="Integer">
+        delete from sys_menu where menu_id = #{menu_id}
+    </delete>
+
+    <select id="getAllMenus" resultType="Menu">
+        select * from sys_menu
+    </select>
+
+    <select id="getRoleMenus" parameterType="Integer" resultType="Menu">
+        select * from sys_menu where menu_id in (select menu_id from role_menu where role_id= #{role_id})
+    </select>
+
+
+
+
+</mapper>

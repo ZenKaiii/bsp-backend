@@ -32,7 +32,4 @@
         select * from cdm
     </select>
 
-    <select id="getAllByFilter" parameterType="java.util.Map" resultType="Code">
-        select * from cdm <!--where username = #{username} and password = #{password}-->
-    </select>
 </mapper>
