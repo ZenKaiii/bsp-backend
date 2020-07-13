@@ -78,10 +78,4 @@
     <select id="getAllByFilter" parameterType="java.util.Map" resultType="Manufacturer">
         select * from man <!--where username = #{username} and password = #{password}-->
     </select>
-
-    <select id="getManIdByUserId" parameterType="java.util.String" resultType='int'>
-        select man_buyer_id
-        from sys_user
-        where user_id=#{userId}
-    </select>
 </mapper>

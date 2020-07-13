@@ -19,16 +19,10 @@ public class RegisterController extends BaseController {
     @Autowired
     UserService userService;
 
-    @PostMapping("/addUser")
-    public BaseModel addUser(@Validated({InsertGroup.class}) @RequestBody User user, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            throw BusinessException.INSERT_FAIL.newInstance(this.getErrorResponse(bindingResult),
-                    new Object[]{user.toString()});
-        } else {
+    @PostMapping("/adduser")
+    public BaseModel addUser(@Validated({InsertGroup.class}) @RequestBody User user) {
+        if (userService.getUserByName(user.getUsername()) == null) {
             BaseModel result = new BaseModel();
-            if(userService.getUserByName(user.getUsername())!=null){
-                throw BusinessException.USERNAME_EXISTS;
-            }
             int i = userService.insert(user);
             if (i == 1) {
                 result.code = 200;
@@ -36,7 +30,8 @@ public class RegisterController extends BaseController {
             } else {
                 throw BusinessException.INSERT_FAIL;
             }
+        }else{
+            throw BusinessException.USERNAME_EXISTS;
         }
     }
-
 }

@@ -18,11 +18,9 @@ public interface ProductService {
 
     List<Product> getAll();
 
-    PageInfo<Product> getAllByManId(Integer pageNum, Integer pageSize, int manId);
-
-    List<Product> getAllByManId(int manId);
-
     List<Product> getAllByFilter(Map<String, Object> map);
 
-    PageInfo<Product> getAllByFilter(Integer pageNum, Integer pageSize, int manId);
+    PageInfo<Product> getAllByFilter(Integer pageNum, Integer pageSize);
+
+    PageInfo<Product> getAllByFilter(Integer pageNum, Integer pageSize, Map<String, Object> map);
 }

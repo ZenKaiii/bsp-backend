@@ -1,5 +1,4 @@
 package com.neusoft.bsp.System.service.impl;
-
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.neusoft.bsp.System.entity.Code;
@@ -7,11 +6,15 @@ import com.neusoft.bsp.System.mapper.CodeMapper;
 import com.neusoft.bsp.System.service.CodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @quthor: 张晗修
+ * @version: v1.0
+ * @description: 实现对数据词典的操作方法
+ */
 @Service ("codeService")
 public class CodeServiceImpl implements CodeService {
    @Autowired

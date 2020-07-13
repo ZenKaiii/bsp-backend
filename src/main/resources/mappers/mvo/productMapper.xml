@@ -43,17 +43,4 @@
     <select id="getAllByFilter" parameterType="java.util.Map" resultType="Brand">
         select * from pro <!--where username = #{username} and password = #{password}-->
     </select>
-
-    <select id="getAllByManId" parameterType="java.lang.Integer" resultType="java.util.List">
-        select *
-        from pro
-        join prc
-        where pro.PRO_ID=prc.PRO_ID
-        join pdn
-        where pro.PRO_ID=pdn.PRO_ID
-        join pck
-        where pro.PRO_ID=pck.PRO_ID
-        where pro.MAN_ID=#{manId}
-        where pro.STS_CD != 'D'
-    </select>
 </mapper>
