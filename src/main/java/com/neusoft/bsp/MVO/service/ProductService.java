@@ -16,6 +16,8 @@ public interface ProductService {
 
     Product getById(int productid);
 
+    Product getBySku(String sku);
+
     List<Product> getAll();
 
     List<Product> getAllByFilter(Map<String, Object> map);

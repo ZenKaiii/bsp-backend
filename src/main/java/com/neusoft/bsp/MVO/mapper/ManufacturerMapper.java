@@ -10,4 +10,8 @@ import java.util.Map;
 @Repository
 public interface ManufacturerMapper extends BaseMapper<String, Manufacturer> {
     int insert(Map map);
+
+    Manufacturer selectByUserId(int userId);
+
+    int getManIdByUserId(int userId);
 }

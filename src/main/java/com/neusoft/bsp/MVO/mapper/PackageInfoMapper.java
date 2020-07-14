@@ -6,6 +6,6 @@ import com.neusoft.bsp.common.base.BaseMapper;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PackageInfoMapper extends BaseMapper<String, PackageInfo> {
-
+public interface PackageInfoMapper extends BaseMapper<Integer, PackageInfo> {
+    PackageInfo getByProId(int proId);
 }

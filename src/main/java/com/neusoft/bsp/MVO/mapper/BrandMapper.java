@@ -11,4 +11,6 @@ import java.util.Map;
 @Repository
 public interface BrandMapper extends BaseMapper<Integer, Brand> {
     List<Brand> getAllByUserId(Map<String,Object> map);
+    Brand getByBrandNameEn(String name_en);
+
 }

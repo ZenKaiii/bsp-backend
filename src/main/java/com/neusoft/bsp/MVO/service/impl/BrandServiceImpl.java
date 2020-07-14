@@ -37,6 +37,10 @@ public class BrandServiceImpl implements BrandService {
         return brandMapper.getById(brandid);
     }
 
+    @Override
+    public Brand getByNameEn(String name_en) {
+        return brandMapper.getByBrandNameEn(name_en);
+    }
 
 
     @Override

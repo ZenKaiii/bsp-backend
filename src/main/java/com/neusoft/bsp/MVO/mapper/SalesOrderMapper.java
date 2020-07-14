@@ -10,4 +10,5 @@ import java.util.Map;
 
 @Repository
 public interface SalesOrderMapper extends BaseMapper<Integer, SalesOrder> {
+    List<SalesOrder> getByUserId(int userID);
 }

@@ -1,8 +1,10 @@
 package com.neusoft.bsp.MVO.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.PageInfo;
 import com.neusoft.bsp.MVO.entity.Manufacturer;
 import com.neusoft.bsp.MVO.service.ManufacturerService;
+import com.neusoft.bsp.MVO.vo.ManufacturerVo;
 import com.neusoft.bsp.System.entity.User;
 import com.neusoft.bsp.common.base.BaseController;
 import com.neusoft.bsp.common.base.BaseModel;
@@ -15,7 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.spring.web.json.Json;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,31 +32,39 @@ public class ManufacturerController extends BaseController {
     @Autowired
     ManufacturerService manufacturerService;
 
-    @PostMapping("/addManufacturer")
-    public BaseModel addManufacturer(@Validated({InsertGroup.class}) @RequestBody Manufacturer manufacturer,
-                                     @RequestParam String userId, BindingResult bindingResult) {
+    @PostMapping("/alterManufacturer")
+    public BaseModel alterManufacturer(@Validated({InsertGroup.class}) @RequestParam String manufacturerVoJson,
+                                     @RequestParam int userId, BindingResult bindingResult) {
+        ManufacturerVo manufacturerVo = JSONArray.parseObject(manufacturerVoJson, ManufacturerVo.class);
         if (bindingResult.hasErrors()) {
             throw BusinessException.INSERT_FAIL.newInstance(this.getErrorResponse(bindingResult),
-                    new Object[]{manufacturer.toString()});
+                    new Object[]{manufacturerVo.toString()});
         } else {
             Map<String,Object> map = new HashMap<>();
+            Manufacturer manufacturer=manufacturerService.selectByUserId(userId);
+            manufacturer=manufacturerVo.changeManufacturer(manufacturer);
             map.put("man_id",manufacturer.getMan_id());
             map.put("name_en",manufacturer.getName_en());
             map.put("name_cn",manufacturer.getName_cn());
             map.put("gmc_report_type",manufacturer.getGmc_report_type());
             map.put("gmc_report_url",manufacturer.getGmc_report_url());
             map.put("description",manufacturer.getDescription());
-            map.put("created_by",manufacturer.getCreated_by());
-            map.put("creation_date",manufacturer.getCreation_date());
-            map.put("last_update_by",manufacturer.getLast_update_by());
-            map.put("last_update_date",manufacturer.getLast_update_date());
+            map.put("created_by",userId);
+            map.put("last_update_by",userId);
             map.put("call_cnt",manufacturer.getCall_cnt());
             map.put("remark",manufacturer.getRemark());
             map.put("sts_cd",manufacturer.getSts_cd());
             map.put("user_id",userId);
-
+            int i=0;
+            if(this.getManufacturerInfo(userId,null).data!=null){
+                manufacturer.setLast_update_date(new Date(System.currentTimeMillis()));
+                manufacturerService.update(manufacturer);
+            }
+            else {
+                map.put("created_date",new Date(System.currentTimeMillis()).toString());
+                i=manufacturerService.insert(map);
+            }
             BaseModel result = new BaseModel();
-            int i = manufacturerService.insert(map);
 
             if(i==1){
                 result.code = 200;
@@ -63,17 +76,20 @@ public class ManufacturerController extends BaseController {
     }
 
     @PostMapping("/getmanufacturerinfo")
-    public BaseModelJson<Manufacturer> getManufacturerInfo(@RequestBody Manufacturer manufacturer, @RequestParam User user, BindingResult bindingResult) {
+    public BaseModelJson<ManufacturerVo> getManufacturerInfo(@RequestParam int userId, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw BusinessException.MANID_NULL_ERROR.newInstance(this.getErrorResponse(bindingResult),
                     new Object[]{});
         }
         else {
-            BaseModelJson<Manufacturer> result = new BaseModelJson();
-            manufacturer = manufacturerService.getById(user.getMan_buyer_id());
+            BaseModelJson<ManufacturerVo> result = new BaseModelJson();
+            Manufacturer manufacturer = manufacturerService.selectByUserId(userId);
             if (manufacturer != null) {
                 result.code = 200;
-                result.data = manufacturerService.getById(user.getMan_buyer_id());
+                ManufacturerVo manufacturerVo=new ManufacturerVo();
+                manufacturerVo=manufacturerVo.getManufacturerVo(manufacturer);
+                result.data = manufacturerVo;
+                result.message= JSONArray.toJSONString(manufacturerVo);
                 return result;
             } else {
                 throw BusinessException.MANID_NOT_EXISTS;
@@ -81,27 +97,14 @@ public class ManufacturerController extends BaseController {
         }
     }
 
-    @PostMapping("/manufacturerList")
-    public BaseModelJson<PageInfo<Manufacturer>> getManufacturerList(Integer pageNum, Integer pageSize,
-                                                     @RequestParam Map<String,Object> map) {
-        BaseModelJson<PageInfo<Manufacturer>> result = new BaseModelJson();
-        if(pageNum == null){
-            pageNum = 1;
-        }
-        if(pageSize == null){
-            pageSize = 10;
-        }
-        result.code = 200;
-        result.data = manufacturerService.getAllByFilter(pageNum,pageSize,map);
-        return result;
-    }
 
     @PostMapping("/deleteManufacturer")
-    public BaseModel deleteManufacturer(@Validated({DeleteGroup.class}) @RequestBody Manufacturer manufacturer, BindingResult bindingResult) throws Exception {
+    public BaseModel deleteManufacturer(@Validated({DeleteGroup.class}) @RequestParam int userId, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             throw BusinessException.USERID_NULL_ERROR.newInstance(this.getErrorResponse(bindingResult),
-                    new Object[]{manufacturer.toString()});
+                    new Object[]{userId});
         } else {
+            Manufacturer manufacturer=manufacturerService.selectByUserId(userId);
             BaseModel result = new BaseModel();
             int i = manufacturerService.delete(manufacturer.getMan_id());
             if (i == 1) {
@@ -112,23 +115,4 @@ public class ManufacturerController extends BaseController {
             }
         }
     }
-    @PostMapping("/updateManufacturer")
-    public BaseModel updateManufacturer(@Validated({UpdateGroup.class}) @RequestBody Manufacturer manufacturer, BindingResult bindingResult) {  //bindingResult用于获得validate的反馈信息
-        if (bindingResult.hasErrors()) {
-            throw BusinessException.MANID_NULL_ERROR.newInstance(this.getErrorResponse(bindingResult),
-                    new Object[]{manufacturer.toString()});
-        } else {
-            BaseModel result = new BaseModel();
-            int i =manufacturerService.update(manufacturer);
-            if(i==1){
-                result.code = 200;
-                return result;
-            }else{
-                throw BusinessException.UPDATE_FAIL;
-            }
-        }
-    }
-
-
-
 }

@@ -15,7 +15,9 @@ public interface ManufacturerService {
 
     int delete(int manufacturerid);
 
-    Manufacturer getById(int manufacturerid);
+    Manufacturer selectByUserId(int userId);
+
+    int getManIdByUserId(int userId);
 
     List<Manufacturer> getAll();
 
