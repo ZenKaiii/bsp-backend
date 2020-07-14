@@ -12,15 +12,15 @@ public interface CodeService {
 
     int update(Code code);
 
-    int delete(String codeid);
+    int delete(int cdm_id);
 
-    Code getById(String codeid);
+    Code getById(int cdm_id);
+
+    Code getByCode(String type_cd);
 
     List<Code> getAll();
 
-    List<Code> getAllByFilter(Map<String,Object> map);
-
-    PageInfo<Code> getAllByFilter(Integer pageNum,Integer pageSize);
-
-    PageInfo<Code> getAllByFilter(Integer pageNum,Integer pageSize,Map<String,Object> map);
+    List<Code> getAllByFilter(Map<String, Object> map);
 }
+
+

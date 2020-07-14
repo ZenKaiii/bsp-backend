@@ -25,23 +25,23 @@ public class MenuRoleServiceImpl implements MenuRoleService {
     }
 
     @Override
-    public int deleteMenu(Menu menu) {
-        return 0;
+    public int deleteMenu(int menu_id) {
+        return menuRoleMapper.deleteMenu(menu_id);
     }
 
     @Override
-    public int deleteRole(Role role) {
-        return 0;
+    public int deleteRole(int role_id) {
+        return menuRoleMapper.deleteRole(role_id);
     }
 
     @Override
     public int updateMenu(Menu menu) {
-        return 0;
+        return menuRoleMapper.updateMenu(menu);
     }
 
     @Override
     public int updateRole(Role role) {
-        return 0;
+        return menuRoleMapper.updateRole(role);
     }
 
     @Override
@@ -51,12 +51,38 @@ public class MenuRoleServiceImpl implements MenuRoleService {
 
     @Override
     public List<Role> getAllRoles() {
-        return null;
+        return menuRoleMapper.getAllRoles();
     }
 
     @Override
     public List<Menu> getRoleMenus(int role_id) {
-        return null;
+        return menuRoleMapper.getRoleMenus(role_id);
+    }
+
+    @Override
+    public int setRoleMenu(Map<String,Object> rolemenu) {
+//        int role_id = (int)(rolemenu.get("role"));
+//        List<Menu> step1 = menuRoleMapper.getRoleMenus(role_id);
+//        int delete_step = menuRoleMapper.deleteRoleMenu(role_id);
+//        if(delete_step == 1){
+//            int set_step = menuRoleMapper.setRoleMenu(rolemenu);
+//            if(delete_step == 1){
+//                return 1;
+//            }else{
+//                for(Menu menu: step1){
+//                    menuRoleMapper.insertMenu(menu);
+//                }
+//                return 0;
+//            }
+//        }else{
+//            return 0;
+//        }
+        return menuRoleMapper.setRoleMenu(rolemenu);
+    }
+
+    @Override
+    public int deletRoleMenu(int role_id) {
+        return menuRoleMapper.deleteRoleMenu(role_id);
     }
 
 }

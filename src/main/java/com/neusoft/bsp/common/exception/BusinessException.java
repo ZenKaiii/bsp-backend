@@ -18,7 +18,7 @@ public class BusinessException extends RuntimeException {
     public static final BusinessException PCKID_NULL_ERROR = new BusinessException(504, "package info id shouldn't be null", new Object[0]);
     public static final BusinessException SPAID_NULL_ERROR = new BusinessException(504, "specific attribute id shouldn't be null", new Object[0]);
     public static final BusinessException SPVID_NULL_ERROR = new BusinessException(504, "specific attribute value id shouldn't be null", new Object[0]);
-    public static final Exception DELETE_FAIL = new BusinessException(504, "delete operation failed", new Object[0]);;
+    public static final BusinessException DELETE_FAIL = new BusinessException(504, "delete operation failed", new Object[0]);;
 
 
     int code;

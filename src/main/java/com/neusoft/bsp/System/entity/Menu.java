@@ -1,6 +1,8 @@
 package com.neusoft.bsp.System.entity;
 
-public class Menu {
+import com.neusoft.bsp.common.base.BaseEntity;
+
+public class Menu implements BaseEntity<Integer> {
     int menu_id;
     String menu_name;
     String menu_index;
@@ -76,5 +78,10 @@ public class Menu {
                 ", menu_icon='" + menu_icon + '\'' +
                 ", menu_type='" + menu_type + '\'' +
                 '}';
+    }
+
+    @Override
+    public Integer getId() {
+        return this.getMenu_id();
     }
 }

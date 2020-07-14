@@ -13,8 +13,8 @@ public interface MenuRoleMapper{
     int insertMenu(Menu menu);
     int insertRole(Role role);
 
-    int deleteMenu(Menu menu);
-    int deleteRole(Role role);
+    int deleteMenu(int menu_id);
+    int deleteRole(int role_id);
 
     int updateMenu(Menu menu);
     int updateRole(Role role);
@@ -23,4 +23,7 @@ public interface MenuRoleMapper{
     List<Role> getAllRoles();
 
     List<Menu> getRoleMenus(int role_id);
+
+    int deleteRoleMenu(int role_id);
+    int setRoleMenu(Map<String,Object> rolemenu);
 }
