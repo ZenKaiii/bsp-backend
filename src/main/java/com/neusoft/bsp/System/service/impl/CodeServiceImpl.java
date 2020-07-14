@@ -31,16 +31,21 @@ public class CodeServiceImpl implements CodeService {
    }
 
    @Override
-   public int delete(String codeid) {
+   public int delete(int codeid) {
        return codeMapper.delete(codeid);
    }
 
    @Override
-   public Code getById(String codeid) {
+   public Code getById(int codeid) {
        return codeMapper.getById(codeid);
    }
 
-   @Override
+    @Override
+    public Code getByCode(String type_cd) {
+        return codeMapper.getByCode(type_cd);
+    }
+
+    @Override
    public List<Code> getAll() {
        return codeMapper.getAll();
    }
@@ -50,15 +55,4 @@ public class CodeServiceImpl implements CodeService {
        return codeMapper.getAllByFilter(map);
    }
 
-   @Override
-   public PageInfo<Code> getAllByFilter(Integer pageNum, Integer pageSize) {
-       return this.getAllByFilter(pageNum,pageSize,new HashMap());
-   }
-
-   @Override
-   public PageInfo<Code> getAllByFilter(Integer pageNum, Integer pageSize, Map<String, Object> map) {
-       PageHelper.startPage(pageNum,pageSize,true);
-       List<Code> Codes = codeMapper.getAllByFilter(map);
-       return new PageInfo<>(Codes);
-   }
 }

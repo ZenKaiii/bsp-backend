@@ -37,6 +37,10 @@ public class ShiroConfiguration {
         filtetMap.put("/login/logout","anon");
         filtetMap.put("/register/adduser","anon");
 
+        //！！！测试完记得删掉
+        filtetMap.put("/menurole/**","anon");
+        filtetMap.put("/cdm/**","anon");
+
         filtetMap.put("/login/userlist","perms[user:userlist]");
 
         filtetMap.put("/swagger-ui.html","anon");
