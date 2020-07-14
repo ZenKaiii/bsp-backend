@@ -8,7 +8,6 @@ import com.neusoft.bsp.MVO.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +36,10 @@ public class BrandServiceImpl implements BrandService {
         return brandMapper.getById(brandid);
     }
 
+    @Override
+    public Brand getByNameEn(String name_en) {
+        return brandMapper.getByBrandNameEn(name_en);
+    }
 
 
     @Override

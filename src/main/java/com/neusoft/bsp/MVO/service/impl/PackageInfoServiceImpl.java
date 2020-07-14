@@ -29,7 +29,12 @@ public class PackageInfoServiceImpl implements PackageInfoService {
 
     @Override
     public int delete(int packageInfoid) {
-        return 0;
+        return packageInfoMapper.delete(packageInfoid);
+    }
+
+    @Override
+    public PackageInfo getByProId(int proId) {
+        return packageInfoMapper.getByProId(proId);
     }
 
     @Override

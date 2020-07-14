@@ -5,6 +5,6 @@ import com.neusoft.bsp.common.base.BaseMapper;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SpecificAttributeValueMapper extends BaseMapper<String, SpecificAttributeValue> {
+public interface SpecificAttributeValueMapper extends BaseMapper<Integer, SpecificAttributeValue> {
 
 }

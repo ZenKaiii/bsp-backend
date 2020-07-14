@@ -1,7 +1,6 @@
 package com.neusoft.bsp.MVO.entity;
 
 import java.util.Date;
-import java.util.List;
 
 public class Manufacturer {
     int man_id;

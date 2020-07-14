@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.neusoft.bsp.MVO.mapper.ProductMapper">
 
-    <insert id="insert" parameterType="Brand">
+    <insert id="insert" parameterType="Product">
         insert into pro values(
         #{pro_id},#{sku_cd},#{pro_id},#{man_id},#{title},#{upc},#{ean},
         #{model},#{warranty_day},#{retail_price},#{created_by},
@@ -14,7 +14,7 @@
         )
     </insert>
 
-    <update id="update" parameterType="Brand">
+    <update id="update" parameterType="Product">
         update pro set
         sku_cd = #{sku_cd},`pro_id` = #{pro_id},man_id = #{man_id},
         title = #{title},upc= #{upc} ,ean = #{ean},model = #{model},
@@ -32,15 +32,28 @@
         delete from pro where pro_id = #{pro_id}
     </delete>
 
-    <select id="getById" parameterType="java.lang.String" resultType="Brand" >
+    <select id="getById" parameterType="java.lang.String" resultType="Product" >
         select * from pro where pro_id = #{pro_id}
     </select>
 
-    <select id="getAll" resultType="Brand">
+    <select id="getAll" resultType="Product">
         select * from pro
     </select>
 
-    <select id="getAllByFilter" parameterType="java.util.Map" resultType="Brand">
-        select * from pro <!--where username = #{username} and password = #{password}-->
+    <select id="getAllByFilter" parameterType="java.util.Map" resultType="java.util.List">
+        select *
+        from sys_user s
+        join man m
+        where s.man_buyer_id=m.man_id
+        right join pro p
+        where p.man_id=m.man_id
+        where s.user_id=#{userId}
+        where p.sts_cd!='D'
+    </select>
+
+    <select id="getBySku" parameterType="java.lang.String" resultType="Product">
+        select *
+        from pro
+        where pro.sku_cd=#{sku}
     </select>
 </mapper>

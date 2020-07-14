@@ -43,4 +43,10 @@
         where s.user_id=#{user_id};
     </select>
 
+    <select id="getByNameEn" parameterType="java.lang.String" resultType="Brand">
+        select *
+        from brd
+        where brd.name_en=#{name_en}
+    </select>
+
 </mapper>
