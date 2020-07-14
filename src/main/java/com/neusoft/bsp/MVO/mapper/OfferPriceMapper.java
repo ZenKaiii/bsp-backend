@@ -6,6 +6,6 @@ import com.neusoft.bsp.common.base.BaseMapper;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface OfferPriceMapper extends BaseMapper<Integer, OfferPrice> {
+public interface OfferPriceMapper extends BaseMapper<String, OfferPrice> {
 
 }

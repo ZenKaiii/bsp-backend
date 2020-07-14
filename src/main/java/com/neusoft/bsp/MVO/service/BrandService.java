@@ -1,7 +1,6 @@
 package com.neusoft.bsp.MVO.service;
 
 import com.github.pagehelper.PageInfo;
-import com.neusoft.bsp.BVO.entity.Str;
 import com.neusoft.bsp.MVO.entity.Brand;
 
 import java.util.HashMap;
@@ -17,8 +16,6 @@ public interface BrandService {
     int delete(int brandid);
 
     Brand getById(int brandid);
-
-    Brand getByNameEn(String name_en);
 
     List<Brand> getAll();
 

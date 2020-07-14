@@ -33,14 +33,10 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     }
 
     @Override
-    public Manufacturer selectByUserId(int userId) {
-        return manufacturerMapper.selectByUserId(userId);
+    public Manufacturer getById(int manufacturerid) {
+        return null;
     }
 
-    @Override
-    public int getManIdByUserId(int userId) {
-        return manufacturerMapper.getManIdByUserId(userId);
-    }
 
     @Override
     public List<Manufacturer> getAll() {

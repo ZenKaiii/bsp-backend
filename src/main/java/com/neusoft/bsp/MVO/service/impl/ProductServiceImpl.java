@@ -39,11 +39,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product getBySku(String sku) {
-        return productMapper.getBySku(sku);
-    }
-
-    @Override
     public List<Product> getAll() {
        return productMapper.getAll();
     }

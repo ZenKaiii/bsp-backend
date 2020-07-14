@@ -1,8 +1,6 @@
 package com.neusoft.bsp.MVO.service;
 
 import com.github.pagehelper.PageInfo;
-import com.neusoft.bsp.MVO.entity.Product;
-import com.neusoft.bsp.MVO.entity.SalesOrder;
 import com.neusoft.bsp.MVO.entity.SalesOrderLineItem;
 
 import java.util.List;
@@ -16,19 +14,7 @@ public interface SalesOrderLineItemService {
 
     int delete(int salesOrderLineItemid);
 
-    SalesOrder getSao();
-
-    SalesOrder getSaoByOrderId(String orderNo);
-
-    SalesOrderLineItem getSalByOrderId(String orderNo);
-
-    Product getPro();
-
     SalesOrderLineItem getById(int salesOrderLineItemid);
-
-    List<SalesOrderLineItem> getBySaoId(int SaoId);
-
-    List<SalesOrderLineItem> getByUserId(int userId);
 
     List<SalesOrderLineItem> getAll();
 

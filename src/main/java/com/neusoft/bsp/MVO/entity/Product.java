@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Product {
     int pro_id;
-    String sku_cd;
+    String sku_cd;;
     int brd_id;
     int man_id;
     String title;

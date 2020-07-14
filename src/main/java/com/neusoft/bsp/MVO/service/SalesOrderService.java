@@ -16,8 +16,6 @@ public interface SalesOrderService {
 
     SalesOrder getById(int salesOrderid);
 
-    List<SalesOrder> getByUserId(int userId);
-
     List<SalesOrder> getAll();
 
     List<SalesOrder> getAllByFilter(Map<String, Object> map);

@@ -16,8 +16,6 @@ public interface ProductDescriptionService {
 
     ProductDescription getById(int productDescriptionid);
 
-    ProductDescription getByProId(int proId);
-
     List<ProductDescription> getAll();
 
     List<ProductDescription> getAllByFilter(Map<String, Object> map);
