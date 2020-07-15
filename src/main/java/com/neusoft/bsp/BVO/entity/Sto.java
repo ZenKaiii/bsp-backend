@@ -6,14 +6,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Date;
+
+// 原始订单
 
 @Data
 @Entity
-public class Dsr {
+public class Sto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer dsrId;
-    private String name;
-    private Date registerDate;
+    private Integer stoId;
+    private Integer strId;
+    private String orderId;
+    private String plateformType;
 }

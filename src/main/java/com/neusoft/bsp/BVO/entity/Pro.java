@@ -6,14 +6,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Date;
 
 @Data
 @Entity
-public class Dsr {
+public class Pro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer dsrId;
-    private String name;
-    private Date registerDate;
+    private Integer proId;
+    private String title;
 }
