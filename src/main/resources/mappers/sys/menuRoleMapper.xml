@@ -48,6 +48,10 @@
         select * from sys_role where STS_CD = 'E'
     </select>
 
+    <select id="getRoleById" resultType="java.lang.String">
+        select role_name from sys_role where role_id = #{role_id}
+    </select>
+
     <delete id="deleteRoleMenu" parameterType="Integer">
         delete from role_menu where role_id = #{role_id};
     </delete>
