@@ -1,5 +1,7 @@
 package com.neusoft.bsp.controller;
 
+import com.neusoft.bsp.BVO.entity.Dsr;
+import com.neusoft.bsp.BVO.repository.DsrRepository;
 import com.neusoft.bsp.MVO.entity.Manufacturer;
 import com.neusoft.bsp.MVO.service.ManufacturerService;
 import com.neusoft.bsp.System.entity.User;
@@ -25,11 +27,17 @@ public class RegisterController extends BaseController {
     UserService userService;
     @Autowired
     ManufacturerService manufacturerService;
+    @Autowired
+    DsrRepository dsrRepository;
 
 
     @PostMapping("/bvo")
     public BaseModel addUser(@Validated({InsertGroup.class}) @RequestBody User user) {
         if (userService.getUserByName(user.getUsername()) == null) {
+            Dsr dsr = new Dsr();
+            dsr.setName(user.getName());
+            dsrRepository.saveAndFlush(dsr);
+            user.setMan_buyer_id(dsr.getDsrId());
             BaseModel result = new BaseModel();
             int i = userService.insert(user);
             if (i == 1) {

@@ -1,5 +1,6 @@
 package com.neusoft.bsp.BVO.service;
 
+import com.neusoft.bsp.BVO.entity.Dsr;
 import com.neusoft.bsp.BVO.entity.Str;
 import com.neusoft.bsp.BVO.form.StoreForm;
 import com.neusoft.bsp.BVO.vo.BvoUserVO;
@@ -11,4 +12,5 @@ public interface InfoService {
     public void updateUserInfo(int id, BvoUserVO bvoUserVO);
     public List<Str> getStoresByDsrId(Integer id);
     public void addStore(StoreForm storeForm);
+    public Dsr getDsr();
 }

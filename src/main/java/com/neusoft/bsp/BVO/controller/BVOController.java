@@ -1,6 +1,7 @@
 package com.neusoft.bsp.BVO.controller;
 
 
+import com.neusoft.bsp.BVO.entity.Dsr;
 import com.neusoft.bsp.BVO.exception.BvoException;
 import com.neusoft.bsp.BVO.form.StoreForm;
 import com.neusoft.bsp.BVO.service.InfoService;
@@ -100,6 +101,11 @@ public class BVOController {
             return ResultVOUtil.success(null);
         else
             return ResultVOUtil.error("钱包余额不足，请充钱");
+    }
+
+    @GetMapping("/dsr")
+    public Dsr getDsr(){
+        return infoService.getDsr();
     }
 
 }

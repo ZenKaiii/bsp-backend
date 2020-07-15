@@ -53,5 +53,14 @@ public class InfoServiceImpl implements InfoService {
         strRepository.saveAndFlush(store);
     }
 
+    @Override
+    public Dsr getDsr() {
+        Dsr dsr = new Dsr();
+        dsr.setName("aaa");
+        dsrRepository.saveAndFlush(dsr);
+        System.out.println(dsr.getDsrId());
+        return dsr;
+    }
+
 
 }
