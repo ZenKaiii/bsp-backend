@@ -3,7 +3,7 @@ server:
 spring:
   datasource:
     username: root
-    password: 171024
+    password: 1234
     url: jdbc:mysql://127.0.0.1:3306/bsp?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT&allowMultiQueries=true
     driver-class-name: com.mysql.cj.jdbc.Driver
 mybatis:

@@ -39,7 +39,7 @@ public class BVOController {
     @PutMapping("/updateInfo/{id}")
     public ResultVO updateUserInfo(@PathVariable("id") int id ,@RequestBody BvoUserVO bvoUserVO, BindingResult bindingResult){
         infoService.updateUserInfo(id,bvoUserVO);
-        ResultVOUtil.success(null);
+        return ResultVOUtil.success(null);
     }
 
     @GetMapping("/store/{id}")
