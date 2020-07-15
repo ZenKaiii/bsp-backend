@@ -3,7 +3,6 @@ package com.neusoft.bsp.MVO.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.neusoft.bsp.MVO.entity.OfferPrice;
-import com.neusoft.bsp.MVO.mapper.OfferPriceMapper;
 import com.neusoft.bsp.MVO.service.OfferPriceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +14,7 @@ import java.util.Map;
 @Service ("OfferPriceService")
 public class OfferPriceServiceImpl implements OfferPriceService {
     @Autowired
-    OfferPriceMapper OfferPriceMapper;
+    com.neusoft.bsp.MVO.mapper.OfferPriceMapper OfferPriceMapper;
 
     @Override
     public int insert(OfferPrice OfferPrice) {

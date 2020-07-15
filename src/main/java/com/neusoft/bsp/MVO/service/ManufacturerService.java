@@ -3,7 +3,6 @@ package com.neusoft.bsp.MVO.service;
 import com.github.pagehelper.PageInfo;
 import com.neusoft.bsp.MVO.entity.Manufacturer;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +14,9 @@ public interface ManufacturerService {
 
     int delete(int manufacturerid);
 
-    Manufacturer getById(int manufacturerid);
+    Manufacturer selectByUserId(int userId);
+
+    int getManIdByUserId(int userId);
 
     List<Manufacturer> getAll();
 

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neusoft.bsp.MVO.mapper.ProductDescriptionMapper">
+
+    <resultMap type="ProductDescription" id="PdnMap">
+        <result property="pdnId" column="PDN_ID" jdbcType="INTEGER"/>
+        <result property="proId" column="PRO_ID" jdbcType="INTEGER"/>
+        <result property="typeCd" column="TYPE_CD" jdbcType="VARCHAR"/>
+        <result property="descrition" column="DESCRITION" jdbcType="OTHER"/>
+        <result property="createdBy" column="CREATED_BY" jdbcType="VARCHAR"/>
+        <result property="creationDate" column="CREATION_DATE" jdbcType="TIMESTAMP"/>
+        <result property="lastUpdateBy" column="LAST_UPDATE_BY" jdbcType="VARCHAR"/>
+        <result property="lastUpdateDate" column="LAST_UPDATE_DATE" jdbcType="TIMESTAMP"/>
+        <result property="callCnt" column="CALL_CNT" jdbcType="INTEGER"/>
+        <result property="remark" column="REMARK" jdbcType="VARCHAR"/>
+        <result property="stsCd" column="STS_CD" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="getById" resultMap="PdnMap">
+        select
+          PDN_ID, PRO_ID, TYPE_CD, DESCRITION, CREATED_BY, CREATION_DATE, LAST_UPDATE_BY, LAST_UPDATE_DATE, CALL_CNT, REMARK, STS_CD
+        from bsp.pdn
+        where PDN_ID = #{pdnId}
+    </select>
+
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="getAll" resultMap="PdnMap">
+        select
+        PDN_ID, PRO_ID, TYPE_CD, DESCRITION, CREATED_BY, CREATION_DATE, LAST_UPDATE_BY, LAST_UPDATE_DATE, CALL_CNT,
+        REMARK, STS_CD
+        from bsp.pdn
+        <where>
+            <if test="pdnId != null">
+                and PDN_ID = #{pdnId}
+            </if>
+            <if test="proId != null">
+                and PRO_ID = #{proId}
+            </if>
+            <if test="typeCd != null and typeCd != ''">
+                and TYPE_CD = #{typeCd}
+            </if>
+            <if test="descrition != null">
+                and DESCRITION = #{descrition}
+            </if>
+            <if test="createdBy != null and createdBy != ''">
+                and CREATED_BY = #{createdBy}
+            </if>
+            <if test="creationDate != null">
+                and CREATION_DATE = #{creationDate}
+            </if>
+            <if test="lastUpdateBy != null and lastUpdateBy != ''">
+                and LAST_UPDATE_BY = #{lastUpdateBy}
+            </if>
+            <if test="lastUpdateDate != null">
+                and LAST_UPDATE_DATE = #{lastUpdateDate}
+            </if>
+            <if test="callCnt != null">
+                and CALL_CNT = #{callCnt}
+            </if>
+            <if test="remark != null and remark != ''">
+                and REMARK = #{remark}
+            </if>
+            <if test="stsCd != null and stsCd != ''">
+                and STS_CD = #{stsCd}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="pdnId" useGeneratedKeys="true">
+        insert into bsp.pdn(PRO_ID, TYPE_CD, DESCRITION, CREATED_BY, CREATION_DATE, LAST_UPDATE_BY, LAST_UPDATE_DATE, CALL_CNT, REMARK, STS_CD)
+        values (#{proId}, #{typeCd}, #{descrition}, #{createdBy}, #{creationDate}, #{lastUpdateBy}, #{lastUpdateDate}, #{callCnt}, #{remark}, #{stsCd})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update bsp.pdn
+        <set>
+            <if test="proId != null">
+                PRO_ID = #{proId},
+            </if>
+            <if test="typeCd != null and typeCd != ''">
+                TYPE_CD = #{typeCd},
+            </if>
+            <if test="descrition != null">
+                DESCRITION = #{descrition},
+            </if>
+            <if test="createdBy != null and createdBy != ''">
+                CREATED_BY = #{createdBy},
+            </if>
+            <if test="creationDate != null">
+                CREATION_DATE = #{creationDate},
+            </if>
+            <if test="lastUpdateBy != null and lastUpdateBy != ''">
+                LAST_UPDATE_BY = #{lastUpdateBy},
+            </if>
+            <if test="lastUpdateDate != null">
+                LAST_UPDATE_DATE = #{lastUpdateDate},
+            </if>
+            <if test="callCnt != null">
+                CALL_CNT = #{callCnt},
+            </if>
+            <if test="remark != null and remark != ''">
+                REMARK = #{remark},
+            </if>
+            <if test="stsCd != null and stsCd != ''">
+                STS_CD = #{stsCd},
+            </if>
+        </set>
+        where PDN_ID = #{pdnId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="delete">
+        delete from bsp.pdn where PDN_ID = #{pdnId}
+    </delete>
+
+</mapper>

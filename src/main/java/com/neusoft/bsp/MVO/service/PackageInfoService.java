@@ -14,6 +14,8 @@ public interface PackageInfoService {
 
     int delete(int packageInfoid);
 
+    PackageInfo getByProId(int proId);
+
     PackageInfo getById(int packageInfoid);
 
     List<PackageInfo> getAll();

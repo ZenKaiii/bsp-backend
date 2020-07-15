@@ -39,6 +39,11 @@ public class ProductDescriptionServiceImpl implements ProductDescriptionService 
     }
 
     @Override
+    public ProductDescription getByProId(int proId) {
+        return productDescriptionMapper.getByProId(proId);
+    }
+
+    @Override
     public List<ProductDescription> getAll() {
        return productDescriptionMapper.getAll();
     }

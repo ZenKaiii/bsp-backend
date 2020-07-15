@@ -13,47 +13,6 @@
         )}
     </insert>
 
-    <!--CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertMan`(
-    in `MAN_ID` int(11),
-    in `NAME_EN`	varchar(100),
-    in `NAME_CN`	varchar(100),
-    in `GMC_REPORT_TYPE`	varchar(2),
-    in `GMC_REPORT_URL`	varchar(255),
-    in `DESCRIPTION`	longtext,
-    in `CREATED_BY`	varchar(20),
-    in `CREATION_DATE`	timestamp,
-    in `LAST_UPDATE_BY`	varchar(20),
-    in `LAST_UPDATE_DATE`	timestamp,
-    in `CALL_CNT`	int(11),
-    in `REMARK`	varchar(50),
-    in `STS_CD`	char(1),
-    in `userId` VARCHAR(100)
-    )
-    BEGIN
-    #Routine body goes here...
-
-    insert into man values(
-    MAN_ID,
-    NAME_EN,
-    NAME_CN,
-    GMC_REPORT_TYPE,
-    GMC_REPORT_URL,
-    DESCRIPTION,
-    CREATED_BY,
-    CREATION_DATE,
-    LAST_UPDATE_BY,
-    LAST_UPDATE_DATE,
-    CALL_CNT,
-    REMARK,
-    STS_CD
-    );
-
-    UPDATE sys_user
-    set MAN_BUYER_ID=MAN_ID
-    WHERE USER_ID=userId;
-
-    END-->
-
     <update id="update" parameterType="Manufacturer">
         update man set
         man_id = #{man_id},`name_en` = #{name_en},name_cn = #{name_cn},
@@ -62,6 +21,14 @@
         call_cnt = #{call_cnt},remark = #{remark},sts_cd = #{sts_cd}
         where man_id = #{man_id}
     </update>
+
+    <select id="selectByUserId" parameterType="java.lang.String" resultType="Manufacturer">
+        select m.*
+        from sys_user s
+        join man m
+        where m.man_id=s.man_buyer_id
+        where s.user_id=#{userId}
+    </select>
 
     <delete id="delete" parameterType="java.lang.String">
         delete from man where man_id = #{man_id}
@@ -77,5 +44,11 @@
 
     <select id="getAllByFilter" parameterType="java.util.Map" resultType="Manufacturer">
         select * from man <!--where username = #{username} and password = #{password}-->
+    </select>
+
+    <select id="getManIdByUserId" parameterType="java.lang.Integer" resultType='int'>
+        select man_buyer_id
+        from sys_user
+        where user_id= #{userId}
     </select>
 </mapper>

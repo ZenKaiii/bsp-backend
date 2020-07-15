@@ -44,7 +44,7 @@ public class SpecificAttributeValueController extends BaseController {
 
     @PostMapping("/specificAttributeValueList")
     public BaseModelJson<PageInfo<SpecificAttributeValue>> getSpecificAttributeValueList(Integer pageNum, Integer pageSize,
-                                                     @RequestParam Map<String,Object> map) {
+                                                                                         @RequestParam Map<String,Object> map) {
         BaseModelJson<PageInfo<SpecificAttributeValue>> result = new BaseModelJson();
         if(pageNum == null){
             pageNum = 1;

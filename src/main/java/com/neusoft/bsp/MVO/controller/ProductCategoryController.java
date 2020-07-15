@@ -44,7 +44,7 @@ public class ProductCategoryController extends BaseController {
 
     @PostMapping("/productCategoryList")
     public BaseModelJson<PageInfo<ProductCategory>> getProductCategoryList(Integer pageNum, Integer pageSize,
-                                                     @RequestParam Map<String,Object> map) {
+                                                                           @RequestParam Map<String,Object> map) {
         BaseModelJson<PageInfo<ProductCategory>> result = new BaseModelJson();
         if(pageNum == null){
             pageNum = 1;

@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProductMapper extends BaseMapper<String, Product> {
-
+    Product getBySku(String sku);
 }

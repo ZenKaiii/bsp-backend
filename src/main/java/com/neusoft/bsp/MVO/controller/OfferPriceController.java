@@ -44,7 +44,7 @@ public class OfferPriceController extends BaseController {
 
     @PostMapping("/offerPriceList")
     public BaseModelJson<PageInfo<OfferPrice>> getOfferPriceList(Integer pageNum, Integer pageSize,
-                                                     @RequestParam Map<String,Object> map) {
+                                                                 @RequestParam Map<String,Object> map) {
         BaseModelJson<PageInfo<OfferPrice>> result = new BaseModelJson();
         if(pageNum == null){
             pageNum = 1;
