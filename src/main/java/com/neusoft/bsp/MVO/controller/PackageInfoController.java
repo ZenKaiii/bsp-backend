@@ -44,7 +44,7 @@ public class PackageInfoController extends BaseController {
 
     @PostMapping("/packageInfoList")
     public BaseModelJson<PageInfo<PackageInfo>> getPackageInfoList(Integer pageNum, Integer pageSize,
-                                                     @RequestParam Map<String,Object> map) {
+                                                                   @RequestParam Map<String,Object> map) {
         BaseModelJson<PageInfo<PackageInfo>> result = new BaseModelJson();
         if(pageNum == null){
             pageNum = 1;

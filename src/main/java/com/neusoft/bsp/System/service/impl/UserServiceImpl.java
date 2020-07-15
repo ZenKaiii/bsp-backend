@@ -28,12 +28,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int delete(String userid) {
+    public int delete(int userid) {
         return userMapper.delete(userid);
     }
 
     @Override
-    public User getById(String userid) {
+    public User getById(int userid) {
         return userMapper.getById(userid);
     }
 

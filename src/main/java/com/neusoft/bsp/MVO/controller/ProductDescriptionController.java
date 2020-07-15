@@ -44,7 +44,7 @@ public class ProductDescriptionController extends BaseController {
 
     @PostMapping("/productDescriptionList")
     public BaseModelJson<PageInfo<ProductDescription>> getProductDescriptionList(Integer pageNum, Integer pageSize,
-                                                     @RequestParam Map<String,Object> map) {
+                                                                                 @RequestParam Map<String,Object> map) {
         BaseModelJson<PageInfo<ProductDescription>> result = new BaseModelJson();
         if(pageNum == null){
             pageNum = 1;

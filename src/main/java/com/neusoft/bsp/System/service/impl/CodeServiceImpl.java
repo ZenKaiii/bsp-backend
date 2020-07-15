@@ -1,5 +1,4 @@
 package com.neusoft.bsp.System.service.impl;
-
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.neusoft.bsp.System.entity.Code;
@@ -7,11 +6,15 @@ import com.neusoft.bsp.System.mapper.CodeMapper;
 import com.neusoft.bsp.System.service.CodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @quthor: 张晗修
+ * @version: v1.0
+ * @description: 实现对数据词典的操作方法
+ */
 @Service ("codeService")
 public class CodeServiceImpl implements CodeService {
    @Autowired
@@ -28,16 +31,21 @@ public class CodeServiceImpl implements CodeService {
    }
 
    @Override
-   public int delete(String codeid) {
+   public int delete(int codeid) {
        return codeMapper.delete(codeid);
    }
 
    @Override
-   public Code getById(String codeid) {
+   public Code getById(int codeid) {
        return codeMapper.getById(codeid);
    }
 
-   @Override
+    @Override
+    public Code getByCode(String type_cd) {
+        return codeMapper.getByCode(type_cd);
+    }
+
+    @Override
    public List<Code> getAll() {
        return codeMapper.getAll();
    }
@@ -47,15 +55,4 @@ public class CodeServiceImpl implements CodeService {
        return codeMapper.getAllByFilter(map);
    }
 
-   @Override
-   public PageInfo<Code> getAllByFilter(Integer pageNum, Integer pageSize) {
-       return this.getAllByFilter(pageNum,pageSize,new HashMap());
-   }
-
-   @Override
-   public PageInfo<Code> getAllByFilter(Integer pageNum, Integer pageSize, Map<String, Object> map) {
-       PageHelper.startPage(pageNum,pageSize,true);
-       List<Code> Codes = codeMapper.getAllByFilter(map);
-       return new PageInfo<>(Codes);
-   }
 }

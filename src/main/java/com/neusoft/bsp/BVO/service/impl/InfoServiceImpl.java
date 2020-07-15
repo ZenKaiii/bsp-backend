@@ -25,13 +25,13 @@ public class InfoServiceImpl implements InfoService {
     DsrRepository dsrRepository;
 
     @Override
-    public BvoUserVO findUserVo(String userId) {
+    public BvoUserVO findUserVo(int userId) {
         User user = userMapper.getById(userId);
         return new BvoUserVO(user.getName(),user.getEmail(),user.getPhone());
     }
 
     @Override
-    public void updateUserInfo(String id,BvoUserVO bvoUserVO) {
+    public void updateUserInfo(int id,BvoUserVO bvoUserVO) {
         User user = userMapper.getById(id);
         user.setName(bvoUserVO.getName());
         user.setEmail(bvoUserVO.getEmail());

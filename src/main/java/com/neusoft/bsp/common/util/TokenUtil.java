@@ -1,3 +1,9 @@
+/**
+ * @author: 张晗修
+ * @version: v1.0
+ * @description: 用于token的加密，目前还没用上
+ */
+
 package com.neusoft.bsp.common.util;
 
 import io.jsonwebtoken.*;

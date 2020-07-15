@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neusoft.bsp.MVO.mapper.SalesOrderLineItemMapper">
+
+    <resultMap type="com.neusoft.bsp.MVO.entity.SalesOrderLineItem" id="SalMap">
+        <result property="salId" column="SAL_ID" jdbcType="INTEGER"/>
+        <result property="createdBy" column="CREATED_BY" jdbcType="VARCHAR"/>
+        <result property="creationDate" column="CREATION_DATE" jdbcType="TIMESTAMP"/>
+        <result property="lastUpdateBy" column="LAST_UPDATE_BY" jdbcType="VARCHAR"/>
+        <result property="lastUpdateDate" column="LAST_UPDATE_DATE" jdbcType="TIMESTAMP"/>
+        <result property="callCnt" column="CALL_CNT" jdbcType="INTEGER"/>
+        <result property="remark" column="REMARK" jdbcType="VARCHAR"/>
+        <result property="stsCd" column="STS_CD" jdbcType="VARCHAR"/>
+        <result property="saoId" column="SAO_ID" jdbcType="INTEGER"/>
+        <result property="proId" column="PRO_ID" jdbcType="INTEGER"/>
+        <result property="qty" column="QTY" jdbcType="INTEGER"/>
+        <result property="price" column="PRICE" jdbcType="NUMERIC"/>
+        <result property="salId" column="SOL_ID" jdbcType="INTEGER"/>
+        <result property="trackingNo" column="TRACKING_NO" jdbcType="VARCHAR"/>
+        <result property="wspName" column="WSP_NAME" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="getById" resultMap="SalMap">
+        select
+          SAL_ID, CREATED_BY, CREATION_DATE, LAST_UPDATE_BY, LAST_UPDATE_DATE, CALL_CNT, REMARK, STS_CD, SAO_ID, PRO_ID, QTY, PRICE, SOL_ID, TRACKING_NO, WSP_NAME
+        from bsp.sal
+        where SAL_ID = #{salId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="getAllByLimit" resultMap="SalMap">
+        select
+          SAL_ID, CREATED_BY, CREATION_DATE, LAST_UPDATE_BY, LAST_UPDATE_DATE, CALL_CNT, REMARK, STS_CD, SAO_ID, PRO_ID, QTY, PRICE, SOL_ID, TRACKING_NO, WSP_NAME
+        from bsp.sal
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="getAll" resultMap="SalMap">
+        select
+        SAL_ID, CREATED_BY, CREATION_DATE, LAST_UPDATE_BY, LAST_UPDATE_DATE, CALL_CNT, REMARK, STS_CD, SAO_ID, PRO_ID,
+        QTY, PRICE, SOL_ID, TRACKING_NO, WSP_NAME
+        from bsp.sal
+        <where>
+            <if test="salId != null">
+                and SAL_ID = #{salId}
+            </if>
+            <if test="createdBy != null and createdBy != ''">
+                and CREATED_BY = #{createdBy}
+            </if>
+            <if test="creationDate != null">
+                and CREATION_DATE = #{creationDate}
+            </if>
+            <if test="lastUpdateBy != null and lastUpdateBy != ''">
+                and LAST_UPDATE_BY = #{lastUpdateBy}
+            </if>
+            <if test="lastUpdateDate != null">
+                and LAST_UPDATE_DATE = #{lastUpdateDate}
+            </if>
+            <if test="callCnt != null">
+                and CALL_CNT = #{callCnt}
+            </if>
+            <if test="remark != null and remark != ''">
+                and REMARK = #{remark}
+            </if>
+            <if test="stsCd != null and stsCd != ''">
+                and STS_CD = #{stsCd}
+            </if>
+            <if test="saoId != null">
+                and SAO_ID = #{saoId}
+            </if>
+            <if test="proId != null">
+                and PRO_ID = #{proId}
+            </if>
+            <if test="qty != null">
+                and QTY = #{qty}
+            </if>
+            <if test="price != null">
+                and PRICE = #{price}
+            </if>
+            <if test="salId != null">
+                and SOL_ID = #{salId}
+            </if>
+            <if test="trackingNo != null and trackingNo != ''">
+                and TRACKING_NO = #{trackingNo}
+            </if>
+            <if test="wspName != null and wspName != ''">
+                and WSP_NAME = #{wspName}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="salId" useGeneratedKeys="true">
+        insert into bsp.sal(CREATED_BY, CREATION_DATE, LAST_UPDATE_BY, LAST_UPDATE_DATE, CALL_CNT, REMARK, STS_CD, SAO_ID, PRO_ID, QTY, PRICE, SOL_ID, TRACKING_NO, WSP_NAME)
+        values (#{createdBy}, #{creationDate}, #{lastUpdateBy}, #{lastUpdateDate}, #{callCnt}, #{remark}, #{stsCd}, #{saoId}, #{proId}, #{qty}, #{price}, #{salId}, #{trackingNo}, #{wspName})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update bsp.sal
+        <set>
+            <if test="createdBy != null and createdBy != ''">
+                CREATED_BY = #{createdBy},
+            </if>
+            <if test="creationDate != null">
+                CREATION_DATE = #{creationDate},
+            </if>
+            <if test="lastUpdateBy != null and lastUpdateBy != ''">
+                LAST_UPDATE_BY = #{lastUpdateBy},
+            </if>
+            <if test="lastUpdateDate != null">
+                LAST_UPDATE_DATE = #{lastUpdateDate},
+            </if>
+            <if test="callCnt != null">
+                CALL_CNT = #{callCnt},
+            </if>
+            <if test="remark != null and remark != ''">
+                REMARK = #{remark},
+            </if>
+            <if test="stsCd != null and stsCd != ''">
+                STS_CD = #{stsCd},
+            </if>
+            <if test="saoId != null">
+                SAO_ID = #{saoId},
+            </if>
+            <if test="proId != null">
+                PRO_ID = #{proId},
+            </if>
+            <if test="qty != null">
+                QTY = #{qty},
+            </if>
+            <if test="price != null">
+                PRICE = #{price},
+            </if>
+            <if test="salId != null">
+                SOL_ID = #{salId},
+            </if>
+            <if test="trackingNo != null and trackingNo != ''">
+                TRACKING_NO = #{trackingNo},
+            </if>
+            <if test="wspName != null and wspName != ''">
+                WSP_NAME = #{wspName},
+            </if>
+        </set>
+        where SAL_ID = #{salId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="delete">
+        delete from bsp.sal where SAL_ID = #{salId}
+    </delete>
+
+    <select id="getByUserId" parameterType="java.lang.Integer" resultType="java.util.List">
+        select sal.*
+        from sys_user s
+        join man m
+        where s.man_buyer_id=m.man_id
+        join sao
+        where m.man_id=sao.man_id
+        join sal
+        where sao.sao_id=sal.sao_id
+        where s.user_id=#{userId}
+    </select>
+
+    <select id="getBySaoId" parameterType="java.lang.Integer" resultType="java.util.List">
+        select sal.*
+        from sal
+        where sal.sao_id=#{saoId}
+    </select>
+
+    <select id="getSaoByOrderNo" parameterType="java.lang.String" resultType="SalesOrder">
+        select *
+        from sao
+        where sao.order_no=#{orderNo}
+    </select>
+
+    <select id="getSalByOrderNo" parameterType="java.lang.String" resultType="SalesOrderLineItem">
+        select *
+        from sal
+        right join sao
+        where sal.sao_id=sao.sao_id
+        where sao.order_no=#{orderNo}
+    </select>
+
+</mapper>

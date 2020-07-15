@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neusoft.bsp.System.mapper.CodeMapper">
+
+    <insert id="insert" parameterType="Code">
+        insert into cdm set code_type = #{code_type}, description = #{description}, type_cd = #{type_cd},
+        code_val = #{code_val}
+    </insert>
+
+    <update id="update" parameterType="Code">
+        update cdm set code_type=#{code_type},`description`=#{description},type_cd=#{type_cd},
+        code_val=#{code_val} where cdm_id = #{cdm_id}
+    </update>
+
+    <delete id="delete" parameterType="Integer">
+        update cdm set sts_cd = 'D' where cdm_id = #{cdm_id}
+    </delete>
+
+    <select id="getById" parameterType="Integer" resultType="Code" >
+        select * from cdm where cdm_id = #{cdm_id}
+    </select>
+
+    <select id="getByCode" parameterType="java.lang.String" resultType="Code" >
+        select * from cdm where type_cd = #{type_cd}
+    </select>
+
+    <select id="getAll" resultType="Code">
+        select * from cdm where STS_CD = 'E'
+    </select>
+
+</mapper>

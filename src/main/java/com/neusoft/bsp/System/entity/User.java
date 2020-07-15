@@ -9,15 +9,15 @@ import com.neusoft.bsp.common.validationGroup.UpdateGroup;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-public class User implements BaseEntity<String> {
-    @NotNull(message = "The userid shouldn't be null",groups = {InsertGroup.class, UpdateGroup.class, SelectGroup.class})  //addUser  user_id shouldn't be null updateuser selectsuer deleteuser
-    String user_id;
+public class User implements BaseEntity<Integer> {
+    int user_id;
     @NotNull(message = "The username shouldn't be null",groups = {InsertGroup.class, UpdateGroup.class})
     String username;
+    @NotNull(message = "The password shouldn't be null",groups = {InsertGroup.class, UpdateGroup.class})
     String password;
     String name;
     String rights;
-    String role_id;
+    int role_id;
     String last_login;
     String ip;
     String status;
@@ -28,11 +28,11 @@ public class User implements BaseEntity<String> {
     String phone;
     int man_buyer_id;
 
-    public String getUser_id() {
+    public int getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(String user_id) {
+    public void setUser_id(int user_id) {
         this.user_id = user_id;
     }
 
@@ -68,11 +68,11 @@ public class User implements BaseEntity<String> {
         this.rights = rights;
     }
 
-    public String getRole_id() {
+    public int getRole_id() {
         return role_id;
     }
 
-    public void setRole_id(String role_id) {
+    public void setRole_id(int role_id) {
         this.role_id = role_id;
     }
 
@@ -149,7 +149,7 @@ public class User implements BaseEntity<String> {
     }
 
     @Override
-    public String getId() {
+    public Integer getId() {
         return this.user_id ;
     }
 

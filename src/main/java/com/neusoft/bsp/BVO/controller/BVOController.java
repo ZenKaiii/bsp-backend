@@ -32,14 +32,14 @@ public class BVOController {
     private BvoWalletService walletService;
 
     @GetMapping("/info/{id}")
-    public ResultVO getInfo(@PathVariable("id") String id){
+    public ResultVO getInfo(@PathVariable("id") int id){
         return ResultVOUtil.success(infoService.findUserVo(id));
     }
 
     @PutMapping("/updateInfo/{id}")
-    public ResultVO updateUserInfo(@PathVariable("id") String id ,@RequestBody BvoUserVO bvoUserVO, BindingResult bindingResult){
+    public ResultVO updateUserInfo(@PathVariable("id") int id ,@RequestBody BvoUserVO bvoUserVO, BindingResult bindingResult){
         infoService.updateUserInfo(id,bvoUserVO);
-        return ResultVOUtil.success(null);
+        ResultVOUtil.success(null);
     }
 
     @GetMapping("/store/{id}")

@@ -1,9 +1,16 @@
 package com.neusoft.bsp.controller;
+/**
+ * @author: 张晗修
+ * @version: V3.0
+ * @date: 2020年7月10日
+ */
 
 import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.PageInfo;
 import com.neusoft.bsp.System.entity.User;
+import com.neusoft.bsp.System.service.MenuRoleService;
 import com.neusoft.bsp.System.service.UserService;
+import com.neusoft.bsp.System.vo.UserLoginJson;
 import com.neusoft.bsp.common.base.BaseController;
 import com.neusoft.bsp.common.base.BaseModel;
 import com.neusoft.bsp.common.base.BaseModelJson;
@@ -13,6 +20,7 @@ import com.neusoft.bsp.common.util.TokenUtil;
 import com.neusoft.bsp.common.validationGroup.DeleteGroup;
 import com.neusoft.bsp.common.validationGroup.InsertGroup;
 import com.neusoft.bsp.common.validationGroup.UpdateGroup;
+import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -28,6 +36,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,10 +48,12 @@ import java.util.Map;
 public class LoginController extends BaseController {
     @Autowired
     UserService userService;
+    @Autowired
+    MenuRoleService menuRoleService;
 
 
     @PostMapping("/checkUser")
-    public BaseModelJson<User> checkUser(@RequestParam String username, @RequestParam String password, HttpServletRequest request) {
+    public UserLoginJson checkUser(@RequestParam String username, @RequestParam String password, HttpServletRequest request) {
 
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken uptoken = new UsernamePasswordToken(username,password);
@@ -68,10 +80,12 @@ public class LoginController extends BaseController {
             subject.login(uptoken);
             User user = (User)subject.getPrincipal();
             user.setIp(ip);
-            //Session session = subject.getSession();
-            BaseModelJson<User> result = new BaseModelJson<User>();
+            user.setLast_login(new Timestamp(System.currentTimeMillis()).toString());
+            userService.update(user);
+            UserLoginJson result = new UserLoginJson();
             result.code = 200;
             result.data = user;
+            result.menu = menuRoleService.getRoleMenus(user.getRole_id());
             //String token = TokenUtil.getToken(username,user.getRole_id(),request.getRemoteAddr());
             result.message = JSONArray.toJSONString(user);
             return result;
@@ -169,17 +183,10 @@ public class LoginController extends BaseController {
     }
 
     @GetMapping("/getRole")
-    public String[] getRole (String role_id){
-        switch(role_id){
-            case "1":
-                return new String[]{"gvo"};
-            case "2":
-                return new String[]{"mvo"};
-            case "3":
-                return new String[]{"bvo"};
-            default:
-                return new String[]{"admin"};
-        }
+    public String[] getRole (int role_id){
+        String role = menuRoleService.getRoleById(role_id);
+        String[] roles = new String[]{role};
+        return roles;
     }
 
 }

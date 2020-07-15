@@ -9,14 +9,16 @@
 <!--    </select>-->
 
     <insert id="insert" parameterType="User">
-        insert into sys_user values(#{user_id},#{username},#{password},#{name},#{rights},#{role_id},#{last_login}
-            ,#{ip},#{status},#{bz},#{skin},#{email},#{number},#{phone},#{man_buyer_id})
+        insert sys_user set username = #{username}, password = #{password},`name` = #{name}, `rights` = #{rights}, role_id = #{role_id},
+                last_login = #{last_login}, ip = #{ip}, status = #{status}, bz = #{bz},
+                skin = #{skin}, email = #{email}, phone = #{phone},
+                man_buyer_id = #{man_buyer_id}
     </insert>
 
     <update id="update" parameterType="User">
         update sys_user set username = #{username},password = #{password},`name` = #{name},rights = #{rights},role_id = #{role_id},
-         last_login= #{last_login} ,ip = #{ip},status = #{status},bz = #{bz},skin = #{skin},email = #{email}
-          ,`number` = #{number},phone = #{phone} ,man_buyer_id = #{man_buyer_id} where user_id = #{user_id}
+         last_login= #{last_login} ,ip = #{ip},status = #{status},bz = #{bz},skin = #{skin},email = #{email},
+        phone = #{phone} ,man_buyer_id = #{man_buyer_id} where user_id = #{user_id}
     </update>
 
     <delete id="delete" parameterType="java.lang.String">
@@ -40,7 +42,5 @@
         select * from sys_user where username = #{username}
     </select>
 
-    <insert id="login_log" parameterType="User">
-    </insert>
 
 </mapper>
