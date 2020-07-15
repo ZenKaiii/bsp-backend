@@ -7,6 +7,7 @@ import com.neusoft.bsp.System.service.MenuRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -46,7 +47,25 @@ public class MenuRoleServiceImpl implements MenuRoleService {
 
     @Override
     public List<Menu> getAllMenus() {
-        return menuRoleMapper.getAllMenus();
+        List<Menu> list = menuRoleMapper.getAllMenus();
+        for(Menu menu: list){
+            int pid= menu.getParent_id();
+            if(pid!=0){
+                for(Menu menu2: list){
+                    if(menu2.getMenu_id()==pid){
+                        menu2.getSubs().add(menu);
+                    }
+                }
+            }
+        }
+        Iterator<Menu> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            Menu menu = iterator.next();
+            if (menu.getParent_id()!=0) {
+                iterator.remove();
+            }
+        }
+        return list;
     }
 
     @Override
@@ -56,7 +75,25 @@ public class MenuRoleServiceImpl implements MenuRoleService {
 
     @Override
     public List<Menu> getRoleMenus(int role_id) {
-        return menuRoleMapper.getRoleMenus(role_id);
+        List<Menu> list = menuRoleMapper.getRoleMenus(role_id);
+        for(Menu menu: list){
+            int pid= menu.getParent_id();
+            if(pid!=0){
+                for(Menu menu2: list){
+                    if(menu2.getMenu_id()==pid){
+                        menu2.getSubs().add(menu);
+                    }
+                }
+            }
+        }
+        Iterator<Menu> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            Menu menu = iterator.next();
+            if (menu.getParent_id()!=0) {
+                iterator.remove();
+            }
+        }
+        return list;
     }
 
     @Override

@@ -10,6 +10,7 @@ import com.github.pagehelper.PageInfo;
 import com.neusoft.bsp.System.entity.User;
 import com.neusoft.bsp.System.service.MenuRoleService;
 import com.neusoft.bsp.System.service.UserService;
+import com.neusoft.bsp.System.vo.UserLoginJson;
 import com.neusoft.bsp.common.base.BaseController;
 import com.neusoft.bsp.common.base.BaseModel;
 import com.neusoft.bsp.common.base.BaseModelJson;
@@ -52,7 +53,7 @@ public class LoginController extends BaseController {
 
 
     @PostMapping("/checkUser")
-    public BaseModelJson<User> checkUser(@RequestParam String username, @RequestParam String password, HttpServletRequest request) {
+    public UserLoginJson checkUser(@RequestParam String username, @RequestParam String password, HttpServletRequest request) {
 
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken uptoken = new UsernamePasswordToken(username,password);
@@ -81,9 +82,10 @@ public class LoginController extends BaseController {
             user.setIp(ip);
             user.setLast_login(new Timestamp(System.currentTimeMillis()).toString());
             userService.update(user);
-            BaseModelJson<User> result = new BaseModelJson<User>();
+            UserLoginJson result = new UserLoginJson();
             result.code = 200;
             result.data = user;
+            result.menu = menuRoleService.getRoleMenus(user.getRole_id());
             //String token = TokenUtil.getToken(username,user.getRole_id(),request.getRemoteAddr());
             result.message = JSONArray.toJSONString(user);
             return result;

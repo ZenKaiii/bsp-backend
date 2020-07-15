@@ -25,10 +25,9 @@ public class RegisterController extends BaseController {
     UserService userService;
     @Autowired
     ManufacturerService manufacturerService;
-//    @Autowired
-//    DropshipperService dropshipperService;
 
-    @PostMapping("/adduser")
+
+    @PostMapping("/bvo")
     public BaseModel addUser(@Validated({InsertGroup.class}) @RequestBody User user) {
         if (userService.getUserByName(user.getUsername()) == null) {
             BaseModel result = new BaseModel();
@@ -45,13 +44,21 @@ public class RegisterController extends BaseController {
         }
     }
 
-    @PostMapping("/mvoregister")
+    @PostMapping("/mvo")
     public BaseModel mvoRegister(@RequestBody User user, @RequestBody Manufacturer manufacturer) {
         if (userService.getUserByName(user.getUsername()) == null) {
             BaseModel result = new BaseModel();
-            int i1 = userService.insert(user);
             Map manmap = new HashMap<String,Object>();
-            int i2 = manufacturerService.insert(manmap);
+            manmap.put("man_id",null);
+            manmap.put("name_en",manufacturer.getName_en());
+            manmap.put("name_cn",manufacturer.getName_cn());
+            manmap.put("gmc_report_type",manufacturer.getGmc_report_type());
+            manmap.put("gmc_report_url",manufacturer.getGmc_report_url());
+            manmap.put("description",manufacturer.getName_en());
+            int i1 = manufacturerService.insert(manmap);
+
+            int i2 = userService.insert(user);
+
             if (i1 == 1&&i2 == 1) {
                 result.code = 200;
                 result.message = "Register success";
@@ -63,6 +70,7 @@ public class RegisterController extends BaseController {
             throw BusinessException.USERNAME_EXISTS;
         }
     }
+
 
 
 }

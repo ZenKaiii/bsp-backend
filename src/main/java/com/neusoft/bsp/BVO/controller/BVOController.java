@@ -19,12 +19,12 @@ public class BVOController {
     private InfoService infoService;
 
     @GetMapping("/info/{id}")
-    public BvoUserVO getInfo(@PathVariable("id") String id){
+    public BvoUserVO getInfo(@PathVariable("id") int id){
         return infoService.findUserVo(id);
     }
 
     @PutMapping("/updateInfo/{id}")
-    public void updateUserInfo(@PathVariable("id") String id ,@RequestBody BvoUserVO bvoUserVO, BindingResult bindingResult){
+    public void updateUserInfo(@PathVariable("id") int id ,@RequestBody BvoUserVO bvoUserVO, BindingResult bindingResult){
         infoService.updateUserInfo(id,bvoUserVO);
     }
 

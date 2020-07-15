@@ -42,7 +42,7 @@ public class SalesOrderController extends BaseController {
             int i=0;
 
             SalesOrder salesOrder=salesOrderLineItemService.getSaoByOrderId(salesOrderVo.getOrderNo());
-            SalesOrderLineItem salesOrderLineItem=salesOrderLineItemService.getSolByOrderId(salesOrderVo.getOrderNo());
+            SalesOrderLineItem salesOrderLineItem=salesOrderLineItemService.getSalByOrderId(salesOrderVo.getOrderNo());
 
             salesOrderVo.changeSalesOrder(salesOrder);
             i=salesOrderService.update(salesOrder);

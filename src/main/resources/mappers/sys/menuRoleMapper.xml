@@ -61,4 +61,5 @@
             insert into role_menu (role_id,menu_id) values (${role},#{menu_id})
         </foreach>
     </update>
+
 </mapper>
