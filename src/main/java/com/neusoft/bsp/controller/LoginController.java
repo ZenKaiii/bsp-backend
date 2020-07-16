@@ -8,7 +8,9 @@ package com.neusoft.bsp.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.PageInfo;
 import com.neusoft.bsp.System.entity.User;
+import com.neusoft.bsp.System.service.MenuRoleService;
 import com.neusoft.bsp.System.service.UserService;
+import com.neusoft.bsp.System.vo.UserLoginJson;
 import com.neusoft.bsp.common.base.BaseController;
 import com.neusoft.bsp.common.base.BaseModel;
 import com.neusoft.bsp.common.base.BaseModelJson;
@@ -46,10 +48,12 @@ import java.util.Map;
 public class LoginController extends BaseController {
     @Autowired
     UserService userService;
+    @Autowired
+    MenuRoleService menuRoleService;
 
 
     @PostMapping("/checkUser")
-    public BaseModelJson<User> checkUser(@RequestParam String username, @RequestParam String password, HttpServletRequest request) {
+    public UserLoginJson checkUser(@RequestParam String username, @RequestParam String password, HttpServletRequest request) {
 
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken uptoken = new UsernamePasswordToken(username,password);
@@ -78,9 +82,10 @@ public class LoginController extends BaseController {
             user.setIp(ip);
             user.setLast_login(new Timestamp(System.currentTimeMillis()).toString());
             userService.update(user);
-            BaseModelJson<User> result = new BaseModelJson<User>();
+            UserLoginJson result = new UserLoginJson();
             result.code = 200;
             result.data = user;
+            result.menu = menuRoleService.getRoleMenus(user.getRole_id());
             //String token = TokenUtil.getToken(username,user.getRole_id(),request.getRemoteAddr());
             result.message = JSONArray.toJSONString(user);
             return result;
@@ -178,17 +183,10 @@ public class LoginController extends BaseController {
     }
 
     @GetMapping("/getRole")
-    public String[] getRole (String role_id){
-        switch(role_id){
-            case "1":
-                return new String[]{"gvo"};
-            case "2":
-                return new String[]{"mvo"};
-            case "3":
-                return new String[]{"bvo"};
-            default:
-                return new String[]{"admin"};
-        }
+    public String[] getRole (int role_id){
+        String role = menuRoleService.getRoleById(role_id);
+        String[] roles = new String[]{role};
+        return roles;
     }
 
 }

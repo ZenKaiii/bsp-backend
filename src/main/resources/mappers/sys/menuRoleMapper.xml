@@ -48,6 +48,10 @@
         select * from sys_role where STS_CD = 'E'
     </select>
 
+    <select id="getRoleById" resultType="java.lang.String">
+        select role_name from sys_role where role_id = #{role_id}
+    </select>
+
     <delete id="deleteRoleMenu" parameterType="Integer">
         delete from role_menu where role_id = #{role_id};
     </delete>
@@ -57,4 +61,5 @@
             insert into role_menu (role_id,menu_id) values (${role},#{menu_id})
         </foreach>
     </update>
+
 </mapper>

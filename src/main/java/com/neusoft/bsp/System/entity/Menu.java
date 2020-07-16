@@ -2,6 +2,9 @@ package com.neusoft.bsp.System.entity;
 
 import com.neusoft.bsp.common.base.BaseEntity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Menu implements BaseEntity<Integer> {
     int menu_id;
     String menu_name;
@@ -10,9 +13,18 @@ public class Menu implements BaseEntity<Integer> {
     int menu_order;
     String menu_icon;
     String menu_type;
+    List<Menu> subs = new ArrayList<Menu>();
 
     public int getMenu_id() {
         return menu_id;
+    }
+
+    public List<Menu> getSubs() {
+        return subs;
+    }
+
+    public void setSubs(List<Menu> subs) {
+        this.subs = subs;
     }
 
     public void setMenu_id(int menu_id) {
@@ -77,6 +89,7 @@ public class Menu implements BaseEntity<Integer> {
                 ", menu_order=" + menu_order +
                 ", menu_icon='" + menu_icon + '\'' +
                 ", menu_type='" + menu_type + '\'' +
+                ", subs=" + subs +
                 '}';
     }
 

@@ -2,6 +2,7 @@ package com.neusoft.bsp.controller;
 
 import com.neusoft.bsp.System.entity.Code;
 import com.neusoft.bsp.System.service.CodeService;
+import com.neusoft.bsp.common.base.BaseController;
 import com.neusoft.bsp.common.base.BaseModel;
 import com.neusoft.bsp.common.base.BaseModelJson;
 import com.neusoft.bsp.common.exception.BusinessException;
@@ -16,7 +17,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping("/cdm")
-public class CodeController {
+public class CodeController extends BaseController {
 
     @Autowired
     CodeService codeService;

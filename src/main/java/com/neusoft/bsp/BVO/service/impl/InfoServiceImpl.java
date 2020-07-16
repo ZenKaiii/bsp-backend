@@ -1,6 +1,9 @@
 package com.neusoft.bsp.BVO.service.impl;
 
+import com.neusoft.bsp.BVO.entity.Dsr;
 import com.neusoft.bsp.BVO.entity.Str;
+import com.neusoft.bsp.BVO.form.StoreForm;
+import com.neusoft.bsp.BVO.repository.DsrRepository;
 import com.neusoft.bsp.BVO.repository.StrRepository;
 import com.neusoft.bsp.BVO.service.InfoService;
 import com.neusoft.bsp.BVO.vo.BvoUserVO;
@@ -18,15 +21,17 @@ public class InfoServiceImpl implements InfoService {
     UserMapper userMapper;
     @Autowired
     StrRepository strRepository;
+    @Autowired
+    DsrRepository dsrRepository;
 
     @Override
-    public BvoUserVO findUserVo(String userId) {
+    public BvoUserVO findUserVo(int userId) {
         User user = userMapper.getById(userId);
         return new BvoUserVO(user.getName(),user.getEmail(),user.getPhone());
     }
 
     @Override
-    public void updateUserInfo(String id,BvoUserVO bvoUserVO) {
+    public void updateUserInfo(int id,BvoUserVO bvoUserVO) {
         User user = userMapper.getById(id);
         user.setName(bvoUserVO.getName());
         user.setEmail(bvoUserVO.getEmail());
@@ -39,7 +44,23 @@ public class InfoServiceImpl implements InfoService {
         return strRepository.getStrByDsrId(id);
     }
 
+    @Override
+    public void addStore(StoreForm storeForm) {
+        Str store = new Str();
+        store.setDsrId(storeForm.getDsrId());
+        store.setPlataeformType(storeForm.getPlataeformType());
+        store.setStoreName(storeForm.getStoreName());
+        strRepository.saveAndFlush(store);
+    }
 
+    @Override
+    public Dsr getDsr() {
+        Dsr dsr = new Dsr();
+        dsr.setName("aaa");
+        dsrRepository.saveAndFlush(dsr);
+        System.out.println(dsr.getDsrId());
+        return dsr;
+    }
 
 
 }

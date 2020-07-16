@@ -8,6 +8,7 @@ import com.neusoft.bsp.System.entity.User;
 import com.neusoft.bsp.System.service.MenuRoleService;
 import com.neusoft.bsp.System.vo.MenuListJson;
 import com.neusoft.bsp.System.vo.RoleListJson;
+import com.neusoft.bsp.common.base.BaseController;
 import com.neusoft.bsp.common.base.BaseModel;
 import com.neusoft.bsp.common.base.BaseModelJsonPaging;
 import com.neusoft.bsp.common.exception.BusinessException;
@@ -23,7 +24,7 @@ import java.util.Map;
 @CrossOrigin
 @RestController
 @RequestMapping("/menurole")
-public class MenuRoleController {
+public class MenuRoleController extends BaseController {
 
     @Autowired
     MenuRoleService menuRoleService;
@@ -35,6 +36,16 @@ public class MenuRoleController {
         result.code = 200;
         result.message = "fetch success";
         result.data = menuRoleService.getAllMenus();
+        return result;
+    }
+
+    @RequiresPermissions("menu:menulist")
+    @GetMapping("/getRoleMenulist")
+    public MenuListJson getRoleMenuList(@RequestParam int role_id) {
+        MenuListJson result = new MenuListJson();
+        result.code = 200;
+        result.message = "fetch success";
+        result.data = menuRoleService.getRoleMenus(role_id);
         return result;
     }
 
@@ -84,6 +95,7 @@ public class MenuRoleController {
         return result;
     }
 
+
     @PostMapping("/addrole")
     public BaseModel addRole(@RequestBody Role role){
         if(menuRoleService.insertRole(role)==1){
@@ -127,7 +139,7 @@ public class MenuRoleController {
         Map rolemenu = new HashMap<String,Object>();
         rolemenu.put("role",role_id);
         rolemenu.put("menu",menu_ids_int);
-        menuRoleService.deleteMenu(role_id);
+        menuRoleService.deletRoleMenu(role_id);
         int res = menuRoleService.setRoleMenu(rolemenu);
         System.out.println(res);
         if(res==1){

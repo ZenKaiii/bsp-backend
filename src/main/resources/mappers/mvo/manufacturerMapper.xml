@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.neusoft.bsp.MVO.mapper.ManufacturerMapper">
 
-    <insert id="insert" parameterType="java.util.Map" statementType="CALLABLE">
+    <insert id="insert" parameterType="java.util.Map" statementType="CALLABLE"  keyProperty="man_id">
         {call insertman(
         #{name_en},#{name_cn},#{gmc_report_type},
         #{gmc_report_url},#{description},

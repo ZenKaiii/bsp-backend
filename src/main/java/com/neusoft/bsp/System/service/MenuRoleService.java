@@ -24,4 +24,6 @@ public interface MenuRoleService{
 
     int setRoleMenu(Map<String,Object> rolemenu);
     int deletRoleMenu(int role_id);
+
+    String getRoleById(int role_id);
 }

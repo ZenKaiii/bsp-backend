@@ -5,7 +5,7 @@ import com.neusoft.bsp.System.entity.User;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserMapper extends BaseMapper<String, User> {
+public interface UserMapper extends BaseMapper<Integer, User> {
     User getUserByName(String username);
 
 }
