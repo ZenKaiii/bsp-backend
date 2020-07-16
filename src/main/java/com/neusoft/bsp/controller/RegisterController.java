@@ -16,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @CrossOrigin
@@ -37,7 +38,8 @@ public class RegisterController extends BaseController {
             Dsr dsr = new Dsr();
             dsr.setName(user.getName());
             dsrRepository.saveAndFlush(dsr);
-            user.setMan_buyer_id(dsr.getDsrId());
+            List<Dsr> dsrs = dsrRepository.findAll();
+            user.setMan_buyer_id(dsrs.get(dsrs.size()-1).getDsrId());
             BaseModel result = new BaseModel();
             int i = userService.insert(user);
             if (i == 1) {

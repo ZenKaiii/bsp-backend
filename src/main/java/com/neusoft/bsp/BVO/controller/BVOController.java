@@ -95,10 +95,12 @@ public class BVOController {
         return ResultVOUtil.success(null);
     }
 
-    @GetMapping("/pay/{buyerId}/{amount}")
-    public ResultVO pay(@PathVariable("buyerId") Integer buyerId, @PathVariable("amount")BigDecimal amount){
-        if (walletService.pay(buyerId,amount))
+    @GetMapping("/pay/{saoId}/{buyerId}/{amount}")
+    public ResultVO pay(@PathVariable("saoId")Integer saoId,@PathVariable("buyerId") Integer buyerId, @PathVariable("amount")BigDecimal amount){
+        if (walletService.pay(buyerId,amount)){
+            orderService.payOrder(saoId);
             return ResultVOUtil.success(null);
+        }
         else
             return ResultVOUtil.error("钱包余额不足，请充钱");
     }
