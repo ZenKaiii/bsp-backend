@@ -4,9 +4,12 @@ import com.neusoft.bsp.BVO.entity.Sal;
 import com.neusoft.bsp.BVO.entity.Sao;
 import com.neusoft.bsp.BVO.entity.Sto;
 import com.neusoft.bsp.BVO.entity.Str;
+import com.neusoft.bsp.BVO.exception.BvoException;
 import com.neusoft.bsp.BVO.repository.*;
+import com.neusoft.bsp.BVO.service.BvoWalletService;
 import com.neusoft.bsp.BVO.service.OrderService;
 import com.neusoft.bsp.BVO.vo.OrderVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class OrderServiceImpl implements OrderService {
 
     @Autowired
@@ -30,7 +34,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderVO getOrderVOBySalAndSao(Sal sal, Sao sao) {
-        return new OrderVO(proRepository.getProByProId(sal.getProId()).getTitle(),sal.getPrice(),sal.getQty(),sal.getSkuNo(),sao.getOrderNo(),sal.getPrice().multiply(new BigDecimal(sal.getQty())),sal.getTrackingNo());
+        return new OrderVO(sao.getSaoId(),proRepository.getProByProId(sal.getProId()).getTitle(),sal.getPrice(),sal.getQty(),sal.getSkuNo(),sao.getOrderNo(),sal.getPrice().multiply(new BigDecimal(sal.getQty())),sal.getTrackingNo());
     }
 
     @Override
@@ -84,4 +88,21 @@ public class OrderServiceImpl implements OrderService {
 
         return orderVOS;
     }
+
+    @Override
+    public void payOrder(Integer saoId) {
+        Sao sao = saoRepository.getSaoBySaoId(saoId);
+        if (sao == null){
+            throw new BvoException("订单不存在");
+        }
+        if (sao.getOrderSts().equals("1")){
+            sao.setOrderSts("2");
+            saoRepository.saveAndFlush(sao);
+        }
+        else {
+            log.error("订单已支付");
+        }
+    }
+
+
 }

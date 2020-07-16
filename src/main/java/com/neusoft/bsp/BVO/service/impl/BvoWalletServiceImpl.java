@@ -46,6 +46,5 @@ public class BvoWalletServiceImpl implements BvoWalletService {
             wafRepository.saveAndFlush(waf);
             return true;
         }
-
     }
 }
