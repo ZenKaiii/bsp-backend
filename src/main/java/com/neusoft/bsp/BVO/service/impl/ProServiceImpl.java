@@ -34,7 +34,7 @@ public class ProServiceImpl implements ProService {
         List<Product> products = new ArrayList<>();
         List<Wit> wits = witRepository.findAllWitByDsrId(dsrId);
         for (Wit wit : wits) {
-            products.add(productMapper.getById(wit.getProId().toString()));
+            products.add(productMapper.getById(wit.getProId()));
         }
         return products;
     }
