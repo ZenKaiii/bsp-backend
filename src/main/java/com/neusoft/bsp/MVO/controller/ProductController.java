@@ -25,15 +25,20 @@ public class ProductController extends BaseController {
 
     @Autowired
     ProductService productService;
+    @Autowired
     ManufacturerService manufacturerService;
+    @Autowired
     ProductDescriptionService productDescriptionService;
+    @Autowired
     PackageInfoService packageInfoService;
+    @Autowired
     ProductCategoryService productCategoryService;
+    @Autowired
     ImgService imgService;
 
     @PostMapping("/alterProduct")
-    public BaseModel alterProduct(@Validated({InsertGroup.class}) @RequestParam String productVoJson, @RequestParam int userId, BindingResult bindingResult) {
-        ProductVo productVo=JSONArray.parseObject(productVoJson,ProductVo.class);
+    public BaseModel alterProduct(@Validated({InsertGroup.class}) @RequestBody ProductVo productVo,BindingResult bindingResult, @RequestParam int userId) {
+//        ProductVo productVo=JSONArray.parseObject(productVoJson,ProductVo.class);
         if (bindingResult.hasErrors()) {
             throw BusinessException.INSERT_FAIL.newInstance(this.getErrorResponse(bindingResult),
                     new Object[]{productVo.toString()});
@@ -46,7 +51,9 @@ public class ProductController extends BaseController {
                 product.setLast_update_by(""+userId);
                 product.setCreation_date(new Date(System.currentTimeMillis()));
                 product.setLast_update_date(new Date(System.currentTimeMillis()));
-                product.setMan_id(manufacturerService.getManIdByUserId(userId));
+                int man_id=manufacturerService.getManIdByUserId(userId);
+                product.setMan_id(man_id);
+                System.out.println("123");
                 i=productService.insert(product);
                 if(i==1){
                     product=productService.getBySku(productVo.getSku_cd());
@@ -95,8 +102,7 @@ public class ProductController extends BaseController {
     }
 
     @PostMapping("/alterProductDetail")
-    public BaseModel alterProductDetail(@Validated({InsertGroup.class}) @RequestParam String productVoJson, @RequestParam int userId, BindingResult bindingResult) {
-        ProductVo productVo=JSONArray.parseObject(productVoJson,ProductVo.class);
+    public BaseModel alterProductDetail(@Validated({InsertGroup.class}) @RequestBody ProductVo productVo, @RequestParam int userId,BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw BusinessException.INSERT_FAIL.newInstance(this.getErrorResponse(bindingResult),
                     new Object[]{productVo.toString()});
@@ -119,6 +125,7 @@ public class ProductController extends BaseController {
             img.setLastUpdateBy("" + userId);
             img.setCreationDate(new Date(System.currentTimeMillis()));
             img.setLastUpdateDate(new Date(System.currentTimeMillis()));
+            img.setName("");
             i = imgService.insert(img);
 
             BaseModel result = new BaseModel();
@@ -132,7 +139,7 @@ public class ProductController extends BaseController {
     }
 
 
-    @PostMapping("/productList")
+    @RequestMapping("/productList")
     public BaseModelJsonPaging<PageInfo<ProductVo>> getProductList(Integer pageNum, Integer pageSize,
                                                                    @RequestParam int userId) {
         BaseModelJsonPaging<PageInfo<ProductVo>> result = new BaseModelJsonPaging();

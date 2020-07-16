@@ -27,6 +27,7 @@ public class BrandController extends BaseController {
 
     @Autowired
     BrandService brandService;
+    @Autowired
     ManufacturerService manufacturerService;
 
     @PostMapping("/alterBrand")

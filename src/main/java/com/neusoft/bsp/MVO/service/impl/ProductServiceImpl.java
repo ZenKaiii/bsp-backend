@@ -20,7 +20,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public int insert(Product product) {
-       return productMapper.insert(product);
+        return productMapper.insert(product);
     }
 
     @Override

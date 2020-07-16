@@ -28,9 +28,9 @@ public class ManufacturerController extends BaseController {
     ManufacturerService manufacturerService;
 
     @PostMapping("/alterManufacturer")
-    public BaseModel alterManufacturer(@Validated({InsertGroup.class}) @RequestParam String manufacturerVoJson,
+    public BaseModel alterManufacturer(@Validated({InsertGroup.class}) @RequestBody ManufacturerVo manufacturerVo,
                                        @RequestParam int userId, BindingResult bindingResult) {
-        ManufacturerVo manufacturerVo = JSONArray.parseObject(manufacturerVoJson, ManufacturerVo.class);
+        //ManufacturerVo manufacturerVo = JSONArray.parseObject(manufacturerVoJson, ManufacturerVo.class);
         if (bindingResult.hasErrors()) {
             throw BusinessException.INSERT_FAIL.newInstance(this.getErrorResponse(bindingResult),
                     new Object[]{manufacturerVo.toString()});

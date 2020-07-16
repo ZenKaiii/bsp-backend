@@ -6,7 +6,7 @@
 
     <insert id="insert" parameterType="java.util.Map" statementType="CALLABLE">
         {call insertman(
-        #{man_id},#{name_en},#{name_cn},#{gmc_report_type},
+        #{name_en},#{name_cn},#{gmc_report_type},
         #{gmc_report_url},#{description},
         #{created_by},#{creation_date},#{last_update_by},
         #{last_update_date},#{call_cnt},#{remark},#{sts_cd},#{user_id}
@@ -15,7 +15,7 @@
 
     <update id="update" parameterType="Manufacturer">
         update man set
-        man_id = #{man_id},`name_en` = #{name_en},name_cn = #{name_cn},
+        `name_en` = #{name_en},name_cn = #{name_cn},
         created_by = #{created_by},creation_date= #{creation_date} ,
         last_update_by = #{last_update_by},last_update_date = #{last_update_date},
         call_cnt = #{call_cnt},remark = #{remark},sts_cd = #{sts_cd}
