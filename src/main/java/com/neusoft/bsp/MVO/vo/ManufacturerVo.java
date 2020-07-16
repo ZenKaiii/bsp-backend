@@ -3,7 +3,6 @@ package com.neusoft.bsp.MVO.vo;
 import com.neusoft.bsp.MVO.entity.Manufacturer;
 
 public class ManufacturerVo {
-    int man_id;
     String name_en;
     String name_cn;
     String gmc_report_type;
@@ -13,21 +12,12 @@ public class ManufacturerVo {
     @Override
     public String toString() {
         return "ManufacturerVo{" +
-                "man_id=" + man_id +
-                ", name_en='" + name_en + '\'' +
+                "name_en='" + name_en + '\'' +
                 ", name_cn='" + name_cn + '\'' +
                 ", gmc_report_type='" + gmc_report_type + '\'' +
                 ", gmc_report_url='" + gmc_report_url + '\'' +
                 ", description='" + description + '\'' +
                 '}';
-    }
-
-    public int getMan_id() {
-        return man_id;
-    }
-
-    public void setMan_id(int man_id) {
-        this.man_id = man_id;
     }
 
     public String getName_en() {

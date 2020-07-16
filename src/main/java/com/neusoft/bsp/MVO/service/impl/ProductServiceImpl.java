@@ -29,18 +29,23 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public int delete(int productid) {
-        return 0;
+    public int delete(int pro_id) {
+        return delete(pro_id);
     }
 
     @Override
-    public Product getById(int productid) {
-        return null;
+    public Product getById(int pro_id) {
+        return productMapper.getById(pro_id);
     }
 
     @Override
     public Product getBySku(String sku) {
         return productMapper.getBySku(sku);
+    }
+
+    @Override
+    public Product getByTitle(Map<String, Object> map) {
+        return productMapper.getByTitle(map);
     }
 
     @Override

@@ -28,11 +28,13 @@
         where pro_id = #{pro_id}
     </update>
 
-    <delete id="delete" parameterType="java.lang.String">
-        delete from pro where pro_id = #{pro_id}
+    <delete id="delete" parameterType="java.lang.Integer">
+        update pro
+        set sts_cd='D'
+        where pro_id = #{pro_id}
     </delete>
 
-    <select id="getById" parameterType="java.lang.String" resultType="Product" >
+    <select id="getById" parameterType="java.lang.Integer" resultType="Product" >
         select * from pro where pro_id = #{pro_id}
     </select>
 
@@ -40,20 +42,27 @@
         select * from pro
     </select>
 
-    <select id="getAllByFilter" parameterType="java.util.Map" resultType="java.util.List">
-        select *
+    <select id="getAllByFilter" parameterType="java.util.Map" resultType="Product">
+        select p.*
         from sys_user s
         join man m
-        where s.man_buyer_id=m.man_id
+        on s.man_buyer_id=m.man_id
         right join pro p
-        where p.man_id=m.man_id
+        on p.man_id=m.man_id
         where s.user_id=#{userId}
-        where p.sts_cd!='D'
+        and p.sts_cd!='D'
     </select>
 
     <select id="getBySku" parameterType="java.lang.String" resultType="Product">
         select *
         from pro
         where pro.sku_cd=#{sku}
+    </select>
+
+    <select id="getByTitle" parameterType="java.util.Map" resultType="Product">
+        select *
+        from pro
+        where pro.title=#{title}
+        and pro.man_id=#{man_id}
     </select>
 </mapper>

@@ -16,13 +16,8 @@ public interface SalesOrderLineItemService {
 
     int delete(int salesOrderLineItemid);
 
-    SalesOrder getSao();
 
-    SalesOrder getSaoByOrderId(String orderNo);
-
-    SalesOrderLineItem getSalByOrderId(String orderNo);
-
-    Product getPro();
+    SalesOrderLineItem getSalBySku(Map map);
 
     SalesOrderLineItem getById(int salesOrderLineItemid);
 

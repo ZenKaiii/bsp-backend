@@ -11,13 +11,10 @@ public class ProductVo {
     String warranty_day;
     Double retail_price;
     String description;
-    String url;
-    String category_name;
     double width;
     double height;
     double length;
     double weight;
-    char sts_cd;
 
     @Override
     public String toString() {
@@ -30,30 +27,11 @@ public class ProductVo {
                 ", warranty_day='" + warranty_day + '\'' +
                 ", retail_price=" + retail_price +
                 ", description='" + description + '\'' +
-                ", url='" + url + '\'' +
-                ", category_name='" + category_name + '\'' +
                 ", width=" + width +
                 ", height=" + height +
                 ", length=" + length +
                 ", weight=" + weight +
-                ", sts_cd=" + sts_cd +
                 '}';
-    }
-
-    public char getSts_cd() {
-        return sts_cd;
-    }
-
-    public void setSts_cd(char sts_cd) {
-        this.sts_cd = sts_cd;
-    }
-
-    public String getCategory_name() {
-        return category_name;
-    }
-
-    public void setCategory_name(String category_name) {
-        this.category_name = category_name;
     }
 
     public String getSku_cd() {
@@ -120,14 +98,6 @@ public class ProductVo {
         this.description = description;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
     public double getWidth() {
         return width;
     }
@@ -162,7 +132,6 @@ public class ProductVo {
 
     public ProductVo getProductVO(Product product){
         ProductVo productVo=new ProductVo();
-        productVo.setSts_cd(product.getSts_cd());
         productVo.setEan(product.getEan());
         productVo.setModel(product.getModel());
         productVo.setSku_cd(product.getSku_cd());
@@ -175,7 +144,6 @@ public class ProductVo {
 
     public Product toProduct(){
         Product product=new Product();
-        product.setSts_cd(this.getSts_cd());
         product.setEan(this.getEan());
         product.setModel(this.getModel());
         product.setSku_cd(this.getSku_cd());
@@ -187,7 +155,6 @@ public class ProductVo {
     }
 
     public Product changeProduct(Product product){
-        product.setSts_cd(this.getSts_cd());
         product.setEan(this.getEan());
         product.setModel(this.getModel());
         product.setSku_cd(this.getSku_cd());
@@ -198,11 +165,6 @@ public class ProductVo {
         return product;
     }
 
-    public ProductCategory toProductCategory(){
-        ProductCategory productCategory=new ProductCategory();
-        productCategory.setCategory_name(this.getCategory_name());
-        return productCategory;
-    }
 
     public ProductDescription toProductDescription(){
         ProductDescription productDescription=new ProductDescription();
@@ -232,12 +194,4 @@ public class ProductVo {
         packageInfo.setWidth(this.getWidth());
         return packageInfo;
     }
-
-    public Img toImg(){
-        Img img=new Img();
-        img.setName("pro");
-        img.setUrl(this.getUrl());
-        return img;
-    }
-
 }

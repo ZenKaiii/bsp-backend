@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neusoft.bsp.MVO.mapper.ImgMapper">
+
+    <resultMap type="Img" id="ImgMap">
+        <result property="imgId" column="IMG_ID" jdbcType="INTEGER"/>
+        <result property="name" column="NAME" jdbcType="VARCHAR"/>
+        <result property="width" column="WIDTH" jdbcType="INTEGER"/>
+        <result property="height" column="HEIGHT" jdbcType="INTEGER"/>
+        <result property="url" column="URL" jdbcType="VARCHAR"/>
+        <result property="typeCd" column="TYPE_CD" jdbcType="VARCHAR"/>
+        <result property="entityId" column="ENTITY_ID" jdbcType="INTEGER"/>
+        <result property="entityCd" column="ENTITY_CD" jdbcType="VARCHAR"/>
+        <result property="seqNo" column="SEQ_NO" jdbcType="INTEGER"/>
+        <result property="createdBy" column="CREATED_BY" jdbcType="VARCHAR"/>
+        <result property="creationDate" column="CREATION_DATE" jdbcType="TIMESTAMP"/>
+        <result property="lastUpdateBy" column="LAST_UPDATE_BY" jdbcType="VARCHAR"/>
+        <result property="lastUpdateDate" column="LAST_UPDATE_DATE" jdbcType="TIMESTAMP"/>
+        <result property="callCnt" column="CALL_CNT" jdbcType="INTEGER"/>
+        <result property="remark" column="REMARK" jdbcType="VARCHAR"/>
+        <result property="stsCd" column="STS_CD" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="getById" resultMap="ImgMap">
+        select
+          IMG_ID, NAME, WIDTH, HEIGHT, URL, TYPE_CD, ENTITY_ID, ENTITY_CD, SEQ_NO, CREATED_BY, CREATION_DATE, LAST_UPDATE_BY, LAST_UPDATE_DATE, CALL_CNT, REMARK, STS_CD
+        from bsp.img
+        where IMG_ID = #{imgId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="getAllByLimit" resultMap="ImgMap">
+        select
+          IMG_ID, NAME, WIDTH, HEIGHT, URL, TYPE_CD, ENTITY_ID, ENTITY_CD, SEQ_NO, CREATED_BY, CREATION_DATE, LAST_UPDATE_BY, LAST_UPDATE_DATE, CALL_CNT, REMARK, STS_CD
+        from bsp.img
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="getAll" resultMap="ImgMap">
+        select
+        IMG_ID, NAME, WIDTH, HEIGHT, URL, TYPE_CD, ENTITY_ID, ENTITY_CD, SEQ_NO, CREATED_BY, CREATION_DATE,
+        LAST_UPDATE_BY, LAST_UPDATE_DATE, CALL_CNT, REMARK, STS_CD
+        from bsp.img
+        <where>
+            <if test="imgId != null">
+                and IMG_ID = #{imgId}
+            </if>
+            <if test="name != null and name != ''">
+                and NAME = #{name}
+            </if>
+            <if test="width != null">
+                and WIDTH = #{width}
+            </if>
+            <if test="height != null">
+                and HEIGHT = #{height}
+            </if>
+            <if test="url != null and url != ''">
+                and URL = #{url}
+            </if>
+            <if test="typeCd != null and typeCd != ''">
+                and TYPE_CD = #{typeCd}
+            </if>
+            <if test="entityId != null">
+                and ENTITY_ID = #{entityId}
+            </if>
+            <if test="entityCd != null and entityCd != ''">
+                and ENTITY_CD = #{entityCd}
+            </if>
+            <if test="seqNo != null">
+                and SEQ_NO = #{seqNo}
+            </if>
+            <if test="createdBy != null and createdBy != ''">
+                and CREATED_BY = #{createdBy}
+            </if>
+            <if test="creationDate != null">
+                and CREATION_DATE = #{creationDate}
+            </if>
+            <if test="lastUpdateBy != null and lastUpdateBy != ''">
+                and LAST_UPDATE_BY = #{lastUpdateBy}
+            </if>
+            <if test="lastUpdateDate != null">
+                and LAST_UPDATE_DATE = #{lastUpdateDate}
+            </if>
+            <if test="callCnt != null">
+                and CALL_CNT = #{callCnt}
+            </if>
+            <if test="remark != null and remark != ''">
+                and REMARK = #{remark}
+            </if>
+            <if test="stsCd != null and stsCd != ''">
+                and STS_CD = #{stsCd}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="imgId" useGeneratedKeys="true">
+        insert into bsp.img(NAME, WIDTH, HEIGHT, URL, TYPE_CD, ENTITY_ID, ENTITY_CD, SEQ_NO, CREATED_BY, CREATION_DATE, LAST_UPDATE_BY, LAST_UPDATE_DATE, CALL_CNT, REMARK, STS_CD)
+        values (#{name}, #{width}, #{height}, #{url}, #{typeCd}, #{entityId}, #{entityCd}, #{seqNo}, #{createdBy}, #{creationDate}, #{lastUpdateBy}, #{lastUpdateDate}, #{callCnt}, #{remark}, #{stsCd})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update bsp.img
+        <set>
+            <if test="name != null and name != ''">
+                NAME = #{name},
+            </if>
+            <if test="width != null">
+                WIDTH = #{width},
+            </if>
+            <if test="height != null">
+                HEIGHT = #{height},
+            </if>
+            <if test="url != null and url != ''">
+                URL = #{url},
+            </if>
+            <if test="typeCd != null and typeCd != ''">
+                TYPE_CD = #{typeCd},
+            </if>
+            <if test="entityId != null">
+                ENTITY_ID = #{entityId},
+            </if>
+            <if test="entityCd != null and entityCd != ''">
+                ENTITY_CD = #{entityCd},
+            </if>
+            <if test="seqNo != null">
+                SEQ_NO = #{seqNo},
+            </if>
+            <if test="createdBy != null and createdBy != ''">
+                CREATED_BY = #{createdBy},
+            </if>
+            <if test="creationDate != null">
+                CREATION_DATE = #{creationDate},
+            </if>
+            <if test="lastUpdateBy != null and lastUpdateBy != ''">
+                LAST_UPDATE_BY = #{lastUpdateBy},
+            </if>
+            <if test="lastUpdateDate != null">
+                LAST_UPDATE_DATE = #{lastUpdateDate},
+            </if>
+            <if test="callCnt != null">
+                CALL_CNT = #{callCnt},
+            </if>
+            <if test="remark != null and remark != ''">
+                REMARK = #{remark},
+            </if>
+            <if test="stsCd != null and stsCd != ''">
+                STS_CD = #{stsCd},
+            </if>
+        </set>
+        where IMG_ID = #{imgId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="delete">
+        delete from bsp.img where IMG_ID = #{imgId}
+    </delete>
+
+    <select id="getByProId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select *
+        from img
+        where entity_id=#{proId}
+        and name="pro"
+    </select>
+
+    <select id="getImgByProId" parameterType="java.lang.Integer" resultMap="ImgMap">
+        select *
+        from img
+        where entity_id=#{proId}
+        and name="pro"
+    </select>
+
+</mapper>

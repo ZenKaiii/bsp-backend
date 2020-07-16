@@ -5,11 +5,13 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.neusoft.bsp.MVO.entity.*;
 import com.neusoft.bsp.MVO.service.*;
+import com.neusoft.bsp.MVO.vo.ProductDetailVo;
 import com.neusoft.bsp.MVO.vo.ProductVo;
 import com.neusoft.bsp.common.base.BaseController;
 import com.neusoft.bsp.common.base.BaseModel;
 import com.neusoft.bsp.common.base.BaseModelJsonPaging;
 import com.neusoft.bsp.common.exception.BusinessException;
+import com.neusoft.bsp.common.validationGroup.DeleteGroup;
 import com.neusoft.bsp.common.validationGroup.InsertGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -102,31 +104,50 @@ public class ProductController extends BaseController {
     }
 
     @PostMapping("/alterProductDetail")
-    public BaseModel alterProductDetail(@Validated({InsertGroup.class}) @RequestBody ProductVo productVo, @RequestParam int userId,BindingResult bindingResult) {
+    public BaseModel alterProductDetail(@Validated({InsertGroup.class}) @RequestBody ProductDetailVo productDetailVo, @RequestParam int userId, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw BusinessException.INSERT_FAIL.newInstance(this.getErrorResponse(bindingResult),
-                    new Object[]{productVo.toString()});
+                    new Object[]{productDetailVo.toString()});
         } else {
-            Product product = productService.getBySku(productVo.getSku_cd());
-            product.setTitle(productVo.getTitle());
+            int man_id=manufacturerService.getManIdByUserId(userId);
+            Map<String,Object> map=new HashMap<>();
+            map.put("man_id",man_id);
+            map.put("title",productDetailVo.getTitle());
+            Product product=productService.getByTitle(map);
+            product.setSts_cd(productDetailVo.getSts_cd());
             int i = 0;
 
-            ProductCategory productCategory = productVo.toProductCategory();
-            productCategory.setPro_id(product.getPro_id());
-            productCategory.setCreated_by("" + userId);
-            productCategory.setLast_update_by("" + userId);
-            productCategory.setCreation_date(new Date(System.currentTimeMillis()));
-            productCategory.setLast_update_date(new Date(System.currentTimeMillis()));
-            i = productCategoryService.insert(productCategory);
+            productService.update(product);
 
-            Img img = productVo.toImg();
-            img.setEntityId(product.getPro_id());
-            img.setCreatedBy("" + userId);
-            img.setLastUpdateBy("" + userId);
-            img.setCreationDate(new Date(System.currentTimeMillis()));
-            img.setLastUpdateDate(new Date(System.currentTimeMillis()));
-            img.setName("");
-            i = imgService.insert(img);
+            if(productCategoryService.getPrcByProId(product.getPro_id())==null) {
+                ProductCategory productCategory = productDetailVo.toProductCategory();
+                productCategory.setProId(product.getPro_id());
+                productCategory.setCreatedBy("" + userId);
+                productCategory.setLastUpdateBy("" + userId);
+                productCategory.setCreationDate(new Date(System.currentTimeMillis()));
+                productCategory.setLastUpdateDate(new Date(System.currentTimeMillis()));
+                i = productCategoryService.insert(productCategory);
+            }
+            else{
+                ProductCategory productCategory=productCategoryService.getPrcByProId(product.getPro_id());
+                productDetailVo.changeProductCategory(productCategory);
+                i=productCategoryService.update(productCategory);
+            }
+            if(imgService.getImgByProId(product.getPro_id())==null) {
+                Img img = productDetailVo.toImg();
+                img.setEntityId(product.getPro_id());
+                img.setCreatedBy("" + userId);
+                img.setLastUpdateBy("" + userId);
+                img.setCreationDate(new Date(System.currentTimeMillis()));
+                img.setLastUpdateDate(new Date(System.currentTimeMillis()));
+                img.setName("pro");
+                i = imgService.insert(img);
+            }
+            else{
+                Img img=imgService.getImgByProId(product.getPro_id());
+                productDetailVo.changeImg(img);
+                i=imgService.update(img);
+            }
 
             BaseModel result = new BaseModel();
             if(i==1){
@@ -166,13 +187,48 @@ public class ProductController extends BaseController {
         return result;
     }
 
-    /*@PostMapping("/deleteProduct")
-    public BaseModel deleteProduct(@Validated({DeleteGroup.class}) @RequestBody Product product, BindingResult bindingResult) throws Exception {
+    @RequestMapping("/productDetailList")
+    public BaseModelJsonPaging<PageInfo<ProductDetailVo>> getProductDetailList(Integer pageNum, Integer pageSize,
+                                                                   @RequestParam int userId) {
+        BaseModelJsonPaging<PageInfo<ProductDetailVo>> result = new BaseModelJsonPaging();
+        Map<String,Object> map=new HashMap<>();
+        map.put("userId",userId);
+        if(pageNum == null){
+            pageNum = 1;
+        }
+        if(pageSize == null){
+            pageSize = 10;
+        }
+        List<Product> productList=productService.getAllByFilter(map);
+        List<ProductDetailVo> productDetailVoList=new ArrayList<>();
+        for(Product product:productList){
+            ProductDetailVo productDetailVo=new ProductDetailVo();
+            int pro_id=product.getPro_id();
+            ProductCategory productCategory=productCategoryService.getPrcByProId(pro_id);
+            productDetailVo.setCategory_name(productCategoryService.getPrcByProId(product.getPro_id()).getCategoryName());
+            productDetailVo.setSts_cd(product.getSts_cd());
+            productDetailVo.setTitle(product.getTitle());
+            productDetailVo.setUrl(imgService.getImgByProId(product.getPro_id()).getUrl());
+            productDetailVoList.add(productDetailVo);
+        }
+
+        PageHelper.startPage(pageNum,pageSize,true);
+        PageInfo<ProductDetailVo> productDetailVoPage=new PageInfo(productDetailVoList);
+        result.code = 200;
+        result.data = productDetailVoPage;
+        result.message= JSONArray.toJSONString(productDetailVoPage);
+        return result;
+    }
+
+   /* @PostMapping("/deleteProduct")
+    public BaseModel deleteProduct(@Validated({DeleteGroup.class}) @RequestBody ProductDetailVo productVo, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             throw BusinessException.USERID_NULL_ERROR.newInstance(this.getErrorResponse(bindingResult),
-                    new Object[]{product.toString()});
+                    new Object[]{productVo.toString()});
         } else {
             BaseModel result = new BaseModel();
+
+            Product product=productService.getByTitle(productVo.getTitle());
             int i = productService.delete(product.getPro_id());
             if (i == 1) {
                 result.code = 200;

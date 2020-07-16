@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProductCategoryMapper extends BaseMapper<Integer, ProductCategory> {
-    ProductCategory getByProId(int proId);
+    int getByProId(int proId);
 
+    ProductCategory getPrcByProId(int proId);
 }

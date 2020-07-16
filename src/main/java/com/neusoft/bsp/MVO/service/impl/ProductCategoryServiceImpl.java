@@ -34,6 +34,16 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     }
 
     @Override
+    public int getByProId(int proId) {
+        return productCategoryMapper.getByProId(proId);
+    }
+
+    @Override
+    public ProductCategory getPrcByProId(int proId) {
+        return productCategoryMapper.getPrcByProId(proId);
+    }
+
+    @Override
     public ProductCategory getById(int productCategoryid) {
         return null;
     }

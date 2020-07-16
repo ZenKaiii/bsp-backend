@@ -37,6 +37,11 @@ public class SalesOrderServiceImpl implements SalesOrderService {
     }
 
     @Override
+    public SalesOrder getSaoByOrderNo(String orderNo) {
+        return salesOrderMapper.getSaoByOrderNo(orderNo);
+    }
+
+    @Override
     public List<SalesOrder> getByUserId(int userId) {
         return salesOrderMapper.getByUserId(userId);
     }

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neusoft.bsp.MVO.mapper.ProductCategoryMapper">
+
+    <resultMap type="ProductCategory" id="PrcMap">
+        <result property="prcId" column="PRC_ID" jdbcType="INTEGER"/>
+        <result property="proId" column="PRO_ID" jdbcType="INTEGER"/>
+        <result property="categoryId" column="CATEGORY_ID" jdbcType="VARCHAR"/>
+        <result property="categoryName" column="CATEGORY_NAME" jdbcType="VARCHAR"/>
+        <result property="categoryPath" column="CATEGORY_PATH" jdbcType="VARCHAR"/>
+        <result property="createdBy" column="CREATED_BY" jdbcType="VARCHAR"/>
+        <result property="creationDate" column="CREATION_DATE" jdbcType="TIMESTAMP"/>
+        <result property="lastUpdateBy" column="LAST_UPDATE_BY" jdbcType="VARCHAR"/>
+        <result property="lastUpdateDate" column="LAST_UPDATE_DATE" jdbcType="TIMESTAMP"/>
+        <result property="callCnt" column="CALL_CNT" jdbcType="INTEGER"/>
+        <result property="remark" column="REMARK" jdbcType="VARCHAR"/>
+        <result property="stsCd" column="STS_CD" jdbcType="VARCHAR"/>
+        <result property="plateformType" column="PLATEFORM_TYPE" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="getById" resultMap="PrcMap">
+        select
+          PRC_ID, PRO_ID, CATEGORY_ID, CATEGORY_NAME, CATEGORY_PATH, CREATED_BY, CREATION_DATE, LAST_UPDATE_BY, LAST_UPDATE_DATE, CALL_CNT, REMARK, STS_CD, PLATEFORM_TYPE
+        from bsp.prc
+        where PRC_ID = #{prcId}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="getAll" resultMap="PrcMap">
+        select
+        PRC_ID, PRO_ID, CATEGORY_ID, CATEGORY_NAME, CATEGORY_PATH, CREATED_BY, CREATION_DATE, LAST_UPDATE_BY,
+        LAST_UPDATE_DATE, CALL_CNT, REMARK, STS_CD, PLATEFORM_TYPE
+        from bsp.prc
+        <where>
+            <if test="prcId != null">
+                and PRC_ID = #{prcId}
+            </if>
+            <if test="proId != null">
+                and PRO_ID = #{proId}
+            </if>
+            <if test="categoryId != null and categoryId != ''">
+                and CATEGORY_ID = #{categoryId}
+            </if>
+            <if test="categoryName != null and categoryName != ''">
+                and CATEGORY_NAME = #{categoryName}
+            </if>
+            <if test="categoryPath != null and categoryPath != ''">
+                and CATEGORY_PATH = #{categoryPath}
+            </if>
+            <if test="createdBy != null and createdBy != ''">
+                and CREATED_BY = #{createdBy}
+            </if>
+            <if test="creationDate != null">
+                and CREATION_DATE = #{creationDate}
+            </if>
+            <if test="lastUpdateBy != null and lastUpdateBy != ''">
+                and LAST_UPDATE_BY = #{lastUpdateBy}
+            </if>
+            <if test="lastUpdateDate != null">
+                and LAST_UPDATE_DATE = #{lastUpdateDate}
+            </if>
+            <if test="callCnt != null">
+                and CALL_CNT = #{callCnt}
+            </if>
+            <if test="remark != null and remark != ''">
+                and REMARK = #{remark}
+            </if>
+            <if test="stsCd != null and stsCd != ''">
+                and STS_CD = #{stsCd}
+            </if>
+            <if test="plateformType != null and plateformType != ''">
+                and PLATEFORM_TYPE = #{plateformType}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="prcId" useGeneratedKeys="true">
+        insert into bsp.prc(PRO_ID, CATEGORY_ID, CATEGORY_NAME, CATEGORY_PATH, CREATED_BY, CREATION_DATE, LAST_UPDATE_BY, LAST_UPDATE_DATE, CALL_CNT, REMARK, STS_CD, PLATEFORM_TYPE)
+        values (#{proId}, #{categoryId}, #{categoryName}, #{categoryPath}, #{createdBy}, #{creationDate}, #{lastUpdateBy}, #{lastUpdateDate}, #{callCnt}, #{remark}, #{stsCd}, #{plateformType})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update bsp.prc
+        <set>
+            <if test="proId != null">
+                PRO_ID = #{proId},
+            </if>
+            <if test="categoryId != null and categoryId != ''">
+                CATEGORY_ID = #{categoryId},
+            </if>
+            <if test="categoryName != null and categoryName != ''">
+                CATEGORY_NAME = #{categoryName},
+            </if>
+            <if test="categoryPath != null and categoryPath != ''">
+                CATEGORY_PATH = #{categoryPath},
+            </if>
+            <if test="createdBy != null and createdBy != ''">
+                CREATED_BY = #{createdBy},
+            </if>
+            <if test="creationDate != null">
+                CREATION_DATE = #{creationDate},
+            </if>
+            <if test="lastUpdateBy != null and lastUpdateBy != ''">
+                LAST_UPDATE_BY = #{lastUpdateBy},
+            </if>
+            <if test="lastUpdateDate != null">
+                LAST_UPDATE_DATE = #{lastUpdateDate},
+            </if>
+            <if test="callCnt != null">
+                CALL_CNT = #{callCnt},
+            </if>
+            <if test="remark != null and remark != ''">
+                REMARK = #{remark},
+            </if>
+            <if test="stsCd != null and stsCd != ''">
+                STS_CD = #{stsCd},
+            </if>
+            <if test="plateformType != null and plateformType != ''">
+                PLATEFORM_TYPE = #{plateformType},
+            </if>
+        </set>
+        where PRC_ID = #{prcId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="delete">
+        delete from bsp.prc where PRC_ID = #{prcId}
+    </delete>
+
+    <select id="getByProId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select *
+        from prc
+        where pro_id=#{proId}
+    </select>
+
+    <select id="getPrcByProId" parameterType="java.lang.Integer" resultMap="PrcMap">
+        select *
+        from prc
+        where prc.pro_id=#{proId}
+    </select>
+
+</mapper>

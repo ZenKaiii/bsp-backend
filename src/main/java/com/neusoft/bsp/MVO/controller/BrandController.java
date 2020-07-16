@@ -31,14 +31,17 @@ public class BrandController extends BaseController {
     ManufacturerService manufacturerService;
 
     @PostMapping("/alterBrand")
-    public BaseModel alterBrand(@Validated({InsertGroup.class}) @RequestParam String brandVoJson,
+    public BaseModel alterBrand(@Validated({InsertGroup.class}) @RequestBody BrandVo brandVo,
                                 @RequestParam int userId, BindingResult bindingResult) {
-        BrandVo brandVo= JSONArray.parseObject(brandVoJson,BrandVo.class);
+//        BrandVo brandVo= JSONArray.parseObject(brandVoJson,BrandVo.class);
         if (bindingResult.hasErrors()) {
             throw BusinessException.INSERT_FAIL.newInstance(this.getErrorResponse(bindingResult),
                     new Object[]{brandVo.toString()});
         } else {
-            Brand brand=brandService.getByNameEn(brandVo.getName_en());
+            Map<String,Object> map=new HashMap<>();
+            map.put("name_en",brandVo.getName_en());
+            map.put("userId",userId);
+            Brand brand=brandService.getByNameEn(map);
             int i=0;
             if(brand==null){
                 brand=brandVo.toBrand();
@@ -91,14 +94,17 @@ public class BrandController extends BaseController {
     }
 
     @PostMapping("/deleteBrand")
-    public BaseModel deleteBrand(@Validated({DeleteGroup.class}) @RequestParam String brandVoJson, BindingResult bindingResult) throws Exception {
-        Brand brandVo=JSONArray.parseObject(brandVoJson,Brand.class);
+    public BaseModel deleteBrand(@Validated({DeleteGroup.class}) @RequestBody BrandVo brandVo, @RequestParam int userId, BindingResult bindingResult) throws Exception {
+//        Brand brandVo=JSONArray.parseObject(brandVoJson,Brand.class);
         if (bindingResult.hasErrors()) {
             throw BusinessException.USERID_NULL_ERROR.newInstance(this.getErrorResponse(bindingResult),
                     new Object[]{brandVo.toString()});
         } else {
             BaseModel result = new BaseModel();
-            Brand brand=brandService.getByNameEn(brandVo.getName_en());
+            Map<String,Object> map=new HashMap<>();
+            map.put("name_en",brandVo.getName_en());
+            map.put("userId",userId);
+            Brand brand=brandService.getByNameEn(map);
             int i = brandService.delete(brand.getBrd_id());
             if (i == 1) {
                 result.code = 200;

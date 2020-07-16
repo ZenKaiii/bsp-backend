@@ -12,11 +12,13 @@ public interface ProductService {
 
     int update(Product product);
 
-    int delete(int productid);
+    int delete(int pro_id);
 
-    Product getById(int productid);
+    Product getById(int pro_id);
 
     Product getBySku(String sku);
+
+    Product getByTitle(Map<String,Object> map);
 
     List<Product> getAll();
 

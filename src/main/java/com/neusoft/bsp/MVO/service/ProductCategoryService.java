@@ -14,6 +14,10 @@ public interface ProductCategoryService {
 
     int delete(int productCategoryid);
 
+    int getByProId(int proId);
+
+    ProductCategory getPrcByProId(int proId);
+
     ProductCategory getById(int productCategoryid);
 
     List<ProductCategory> getAll();

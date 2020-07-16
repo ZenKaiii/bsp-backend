@@ -7,6 +7,7 @@ import com.neusoft.bsp.common.base.BaseMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface SalesOrderLineItemMapper extends BaseMapper<Integer, SalesOrderLineItem> {
@@ -14,11 +15,5 @@ public interface SalesOrderLineItemMapper extends BaseMapper<Integer, SalesOrder
 
     List<SalesOrderLineItem> getByUserId(int userId);
 
-    SalesOrder getSao();
-
-    Product getPro();
-
-    SalesOrder getSaoByOrder(String orderNo);
-
-    SalesOrderLineItem getSalByOrder(String orderNo);
+    SalesOrderLineItem getSalBySku(Map map);
 }

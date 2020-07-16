@@ -16,6 +16,10 @@ public interface ImgService {
 
     Img getById(int imgid);
 
+    int getByProId(int proId);
+
+    Img getImgByProId(int proId);
+
     List<Img> getAll();
 
     List<Img> getAllByFilter(Map<String, Object> map);

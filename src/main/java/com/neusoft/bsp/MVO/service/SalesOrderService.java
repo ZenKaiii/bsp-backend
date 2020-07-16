@@ -16,6 +16,8 @@ public interface SalesOrderService {
 
     SalesOrder getById(int salesOrderid);
 
+    SalesOrder getSaoByOrderNo(String orderNo);
+
     List<SalesOrder> getByUserId(int userId);
 
     List<SalesOrder> getAll();

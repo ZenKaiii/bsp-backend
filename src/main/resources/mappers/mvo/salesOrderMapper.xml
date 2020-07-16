@@ -251,7 +251,7 @@
         delete from bsp.sao where SAO_ID = #{saoId}
     </delete>
 
-    <select id="getByUserId" parameterType="java.lang.Integer" resultType="java.util.List">
+    <select id="getByUserId" parameterType="java.lang.Integer" resultMap="SaoMap">
         select sao.*
         from sys_user s
         join man m
@@ -259,6 +259,12 @@
         join sao
         where m.man_id=sao.man_id
         where s.user_id=#{userId}
+    </select>
+
+    <select id="getSaoByOrderNo" parameterType="java.lang.String" resultMap="SaoMap">
+        select *
+        from sao
+        where sao.order_no=#{orderNo}
     </select>
 
 </mapper>

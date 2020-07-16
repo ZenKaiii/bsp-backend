@@ -1,3 +1,4 @@
+/*
 package com.neusoft.bsp.MVO.controller;
 
 import com.github.pagehelper.PageInfo;
@@ -64,7 +65,7 @@ public class ProductCategoryController extends BaseController {
                     new Object[]{productCategory.toString()});
         } else {
             BaseModel result = new BaseModel();
-            int i = productCategoryService.delete(productCategory.getPrc_id());
+            int i = productCategoryService.delete(productCategory.getPrcId());
             if (i == 1) {
                 result.code = 200;
                 return result;
@@ -93,3 +94,4 @@ public class ProductCategoryController extends BaseController {
 
 
 }
+*/

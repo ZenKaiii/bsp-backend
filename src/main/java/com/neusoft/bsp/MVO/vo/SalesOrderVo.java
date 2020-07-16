@@ -18,8 +18,6 @@ public class SalesOrderVo {
     String trackingNo;
     String orderSts;
 
-    @Autowired
-    SalesOrderLineItemService salesOrderLineItemService;
 
     @Override
     public String toString() {
@@ -120,19 +118,5 @@ public class SalesOrderVo {
         return salesOrder;
     }
 
-    public SalesOrderVo getSalesOrderVo(SalesOrderLineItem salesOrderLineItem){
-        SalesOrder salesOrder=salesOrderLineItemService.getSao();
-        Product product=salesOrderLineItemService.getPro();
-        SalesOrderVo salesOrderVo=new SalesOrderVo();
-        salesOrderVo.setTitle(product.getTitle());
-        salesOrderVo.setCreatedTime(salesOrder.getCreationDate());
-        salesOrderVo.setOrderSts(salesOrder.getOrderSts());
-        salesOrderVo.setOrderNo(salesOrder.getOrderNo());
-        salesOrderVo.setQty(salesOrderLineItem.getQty());
-        salesOrderVo.setSku(product.getSku_cd());
-        salesOrderVo.setTrackingNo(salesOrderLineItem.getTrackingNo());
-        salesOrderVo.setPrice(product.getMininum_retail_price());
-        return salesOrderVo;
-    }
 
 }

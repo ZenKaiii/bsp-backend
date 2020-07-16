@@ -10,6 +10,7 @@ import com.neusoft.bsp.MVO.service.SalesOrderLineItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,25 +34,13 @@ public class SalesOrderLineItemServiceImpl implements SalesOrderLineItemService 
         return salesOrderLineItemMapper.delete(salesOrderLineItemid);
     }
 
-    @Override
-    public SalesOrder getSao() {
-        return salesOrderLineItemMapper.getSao();
-    }
+
 
     @Override
-    public SalesOrder getSaoByOrderId(String orderNo) {
-        return salesOrderLineItemMapper.getSaoByOrder(orderNo);
+    public SalesOrderLineItem getSalBySku(Map map) {
+        return salesOrderLineItemMapper.getSalBySku(map);
     }
 
-    @Override
-    public SalesOrderLineItem getSalByOrderId(String orderNo) {
-        return salesOrderLineItemMapper.getSalByOrder(orderNo);
-    }
-
-    @Override
-    public Product getPro() {
-        return salesOrderLineItemMapper.getPro();
-    }
 
     @Override
     public SalesOrderLineItem getById(int salesOrderLineItemid) {

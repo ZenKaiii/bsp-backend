@@ -3,8 +3,10 @@ package com.neusoft.bsp.MVO.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.neusoft.bsp.MVO.entity.Product;
 import com.neusoft.bsp.MVO.entity.SalesOrder;
 import com.neusoft.bsp.MVO.entity.SalesOrderLineItem;
+import com.neusoft.bsp.MVO.service.ProductService;
 import com.neusoft.bsp.MVO.service.SalesOrderLineItemService;
 import com.neusoft.bsp.MVO.service.SalesOrderService;
 import com.neusoft.bsp.MVO.vo.SalesOrderVo;
@@ -30,19 +32,25 @@ public class SalesOrderController extends BaseController {
 
     @Autowired
     SalesOrderService salesOrderService;
+    @Autowired
     SalesOrderLineItemService salesOrderLineItemService;
+    @Autowired
+    ProductService productService;
 
     @PostMapping("/alterSalesOrder")
-    public BaseModel alterSalesOrder(@Validated({InsertGroup.class}) @RequestParam String salesOrderVoJson, @RequestParam int userId, BindingResult bindingResult) {
-        SalesOrderVo salesOrderVo=JSONArray.parseObject(salesOrderVoJson, SalesOrderVo.class);
+    public BaseModel alterSalesOrder(@Validated({InsertGroup.class}) @RequestBody SalesOrderVo salesOrderVo, @RequestParam int userId, BindingResult bindingResult) {
+//        SalesOrderVo salesOrderVo=JSONArray.parseObject(salesOrderVoJson, SalesOrderVo.class);
         if (bindingResult.hasErrors()) {
             throw BusinessException.INSERT_FAIL.newInstance(this.getErrorResponse(bindingResult),
                     new Object[]{salesOrderVo.toString()});
         } else {
             int i=0;
+            Map<String,Object> map=new HashMap<>();
+            map.put("sku",salesOrderVo.getSku());
+            map.put("orderNo",salesOrderVo.getOrderNo());
 
-            SalesOrder salesOrder=salesOrderLineItemService.getSaoByOrderId(salesOrderVo.getOrderNo());
-            SalesOrderLineItem salesOrderLineItem=salesOrderLineItemService.getSalByOrderId(salesOrderVo.getOrderNo());
+            SalesOrder salesOrder=salesOrderService.getSaoByOrderNo(salesOrderVo.getOrderNo());
+            SalesOrderLineItem salesOrderLineItem=salesOrderLineItemService.getSalBySku(map);
 
             salesOrderVo.changeSalesOrder(salesOrder);
             i=salesOrderService.update(salesOrder);
@@ -103,8 +111,8 @@ public class SalesOrderController extends BaseController {
                                                                          @RequestParam int userId) {
         List<SalesOrderLineItem> salesOrderLineItems = salesOrderLineItemService.getByUserId(userId);
         BaseModelJsonPaging<PageInfo<SalesOrderVo>> result = new BaseModelJsonPaging();
-        Map<String,Object> map=new HashMap<>();
-        map.put("userId",userId);
+//        Map<String,Object> map=new HashMap<>();
+//        map.put("userId",userId);
         if(pageNum == null){
             pageNum = 1;
         }
@@ -113,8 +121,8 @@ public class SalesOrderController extends BaseController {
         }
         List<SalesOrderVo> salesOrderVoList=new ArrayList<>();
         for(SalesOrderLineItem salesOrderLineItem:salesOrderLineItems){
-            SalesOrderVo salesOrderVo=new SalesOrderVo();
-            salesOrderVoList.add(salesOrderVo.getSalesOrderVo(salesOrderLineItem));
+//            SalesOrderVo salesOrderVo=new SalesOrderVo();
+            salesOrderVoList.add(this.getSalesOrderVo(salesOrderLineItem));
         }
 
         PageHelper.startPage(pageNum,pageSize,true);
@@ -123,6 +131,21 @@ public class SalesOrderController extends BaseController {
         result.data = salesOrderVoPage;
         result.message= JSONArray.toJSONString(salesOrderVoPage);
         return result;
+    }
+
+    public SalesOrderVo getSalesOrderVo(SalesOrderLineItem salesOrderLineItem){
+        SalesOrder salesOrder=salesOrderService.getById(salesOrderLineItem.getSaoId());
+        Product product=productService.getById(salesOrderLineItem.getProId());
+        SalesOrderVo salesOrderVo=new SalesOrderVo();
+        salesOrderVo.setTitle(product.getTitle());
+        salesOrderVo.setCreatedTime(salesOrder.getCreationDate());
+        salesOrderVo.setOrderSts(salesOrder.getOrderSts());
+        salesOrderVo.setOrderNo(salesOrder.getOrderNo());
+        salesOrderVo.setQty(salesOrderLineItem.getQty());
+        salesOrderVo.setSku(product.getSku_cd());
+        salesOrderVo.setTrackingNo(salesOrderLineItem.getTrackingNo());
+        salesOrderVo.setPrice(product.getRetail_price());
+        return salesOrderVo;
     }
 
     /*@PostMapping("/deleteSalesOrder")

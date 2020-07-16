@@ -37,6 +37,7 @@ public class ManufacturerController extends BaseController {
         } else {
             Map<String,Object> map = new HashMap<>();
             Manufacturer manufacturer=manufacturerService.selectByUserId(userId);
+//            Manufacturer manufacturer=new Manufacturer();
             manufacturer=manufacturerVo.changeManufacturer(manufacturer);
             map.put("man_id",manufacturer.getMan_id());
             map.put("name_en",manufacturer.getName_en());
@@ -51,9 +52,9 @@ public class ManufacturerController extends BaseController {
             map.put("sts_cd",manufacturer.getSts_cd());
             map.put("user_id",userId);
             int i=0;
-            if(this.getManufacturerInfo(userId,null).data!=null){
+            if(manufacturerService.getManIdByUserId(userId)!=0){
                 manufacturer.setLast_update_date(new Date(System.currentTimeMillis()));
-                manufacturerService.update(manufacturer);
+                i=manufacturerService.update(manufacturer);
             }
             else {
                 map.put("created_date",new Date(System.currentTimeMillis()).toString());
@@ -71,29 +72,26 @@ public class ManufacturerController extends BaseController {
     }
 
     @PostMapping("/getmanufacturerinfo")
-    public BaseModelJson<ManufacturerVo> getManufacturerInfo(@RequestParam int userId, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            throw BusinessException.MANID_NULL_ERROR.newInstance(this.getErrorResponse(bindingResult),
-                    new Object[]{});
+    public BaseModelJson<ManufacturerVo> getManufacturerInfo(@RequestParam int userId) {
+        BaseModelJson<ManufacturerVo> result = new BaseModelJson();
+        Manufacturer manufacturer = manufacturerService.selectByUserId(userId);
+        if (manufacturer != null) {
+            result.code = 200;
+            ManufacturerVo manufacturerVo=new ManufacturerVo();
+            manufacturerVo=manufacturerVo.getManufacturerVo(manufacturer);
+            result.data = manufacturerVo;
+            result.message= JSONArray.toJSONString(manufacturerVo);
+            return result;
+        } else {
+            result.code=200;
+            result.message="Manufacturer doesn't exist";
+            return  result;
         }
-        else {
-            BaseModelJson<ManufacturerVo> result = new BaseModelJson();
-            Manufacturer manufacturer = manufacturerService.selectByUserId(userId);
-            if (manufacturer != null) {
-                result.code = 200;
-                ManufacturerVo manufacturerVo=new ManufacturerVo();
-                manufacturerVo=manufacturerVo.getManufacturerVo(manufacturer);
-                result.data = manufacturerVo;
-                result.message= JSONArray.toJSONString(manufacturerVo);
-                return result;
-            } else {
-                throw BusinessException.MANID_NOT_EXISTS;
-            }
-        }
+
     }
 
 
-    @PostMapping("/deleteManufacturer")
+    /*@PostMapping("/deleteManufacturer")
     public BaseModel deleteManufacturer(@Validated({DeleteGroup.class}) @RequestParam int userId, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             throw BusinessException.USERID_NULL_ERROR.newInstance(this.getErrorResponse(bindingResult),
@@ -109,5 +107,5 @@ public class ManufacturerController extends BaseController {
                 throw BusinessException.DELETE_FAIL;
             }
         }
-    }
+    }*/
 }

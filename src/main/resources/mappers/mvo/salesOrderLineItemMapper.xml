@@ -152,36 +152,35 @@
         delete from bsp.sal where SAL_ID = #{salId}
     </delete>
 
-    <select id="getByUserId" parameterType="java.lang.Integer" resultType="java.util.List">
+    <select id="getByUserId" parameterType="java.lang.Integer" resultMap="SalMap">
         select sal.*
         from sys_user s
         join man m
-        where s.man_buyer_id=m.man_id
+        on s.man_buyer_id=m.man_id
         join sao
-        where m.man_id=sao.man_id
+        on m.man_id=sao.man_id
         join sal
-        where sao.sao_id=sal.sao_id
+        on sao.sao_id=sal.sao_id
         where s.user_id=#{userId}
     </select>
 
-    <select id="getBySaoId" parameterType="java.lang.Integer" resultType="java.util.List">
+    <select id="getBySaoId" parameterType="java.lang.Integer" resultMap="SalMap">
         select sal.*
         from sal
         where sal.sao_id=#{saoId}
     </select>
 
-    <select id="getSaoByOrderNo" parameterType="java.lang.String" resultType="SalesOrder">
-        select *
-        from sao
+    <select id="getSalBySku" parameterType="java.util.Map" resultMap="SalMap">
+        select sal.*
+        from sal
+        join sao
+        on sal.sao_id=sao.sao_id
+        join pro
+        on sal.pro_id=pro.pro_id
         where sao.order_no=#{orderNo}
+        and pro.sku_cd=#{sku}
     </select>
 
-    <select id="getSalByOrderNo" parameterType="java.lang.String" resultType="SalesOrderLineItem">
-        select *
-        from sal
-        right join sao
-        where sal.sao_id=sao.sao_id
-        where sao.order_no=#{orderNo}
-    </select>
+
 
 </mapper>

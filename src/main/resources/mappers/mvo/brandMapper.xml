@@ -21,11 +21,11 @@
         where brd_id = #{brd_id}
     </update>
 
-    <delete id="delete" parameterType="java.lang.String">
+    <delete id="delete" parameterType="java.lang.Integer">
         delete from brd where brd_id = #{brd_id}
     </delete>
 
-    <select id="getById" parameterType="java.lang.String" resultType="Brand" >
+    <select id="getById" parameterType="java.lang.Integer" resultType="Brand" >
         select * from brd where brd_id = #{brd_id}
     </select>
 
@@ -43,10 +43,15 @@
         where s.user_id=#{user_id};
     </select>
 
-    <select id="getByNameEn" parameterType="java.lang.String" resultType="Brand">
-        select *
-        from brd
-        where brd.name_en=#{name_en}
+    <select id="getByNameEn" parameterType="java.util.Map" resultType="Brand">
+        select b.*
+        from sys_user s
+        right join man m
+        on s.MAN_BUYER_ID = m.MAN_ID
+        right join brd b
+        on m.MAN_ID=b.MAN_ID
+        where s.user_id=#{userId}
+        and b.name_en=#{name_en}
     </select>
 
 </mapper>

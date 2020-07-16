@@ -16,7 +16,7 @@ public interface BrandService {
 
     Brand getById(int brandid);
 
-    Brand getByNameEn(String name_en);
+    Brand getByNameEn(Map map);
 
     List<Brand> getAll();
 

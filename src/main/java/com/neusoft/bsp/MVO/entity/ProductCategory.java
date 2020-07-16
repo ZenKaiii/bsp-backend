@@ -1,119 +1,122 @@
 package com.neusoft.bsp.MVO.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class ProductCategory {
-    int prc_id;
-    int pro_id;
-    String category_id;
-    String category_name;
-    String category_path;
-    String created_by;
-    Date creation_date;
-    String last_update_by;
-    Date last_update_date;
-    int call_cnt;
-    String remark;
-    char sts_cd;
-    String plateform_type;
+/**
+ * (Prc)实体类
+ *
+ * @author makejava
+ * @since 2020-07-16 15:01:08
+ */
+public class ProductCategory implements Serializable {
+    private static final long serialVersionUID = 887454450712096309L;
 
-    @Override
-    public String toString() {
-        return "ProductCategory{" +
-                "prc_id=" + prc_id +
-                ", pro_id=" + pro_id +
-                ", category_id='" + category_id + '\'' +
-                ", category_name='" + category_name + '\'' +
-                ", category_path='" + category_path + '\'' +
-                ", created_by='" + created_by + '\'' +
-                ", creation_date=" + creation_date +
-                ", last_update_by='" + last_update_by + '\'' +
-                ", last_update_date=" + last_update_date +
-                ", call_cnt=" + call_cnt +
-                ", remark='" + remark + '\'' +
-                ", sts_cd=" + sts_cd +
-                ", plateform_type='" + plateform_type + '\'' +
-                '}';
+    private Integer prcId;
+
+    private Integer proId;
+
+    private String categoryId;
+
+    private String categoryName;
+
+    private String categoryPath;
+
+    private String createdBy;
+
+    private Date creationDate;
+
+    private String lastUpdateBy;
+
+    private Date lastUpdateDate;
+
+    private Integer callCnt;
+
+    private String remark;
+
+    private String stsCd;
+
+    private String plateformType;
+
+
+    public Integer getPrcId() {
+        return prcId;
     }
 
-    public int getPrc_id() {
-        return prc_id;
+    public void setPrcId(Integer prcId) {
+        this.prcId = prcId;
     }
 
-    public void setPrc_id(int prc_id) {
-        this.prc_id = prc_id;
+    public Integer getProId() {
+        return proId;
     }
 
-    public int getPro_id() {
-        return pro_id;
+    public void setProId(Integer proId) {
+        this.proId = proId;
     }
 
-    public void setPro_id(int pro_id) {
-        this.pro_id = pro_id;
+    public String getCategoryId() {
+        return categoryId;
     }
 
-    public String getCategory_id() {
-        return category_id;
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
     }
 
-    public void setCategory_id(String category_id) {
-        this.category_id = category_id;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public String getCategory_name() {
-        return category_name;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
-    public void setCategory_name(String category_name) {
-        this.category_name = category_name;
+    public String getCategoryPath() {
+        return categoryPath;
     }
 
-    public String getCategory_path() {
-        return category_path;
+    public void setCategoryPath(String categoryPath) {
+        this.categoryPath = categoryPath;
     }
 
-    public void setCategory_path(String category_path) {
-        this.category_path = category_path;
+    public String getCreatedBy() {
+        return createdBy;
     }
 
-    public String getCreated_by() {
-        return created_by;
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 
-    public void setCreated_by(String created_by) {
-        this.created_by = created_by;
+    public Date getCreationDate() {
+        return creationDate;
     }
 
-    public Date getCreation_date() {
-        return creation_date;
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 
-    public void setCreation_date(Date creation_date) {
-        this.creation_date = creation_date;
+    public String getLastUpdateBy() {
+        return lastUpdateBy;
     }
 
-    public String getLast_update_by() {
-        return last_update_by;
+    public void setLastUpdateBy(String lastUpdateBy) {
+        this.lastUpdateBy = lastUpdateBy;
     }
 
-    public void setLast_update_by(String last_update_by) {
-        this.last_update_by = last_update_by;
+    public Date getLastUpdateDate() {
+        return lastUpdateDate;
     }
 
-    public Date getLast_update_date() {
-        return last_update_date;
+    public void setLastUpdateDate(Date lastUpdateDate) {
+        this.lastUpdateDate = lastUpdateDate;
     }
 
-    public void setLast_update_date(Date last_update_date) {
-        this.last_update_date = last_update_date;
+    public Integer getCallCnt() {
+        return callCnt;
     }
 
-    public int getCall_cnt() {
-        return call_cnt;
-    }
-
-    public void setCall_cnt(int call_cnt) {
-        this.call_cnt = call_cnt;
+    public void setCallCnt(Integer callCnt) {
+        this.callCnt = callCnt;
     }
 
     public String getRemark() {
@@ -124,19 +127,20 @@ public class ProductCategory {
         this.remark = remark;
     }
 
-    public char getSts_cd() {
-        return sts_cd;
+    public String getStsCd() {
+        return stsCd;
     }
 
-    public void setSts_cd(char sts_cd) {
-        this.sts_cd = sts_cd;
+    public void setStsCd(String stsCd) {
+        this.stsCd = stsCd;
     }
 
-    public String getPlateform_type() {
-        return plateform_type;
+    public String getPlateformType() {
+        return plateformType;
     }
 
-    public void setPlateform_type(String plateform_type) {
-        this.plateform_type = plateform_type;
+    public void setPlateformType(String plateformType) {
+        this.plateformType = plateformType;
     }
+
 }

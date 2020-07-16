@@ -15,26 +15,26 @@
 
     <update id="update" parameterType="Manufacturer">
         update man set
-        `name_en` = #{name_en},name_cn = #{name_cn},
+        name_en = #{name_en},name_cn = #{name_cn},
         created_by = #{created_by},creation_date= #{creation_date} ,
         last_update_by = #{last_update_by},last_update_date = #{last_update_date},
-        call_cnt = #{call_cnt},remark = #{remark},sts_cd = #{sts_cd}
+        call_cnt = #{call_cnt},remark = #{remark}, sts_cd = #{sts_cd}
         where man_id = #{man_id}
     </update>
 
-    <select id="selectByUserId" parameterType="java.lang.String" resultType="Manufacturer">
+    <select id="selectByUserId" parameterType="java.lang.Integer" resultType="Manufacturer">
         select m.*
         from sys_user s
-        join man m
-        where m.man_id=s.man_buyer_id
+        right join man m
+        on m.man_id=s.man_buyer_id
         where s.user_id=#{userId}
     </select>
 
-    <delete id="delete" parameterType="java.lang.String">
+    <delete id="delete" parameterType="java.lang.Integer">
         delete from man where man_id = #{man_id}
     </delete>
 
-    <select id="getById" parameterType="java.lang.String" resultType="Manufacturer" >
+    <select id="getById" parameterType="java.lang.Integer" resultType="Manufacturer" >
         select * from man where man_id = #{man_id}
     </select>
 
