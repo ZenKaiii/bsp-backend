@@ -19,7 +19,7 @@ public class Sal {
     private Integer proId;
     private Integer qty;
     private BigDecimal price;
-    private Integer skuNo;
+//    private Integer skuNo;
 //    private Integer solId;
     private String trackingNo;
     private String wspName;

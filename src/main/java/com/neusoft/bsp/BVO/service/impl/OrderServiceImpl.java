@@ -34,7 +34,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderVO getOrderVOBySalAndSao(Sal sal, Sao sao) {
-        return new OrderVO(sao.getSaoId(),proRepository.getProByProId(sal.getProId()).getTitle(),sal.getPrice(),sal.getQty(),sal.getSkuNo(),sao.getOrderNo(),sal.getPrice().multiply(new BigDecimal(sal.getQty())),sal.getTrackingNo());
+        return new OrderVO(sao.getSaoId(),proRepository.getProByProId(sal.getProId()).getTitle(),sal.getPrice(),sal.getQty(),proRepository.getProByProId(sal.getProId()).getSkuCd(),sao.getOrderNo(),sal.getPrice().multiply(new BigDecimal(sal.getQty())),sal.getTrackingNo());
     }
 
     @Override

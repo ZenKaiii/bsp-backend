@@ -14,4 +14,5 @@ public class Pro {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer proId;
     private String title;
+    private String skuCd;
 }
