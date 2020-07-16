@@ -31,15 +31,12 @@ public class ShiroConfiguration {
         Map<String,String> filtetMap = new LinkedHashMap<>();
         filtetMap.put("/","anon");
 
-        filtetMap.put("/login/relogin","anon");
-        filtetMap.put("/login/checkUser","anon");
-        filtetMap.put("/login/getInfo","anon");
-        filtetMap.put("/login/logout","anon");
+        filtetMap.put("/login/**","anon");
         filtetMap.put("/register/**","anon");
 
         //！！！测试完记得删掉
-        filtetMap.put("/menurole/**","anon");
-        filtetMap.put("/cdm/**","anon");
+//        filtetMap.put("/menurole/**","anon");
+//        filtetMap.put("/cdm/**","anon");
 
         filtetMap.put("/login/userlist","perms[user:userlist]");
 
