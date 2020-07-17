@@ -1,25 +1,31 @@
 package com.neusoft.bsp.System.dto;
 
+import com.neusoft.bsp.MVO.service.ManufacturerService;
+import com.neusoft.bsp.System.entity.User;
 import com.neusoft.bsp.common.validationGroup.InsertGroup;
 import com.neusoft.bsp.common.validationGroup.UpdateGroup;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.constraints.NotNull;
+import java.sql.Time;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserMvoDto {
     String username;
     String password;
     String name;
-    String rights;
-    String bz;
-    String skin;
     String email;
-    String number;
     String phone;
     String name_en;
     String name_cn;
     String gmc_report_type;
     String gmc_report_url;
     String description;
+
+    @Autowired
+    ManufacturerService manufacturerService;
 
     public String getUsername() {
         return username;
@@ -33,24 +39,8 @@ public class UserMvoDto {
         return name;
     }
 
-    public String getRights() {
-        return rights;
-    }
-
-    public String getBz() {
-        return bz;
-    }
-
-    public String getSkin() {
-        return skin;
-    }
-
     public String getEmail() {
         return email;
-    }
-
-    public String getNumber() {
-        return number;
     }
 
     public String getPhone() {
@@ -75,5 +65,30 @@ public class UserMvoDto {
 
     public String getDescription() {
         return description;
+    }
+
+    public User toUser(){
+        User user = new User();
+        user.setUsername(this.username);
+        user.setName(this.name);
+        user.setPassword(this.password);
+        user.setEmail(this.email);
+        user.setPhone(this.phone);
+        user.setRole_id(2);
+        return user;
+    }
+
+    public Map<String,Object> toManufacturer(int userId){
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("name_en",this.getName_en());
+        map.put("name_cn",this.getName_cn());
+        map.put("gmc_report_type",this.getGmc_report_type());
+        map.put("gmc_report_url",this.getGmc_report_url());
+        map.put("description",this.getDescription());
+        map.put("created_by",userId);
+        map.put("last_update_by",userId);
+        map.put("user_id",userId);
+        map.put("creation_date",new Date(System.currentTimeMillis()));
+        return map;
     }
 }

@@ -2,8 +2,10 @@ package com.neusoft.bsp.controller;
 
 import com.neusoft.bsp.BVO.entity.Dsr;
 import com.neusoft.bsp.BVO.repository.DsrRepository;
+import com.neusoft.bsp.MVO.controller.ManufacturerController;
 import com.neusoft.bsp.MVO.entity.Manufacturer;
 import com.neusoft.bsp.MVO.service.ManufacturerService;
+import com.neusoft.bsp.MVO.vo.ManufacturerVo;
 import com.neusoft.bsp.System.dto.UserMvoDto;
 import com.neusoft.bsp.System.entity.User;
 import com.neusoft.bsp.System.service.UserService;
@@ -16,6 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,38 +61,26 @@ public class RegisterController extends BaseController {
 
     @PostMapping("/mvo")
     public BaseModel mvoRegister(@RequestBody UserMvoDto umd) {
-       User user = new User();
-       Manufacturer manufacturer = new Manufacturer();
-       user.setUsername(umd.getUsername());
-       user.setPassword(umd.getPassword());
-       user.setRights(umd.getRights());
-       user.setBz(umd.getBz());
-       user.setSkin(umd.getSkin());
-       user.setEmail(umd.getEmail());
-       user.setNumber(umd.getNumber());
-       user.setPhone(umd.getPhone());
-        if (userService.getUserByName(user.getUsername()) == null) {
-            BaseModel result = new BaseModel();
-            Map manmap = new HashMap<String,Object>();
-            manmap.put("man_id",null);
-            manmap.put("name_en",umd.getName_en());
-            manmap.put("name_cn",umd.getName_cn());
-            manmap.put("gmc_report_type",umd.getGmc_report_type());
-            manmap.put("gmc_report_url",umd.getGmc_report_url());
-            manmap.put("description",umd.getName_en());
-            int i1 = manufacturerService.insert(manmap);
-            user.setMan_buyer_id(i1);
-            int i2 = userService.insert(user);
-            if (i1 == 1&&i2 == 1) {
-                result.code = 200;
-                result.message = "Register success";
-                return result;
-            } else {
-                throw BusinessException.INSERT_FAIL;
-            }
-        }else{
+       if (userService.getUserByName(umd.getUsername()) == null) {
+           User user = umd.toUser();
+           int i1 = userService.insert(user);
+           if(i1 != 1){
+               throw BusinessException.INSERT_FAIL;
+           }else{
+               Map<String,Object> manmap = umd.toManufacturer(user.getId());
+               int i2 = manufacturerService.insert(manmap);
+               List<Manufacturer> mans = manufacturerService.getAll();
+               user.setMan_buyer_id(mans.get(mans.size()-1).getMan_id());
+               userService.update(user);
+               BaseModel result = new BaseModel();
+               result.code = 200;
+               result.message = "register success";
+               return result;
+           }
+
+       }else{
             throw BusinessException.USERNAME_EXISTS;
-        }
+       }
     }
 
 

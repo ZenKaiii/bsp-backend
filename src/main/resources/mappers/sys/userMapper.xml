@@ -8,11 +8,14 @@
 <!--        select * from user where t_id = #{tid} and t_password = #{tpassword}-->
 <!--    </select>-->
 
-    <insert id="insert" parameterType="User">
+    <insert id="insert" parameterType="User" useGeneratedKeys="true" keyColumn="user_id" keyProperty="user_id">
         insert sys_user set username = #{username}, password = #{password},`name` = #{name}, `rights` = #{rights}, role_id = #{role_id},
                 last_login = #{last_login}, ip = #{ip}, status = #{status}, bz = #{bz},
                 skin = #{skin}, email = #{email}, phone = #{phone},
                 man_buyer_id = #{man_buyer_id}
+        <selectKey resultType="int" keyProperty="user_id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
     </insert>
 
     <update id="update" parameterType="User">
