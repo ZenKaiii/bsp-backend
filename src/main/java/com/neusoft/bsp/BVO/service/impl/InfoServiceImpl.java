@@ -2,13 +2,13 @@ package com.neusoft.bsp.BVO.service.impl;
 
 import com.neusoft.bsp.BVO.entity.Dsr;
 import com.neusoft.bsp.BVO.entity.Str;
+import com.neusoft.bsp.BVO.entity.SysUser;
 import com.neusoft.bsp.BVO.form.StoreForm;
 import com.neusoft.bsp.BVO.repository.DsrRepository;
 import com.neusoft.bsp.BVO.repository.StrRepository;
+import com.neusoft.bsp.BVO.repository.SysUserRepository;
 import com.neusoft.bsp.BVO.service.InfoService;
 import com.neusoft.bsp.BVO.vo.BvoUserVO;
-import com.neusoft.bsp.System.entity.User;
-import com.neusoft.bsp.System.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ import java.util.List;
 public class InfoServiceImpl implements InfoService {
 
     @Autowired
-    UserMapper userMapper;
+    SysUserRepository sysUserRepository;
     @Autowired
     StrRepository strRepository;
     @Autowired
@@ -26,17 +26,17 @@ public class InfoServiceImpl implements InfoService {
 
     @Override
     public BvoUserVO findUserVo(int userId) {
-        User user = userMapper.getById(userId);
+        SysUser user = sysUserRepository.getSysUserByUserId(userId);
         return new BvoUserVO(user.getName(),user.getEmail(),user.getPhone());
     }
 
     @Override
     public void updateUserInfo(int id,BvoUserVO bvoUserVO) {
-        User user = userMapper.getById(id);
+        SysUser user = sysUserRepository.getSysUserByUserId(id);
         user.setName(bvoUserVO.getName());
         user.setEmail(bvoUserVO.getEmail());
         user.setPhone(bvoUserVO.getPhone());
-        userMapper.update(user);
+        sysUserRepository.saveAndFlush(user);
     }
 
     @Override
