@@ -13,7 +13,7 @@ public class OrderVO {
     private String title;
     private BigDecimal price;
     private Integer qty;
-    private Integer sku;
+    private String  sku;
     private String orderNo;
     private BigDecimal total;
     private String trackingNo;

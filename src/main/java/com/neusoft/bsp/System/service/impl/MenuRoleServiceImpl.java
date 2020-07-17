@@ -53,7 +53,10 @@ public class MenuRoleServiceImpl implements MenuRoleService {
             if(pid!=0){
                 for(Menu menu2: list){
                     if(menu2.getMenu_id()==pid){
+                        System.out.println(menu2.getMenu_name());
                         menu2.getSubs().add(menu);
+                        menu.setSubs(null);
+                        continue;
                     }
                 }
             }
@@ -63,6 +66,10 @@ public class MenuRoleServiceImpl implements MenuRoleService {
             Menu menu = iterator.next();
             if (menu.getParent_id()!=0) {
                 iterator.remove();
+            }else{
+                if(menu.getSubs()!=null&&menu.getSubs().size()==0){
+                    menu.setSubs(null);
+                }
             }
         }
         return list;
@@ -81,7 +88,10 @@ public class MenuRoleServiceImpl implements MenuRoleService {
             if(pid!=0){
                 for(Menu menu2: list){
                     if(menu2.getMenu_id()==pid){
+                        System.out.println(menu2.getMenu_name());
                         menu2.getSubs().add(menu);
+                        menu.setSubs(null);
+                        continue;
                     }
                 }
             }
@@ -91,6 +101,10 @@ public class MenuRoleServiceImpl implements MenuRoleService {
             Menu menu = iterator.next();
             if (menu.getParent_id()!=0) {
                 iterator.remove();
+            }else{
+                if(menu.getSubs()!=null&&menu.getSubs().size()==0){
+                    menu.setSubs(null);
+                }
             }
         }
         return list;
