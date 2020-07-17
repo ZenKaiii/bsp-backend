@@ -1,6 +1,8 @@
 package com.neusoft.bsp.BVO.service.impl;
 
+import com.neusoft.bsp.BVO.entity.Pro;
 import com.neusoft.bsp.BVO.entity.Wit;
+import com.neusoft.bsp.BVO.repository.ProRepository;
 import com.neusoft.bsp.BVO.repository.WitRepository;
 import com.neusoft.bsp.BVO.service.ProService;
 import com.neusoft.bsp.MVO.entity.Product;
@@ -15,13 +17,13 @@ import java.util.List;
 public class ProServiceImpl implements ProService {
 
     @Autowired
-    ProductMapper productMapper;
+    ProRepository proRepository;
     @Autowired
     WitRepository witRepository;
 
     @Override
-    public List<Product> findAllProduct() {
-        return productMapper.getAll();
+    public List<Pro> findAllProduct() {
+        return proRepository.findAll();
     }
 
     @Override
@@ -30,11 +32,11 @@ public class ProServiceImpl implements ProService {
     }
 
     @Override
-    public List<Product> findProductByWit(Integer dsrId) {
-        List<Product> products = new ArrayList<>();
+    public List<Pro> findProductByWit(Integer dsrId) {
+        List<Pro> products = new ArrayList<>();
         List<Wit> wits = witRepository.findAllWitByDsrId(dsrId);
         for (Wit wit : wits) {
-            products.add(productMapper.getById(wit.getProId()));
+            products.add(proRepository.getProByProId(wit.getProId()));
         }
         return products;
     }
