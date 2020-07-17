@@ -106,9 +106,11 @@ public class ProductController extends BaseController {
     @PostMapping("/alterProductDetail")
     public BaseModel alterProductDetail(@Validated({InsertGroup.class}) @RequestBody ProductDetailVo productDetailVo, @RequestParam int userId, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
+            System.out.println("aaaaaaaaaaaaaaa");
             throw BusinessException.INSERT_FAIL.newInstance(this.getErrorResponse(bindingResult),
                     new Object[]{productDetailVo.toString()});
         } else {
+            System.out.println("lalallalallallal");
             int man_id=manufacturerService.getManIdByUserId(userId);
             Map<String,Object> map=new HashMap<>();
             map.put("man_id",man_id);
@@ -160,7 +162,7 @@ public class ProductController extends BaseController {
     }
 
 
-    @RequestMapping("/productList")
+    @GetMapping("/productList")
     public BaseModelJsonPaging<PageInfo<ProductVo>> getProductList(Integer pageNum, Integer pageSize,
                                                                    @RequestParam int userId) {
         BaseModelJsonPaging<PageInfo<ProductVo>> result = new BaseModelJsonPaging();
@@ -187,7 +189,7 @@ public class ProductController extends BaseController {
         return result;
     }
 
-    @RequestMapping("/productDetailList")
+    @GetMapping("/productDetailList")
     public BaseModelJsonPaging<PageInfo<ProductDetailVo>> getProductDetailList(Integer pageNum, Integer pageSize,
                                                                    @RequestParam int userId) {
         BaseModelJsonPaging<PageInfo<ProductDetailVo>> result = new BaseModelJsonPaging();

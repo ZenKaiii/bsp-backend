@@ -10,4 +10,6 @@ public interface ImgMapper extends BaseMapper<Integer, Img> {
     int getByProId(int proId);
 
     Img getImgByProId(int proId);
+
+    String getUrlByProId(int proId);
 }

@@ -71,7 +71,7 @@ public class ManufacturerController extends BaseController {
         }
     }
 
-    @PostMapping("/getmanufacturerinfo")
+    @GetMapping("/getmanufacturerinfo")
     public BaseModelJson<ManufacturerVo> getManufacturerInfo(@RequestParam int userId) {
         BaseModelJson<ManufacturerVo> result = new BaseModelJson();
         Manufacturer manufacturer = manufacturerService.selectByUserId(userId);

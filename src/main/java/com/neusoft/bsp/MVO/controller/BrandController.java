@@ -67,7 +67,7 @@ public class BrandController extends BaseController {
         }
     }
 
-    @PostMapping("/brandList")
+    @GetMapping("/brandList")
     public BaseModelJsonPaging<PageInfo<BrandVo>> getBrandList(Integer pageNum, Integer pageSize,
                                                                @RequestParam int userId) {
         Map<String,Object> map = new HashMap<>();

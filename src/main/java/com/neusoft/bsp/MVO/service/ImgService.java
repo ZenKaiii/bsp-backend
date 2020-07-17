@@ -18,6 +18,8 @@ public interface ImgService {
 
     int getByProId(int proId);
 
+    String getUrlByProId(int proId);
+
     Img getImgByProId(int proId);
 
     List<Img> getAll();

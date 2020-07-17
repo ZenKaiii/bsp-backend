@@ -106,7 +106,7 @@ public class SalesOrderController extends BaseController {
     }*/
 
 
-    @PostMapping("/salesOrderList")
+    @GetMapping("/salesOrderList")
     public BaseModelJsonPaging<PageInfo<SalesOrderVo>> getSalesOrderList(Integer pageNum, Integer pageSize,
                                                                          @RequestParam int userId) {
         List<SalesOrderLineItem> salesOrderLineItems = salesOrderLineItemService.getByUserId(userId);
