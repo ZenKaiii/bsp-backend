@@ -51,12 +51,13 @@ public class BrandServiceImpl implements BrandService {
         Map<String,Object> map = new HashMap<>();
         map.put("user_id",userId);
         List<Brand> brandList= this.getAllByUserId(map);
-        List<BrandVo> brandVoList=new ArrayList<>();
-        for(Brand brand:brandList){
-            BrandVo brandVo=new BrandVo();
-            brandVoList.add(brandVo.getBrandVO(brand));
+        List<BrandVo> brandVoList = new ArrayList<>();
+        if(brandList.size()!=0) {
+            for (Brand brand : brandList) {
+                BrandVo brandVo = new BrandVo();
+                brandVoList.add(brandVo.getBrandVO(brand));
+            }
         }
-
         return brandVoList;
     }
 

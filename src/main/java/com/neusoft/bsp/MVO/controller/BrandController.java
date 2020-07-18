@@ -72,7 +72,7 @@ public class BrandController extends BaseController {
                                                                @RequestParam int userId) {
 
         List<BrandVo> brandVoList=brandService.brandList(userId);
-        PageHelper.startPage(pageNum,pageSize,true);
+
         /*Map<String,Object> map = new HashMap<>();
         map.put("user_id",userId);*/
         BaseModelJsonPaging<PageInfo<BrandVo>> result = new BaseModelJsonPaging<>();
@@ -82,16 +82,22 @@ public class BrandController extends BaseController {
         if(pageSize == null){
             pageSize = 10;
         }
+        PageHelper.startPage(pageNum,pageSize,true);
         /*List<Brand> brandList= brandService.getAllByUserId(map);
         List<BrandVo> brandVoList=new ArrayList<>();
         for(Brand brand:brandList){
             BrandVo brandVo=new BrandVo();
             brandVoList.add(brandVo.getBrandVO(brand));
         }*/
-        PageInfo<BrandVo> brandVoPage=new PageInfo(brandVoList);
+        if(brandVoList.size()!=0) {
+            PageInfo<BrandVo> brandVoPage = new PageInfo(brandVoList);
+            result.data = brandVoPage;
+            result.message = JSONArray.toJSONString(brandVoPage);
+        }
+        else{
+            result.message="no brand info";
+        }
         result.code = 200;
-        result.data = brandVoPage;
-        result.message=JSONArray.toJSONString(brandVoPage);
         return result;
     }
 
