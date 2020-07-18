@@ -2,6 +2,7 @@ package com.neusoft.bsp.BVO.service.impl;
 
 import com.neusoft.bsp.BVO.entity.Pro;
 import com.neusoft.bsp.BVO.entity.Wit;
+import com.neusoft.bsp.BVO.repository.BrdRepository;
 import com.neusoft.bsp.BVO.repository.ProRepository;
 import com.neusoft.bsp.BVO.repository.WitRepository;
 import com.neusoft.bsp.BVO.service.ProService;
@@ -27,7 +28,7 @@ public class ProServiceImpl implements ProService {
     @Autowired
     ImgMapper imgMapper;
     @Autowired
-    BrandMapper brandMapper;
+    BrdRepository brdRepository;
 
     @Override
     public ProVO findProVOById(Integer proId) {
@@ -36,7 +37,7 @@ public class ProServiceImpl implements ProService {
                 pro.getTitle(),
                 pro.getRetailPrice(),
                 pro.getSkuCd(),
-                brandMapper.getById(pro.getBrdId()).getName_cn(),
+                brdRepository.getBrdByBrdId(proId).getNameCn(),
                 pro.getStockseting(),
                 imgMapper.getUrlByProId(pro.getProId()));
     }
@@ -51,7 +52,7 @@ public class ProServiceImpl implements ProService {
                     pro.getTitle(),
                     pro.getRetailPrice(),
                     pro.getSkuCd(),
-                    brandMapper.getById(pro.getBrdId()).getName_cn(),
+                    brdRepository.getBrdByBrdId(pro.getProId()).getNameCn(),
                     pro.getStockseting(),
                     imgMapper.getUrlByProId(pro.getProId())));
         }
