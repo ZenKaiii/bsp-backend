@@ -52,11 +52,14 @@ public class ProServiceImpl implements ProService {
         List<ProVO> proVOS = new ArrayList<>();
 
         for (Pro pro : pros) {
+            if (brdRepository.getBrdByBrdId(pro.getBrdId())==null){
+                throw new BvoException("pro数据库中brdId有误");
+            }
             proVOS.add(new ProVO(pro.getProId(),
                     pro.getTitle(),
                     pro.getRetailPrice(),
                     pro.getSkuCd(),
-                    brdRepository.getBrdByBrdId(pro.getProId()).getNameCn(),
+                    brdRepository.getBrdByBrdId(pro.getBrdId()).getNameCn(),
                     pro.getStockseting(),
                     imgMapper.getUrlByProId(pro.getProId())));
         }
