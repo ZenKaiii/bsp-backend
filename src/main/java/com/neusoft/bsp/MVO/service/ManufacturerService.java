@@ -2,11 +2,14 @@ package com.neusoft.bsp.MVO.service;
 
 import com.github.pagehelper.PageInfo;
 import com.neusoft.bsp.MVO.entity.Manufacturer;
+import com.neusoft.bsp.MVO.vo.ManufacturerVo;
 
 import java.util.List;
 import java.util.Map;
 
 public interface ManufacturerService {
+
+    int alterManufacturer(ManufacturerVo manufacturerVo,int userId);
 
     int insert(Map<String, Object> map);
 

@@ -35,7 +35,7 @@ public class ManufacturerController extends BaseController {
             throw BusinessException.INSERT_FAIL.newInstance(this.getErrorResponse(bindingResult),
                     new Object[]{manufacturerVo.toString()});
         } else {
-            Map<String,Object> map = new HashMap<>();
+            /*Map<String,Object> map = new HashMap<>();
             Manufacturer manufacturer=manufacturerService.selectByUserId(userId);
 //            Manufacturer manufacturer=new Manufacturer();
             manufacturer=manufacturerVo.changeManufacturer(manufacturer);
@@ -59,7 +59,8 @@ public class ManufacturerController extends BaseController {
             else {
                 map.put("created_date",new Date(System.currentTimeMillis()).toString());
                 i=manufacturerService.insert(map);
-            }
+            }*/
+            int i=manufacturerService.alterManufacturer(manufacturerVo,userId);
             BaseModel result = new BaseModel();
 
             if(i==1){

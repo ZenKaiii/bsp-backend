@@ -44,7 +44,7 @@ public class SalesOrderController extends BaseController {
             throw BusinessException.INSERT_FAIL.newInstance(this.getErrorResponse(bindingResult),
                     new Object[]{salesOrderVo.toString()});
         } else {
-            int i=0;
+           /* int i=0;
             Map<String,Object> map=new HashMap<>();
             map.put("sku",salesOrderVo.getSku());
             map.put("orderNo",salesOrderVo.getOrderNo());
@@ -56,8 +56,8 @@ public class SalesOrderController extends BaseController {
             i=salesOrderService.update(salesOrder);
 
             salesOrderVo.changeSalesOrderLineItem(salesOrderLineItem);
-            i=salesOrderLineItemService.update(salesOrderLineItem);
-
+            i=salesOrderLineItemService.update(salesOrderLineItem);*/
+            int i=salesOrderService.alterSalesOrder(salesOrderVo,userId);
             BaseModel result = new BaseModel();
             if(i==1){
                 result.code = 200;
@@ -109,7 +109,7 @@ public class SalesOrderController extends BaseController {
     @GetMapping("/salesOrderList")
     public BaseModelJsonPaging<PageInfo<SalesOrderVo>> getSalesOrderList(Integer pageNum, Integer pageSize,
                                                                          @RequestParam int userId) {
-        List<SalesOrderLineItem> salesOrderLineItems = salesOrderLineItemService.getByUserId(userId);
+        /*List<SalesOrderLineItem> salesOrderLineItems = salesOrderLineItemService.getByUserId(userId);*/
         BaseModelJsonPaging<PageInfo<SalesOrderVo>> result = new BaseModelJsonPaging();
 //        Map<String,Object> map=new HashMap<>();
 //        map.put("userId",userId);
@@ -119,12 +119,12 @@ public class SalesOrderController extends BaseController {
         if(pageSize == null){
             pageSize = 10;
         }
-        List<SalesOrderVo> salesOrderVoList=new ArrayList<>();
+        /*List<SalesOrderVo> salesOrderVoList=new ArrayList<>();
         for(SalesOrderLineItem salesOrderLineItem:salesOrderLineItems){
 //            SalesOrderVo salesOrderVo=new SalesOrderVo();
             salesOrderVoList.add(this.getSalesOrderVo(salesOrderLineItem));
-        }
-
+        }*/
+        List<SalesOrderVo> salesOrderVoList=salesOrderService.getSalesOrderList(userId);
         PageHelper.startPage(pageNum,pageSize,true);
         PageInfo<SalesOrderVo> salesOrderVoPage=new PageInfo(salesOrderVoList);
         result.code = 200;
@@ -133,7 +133,7 @@ public class SalesOrderController extends BaseController {
         return result;
     }
 
-    public SalesOrderVo getSalesOrderVo(SalesOrderLineItem salesOrderLineItem){
+    /*public SalesOrderVo getSalesOrderVo(SalesOrderLineItem salesOrderLineItem){
         SalesOrder salesOrder=salesOrderService.getById(salesOrderLineItem.getSaoId());
         Product product=productService.getById(salesOrderLineItem.getProId());
         SalesOrderVo salesOrderVo=new SalesOrderVo();
@@ -146,7 +146,7 @@ public class SalesOrderController extends BaseController {
         salesOrderVo.setTrackingNo(salesOrderLineItem.getTrackingNo());
         salesOrderVo.setPrice(product.getRetail_price());
         return salesOrderVo;
-    }
+    }*/
 
     /*@PostMapping("/deleteSalesOrder")
     public BaseModel deleteSalesOrder(@Validated({DeleteGroup.class}) @RequestBody SalesOrder salesOrder, BindingResult bindingResult) throws Exception {
