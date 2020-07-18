@@ -2,6 +2,7 @@ package com.neusoft.bsp.BVO.service.impl;
 
 import com.neusoft.bsp.BVO.entity.Pro;
 import com.neusoft.bsp.BVO.entity.Wit;
+import com.neusoft.bsp.BVO.exception.BvoException;
 import com.neusoft.bsp.BVO.repository.BrdRepository;
 import com.neusoft.bsp.BVO.repository.ProRepository;
 import com.neusoft.bsp.BVO.repository.WitRepository;
@@ -33,11 +34,14 @@ public class ProServiceImpl implements ProService {
     @Override
     public ProVO findProVOById(Integer proId) {
         Pro pro = proRepository.getProByProId(proId);
+        if (pro == null || brdRepository.getBrdByBrdId(pro.getBrdId())==null){
+            throw new BvoException("proId有误或数据库有误");
+        }
         return new ProVO(pro.getProId(),
                 pro.getTitle(),
                 pro.getRetailPrice(),
                 pro.getSkuCd(),
-                brdRepository.getBrdByBrdId(proId).getNameCn(),
+                brdRepository.getBrdByBrdId(pro.getBrdId()).getNameCn(),
                 pro.getStockseting(),
                 imgMapper.getUrlByProId(pro.getProId()));
     }
