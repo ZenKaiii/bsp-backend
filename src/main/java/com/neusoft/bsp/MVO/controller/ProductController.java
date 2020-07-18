@@ -181,10 +181,15 @@ public class ProductController extends BaseController {
 //        }
         List<ProductVo> productVoList=productService.getProductList(userId);
         PageHelper.startPage(pageNum,pageSize,true);
-        PageInfo<ProductVo> productVoPage=new PageInfo(productVoList);
+        if(productVoList.size()!=0) {
+            PageInfo<ProductVo> productVoPage = new PageInfo(productVoList);
+            result.data = productVoPage;
+            result.message = JSONArray.toJSONString(productVoPage);
+        }
+        else{
+            result.message="no product info";
+        }
         result.code = 200;
-        result.data = productVoPage;
-        result.message= JSONArray.toJSONString(productVoPage);
         return result;
     }
 
@@ -214,10 +219,15 @@ public class ProductController extends BaseController {
         }*/
         List<ProductDetailVo> productDetailVoList=productService.getProductDetailList(userId);
         PageHelper.startPage(pageNum,pageSize,true);
-        PageInfo<ProductDetailVo> productDetailVoPage=new PageInfo(productDetailVoList);
+        if(productDetailVoList.size()!=0) {
+            PageInfo<ProductDetailVo> productDetailVoPage = new PageInfo(productDetailVoList);
+            result.data = productDetailVoPage;
+            result.message= JSONArray.toJSONString(productDetailVoPage);
+        }
+        else{
+            result.message="no product info";
+        }
         result.code = 200;
-        result.data = productDetailVoPage;
-        result.message= JSONArray.toJSONString(productDetailVoPage);
         return result;
     }
 

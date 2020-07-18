@@ -125,11 +125,16 @@ public class SalesOrderController extends BaseController {
             salesOrderVoList.add(this.getSalesOrderVo(salesOrderLineItem));
         }*/
         List<SalesOrderVo> salesOrderVoList=salesOrderService.getSalesOrderList(userId);
-        PageHelper.startPage(pageNum,pageSize,true);
-        PageInfo<SalesOrderVo> salesOrderVoPage=new PageInfo(salesOrderVoList);
+        PageHelper.startPage(pageNum, pageSize, true);
+        if(salesOrderVoList.size()!=0) {
+            PageInfo<SalesOrderVo> salesOrderVoPage = new PageInfo(salesOrderVoList);
+            result.data = salesOrderVoPage;
+            result.message= JSONArray.toJSONString(salesOrderVoPage);
+        }
+        else{
+            result.message="no sales order info";
+        }
         result.code = 200;
-        result.data = salesOrderVoPage;
-        result.message= JSONArray.toJSONString(salesOrderVoPage);
         return result;
     }
 

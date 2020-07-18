@@ -50,12 +50,13 @@ public class SalesOrderServiceImpl implements SalesOrderService {
     @Override
     public List<SalesOrderVo> getSalesOrderList(int userId) {
         List<SalesOrderLineItem> salesOrderLineItems = salesOrderLineItemService.getByUserId(userId);
-        List<SalesOrderVo> salesOrderVoList=new ArrayList<>();
-        for(SalesOrderLineItem salesOrderLineItem:salesOrderLineItems){
+        List<SalesOrderVo> salesOrderVoList = new ArrayList<>();
+        if(salesOrderLineItems.size()!=0) {
+            for (SalesOrderLineItem salesOrderLineItem : salesOrderLineItems) {
 //            SalesOrderVo salesOrderVo=new SalesOrderVo();
-            salesOrderVoList.add(this.getSalesOrderVo(salesOrderLineItem));
+                salesOrderVoList.add(this.getSalesOrderVo(salesOrderLineItem));
+            }
         }
-
         return salesOrderVoList;
     }
 

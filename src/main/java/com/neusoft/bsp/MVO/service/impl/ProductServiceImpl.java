@@ -132,9 +132,11 @@ public class ProductServiceImpl implements ProductService {
         map.put("userId",userId);
         List<Product> productList=this.getAllByFilter(map);
         List<ProductVo> productVoList=new ArrayList<>();
-        for(Product product:productList){
-            ProductVo productVo=new ProductVo();
-            productVoList.add(productVo.getProductVO(product));
+        if(productList.size()!=0){
+            for (Product product : productList) {
+                ProductVo productVo = new ProductVo();
+                productVoList.add(productVo.getProductVO(product));
+            }
         }
         return  productVoList;
 
@@ -146,15 +148,17 @@ public class ProductServiceImpl implements ProductService {
         map.put("userId",userId);
         List<Product> productList=this.getAllByFilter(map);
         List<ProductDetailVo> productDetailVoList=new ArrayList<>();
-        for(Product product:productList){
-            ProductDetailVo productDetailVo=new ProductDetailVo();
-            int pro_id=product.getPro_id();
-            ProductCategory productCategory=productCategoryService.getPrcByProId(pro_id);
-            productDetailVo.setCategory_name(productCategoryService.getPrcByProId(product.getPro_id()).getCategoryName());
-            productDetailVo.setSts_cd(product.getSts_cd());
-            productDetailVo.setTitle(product.getTitle());
-            productDetailVo.setUrl(imgService.getImgByProId(product.getPro_id()).getUrl());
-            productDetailVoList.add(productDetailVo);
+        if(productList.size()!=0) {
+            for (Product product : productList) {
+                ProductDetailVo productDetailVo = new ProductDetailVo();
+                int pro_id = product.getPro_id();
+                ProductCategory productCategory = productCategoryService.getPrcByProId(pro_id);
+                productDetailVo.setCategory_name(productCategoryService.getPrcByProId(product.getPro_id()).getCategoryName());
+                productDetailVo.setSts_cd(product.getSts_cd());
+                productDetailVo.setTitle(product.getTitle());
+                productDetailVo.setUrl(imgService.getImgByProId(product.getPro_id()).getUrl());
+                productDetailVoList.add(productDetailVo);
+            }
         }
         return productDetailVoList;
     }
