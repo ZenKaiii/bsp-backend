@@ -85,6 +85,7 @@ public class LoginController extends BaseController {
             UserLoginJson result = new UserLoginJson();
             result.code = 200;
             result.data = user;
+            result.role_id = new int[]{user.getRole_id()};
             result.menu = menuRoleService.getRoleMenus(user.getRole_id());
             //String token = TokenUtil.getToken(username,user.getRole_id(),request.getRemoteAddr());
             result.message = JSONArray.toJSONString(user);

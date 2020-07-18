@@ -173,7 +173,7 @@
         and name="pro"
     </select>
 
-    <select id="getUrlByProId" parameterType="java.lang.Integer" resultMap="java.lang.String">
+    <select id="getUrlByProId" parameterType="java.lang.Integer" resultType="java.lang.String">
         select url
         from img
         where entity_id=#{proId}

@@ -1,9 +1,17 @@
 package com.neusoft.bsp.BVO.service.impl;
 
+import com.neusoft.bsp.BVO.entity.Pro;
 import com.neusoft.bsp.BVO.entity.Wit;
+import com.neusoft.bsp.BVO.exception.BvoException;
+import com.neusoft.bsp.BVO.repository.BrdRepository;
+import com.neusoft.bsp.BVO.repository.ProRepository;
 import com.neusoft.bsp.BVO.repository.WitRepository;
 import com.neusoft.bsp.BVO.service.ProService;
+import com.neusoft.bsp.BVO.vo.ProVO;
+import com.neusoft.bsp.MVO.entity.Brand;
 import com.neusoft.bsp.MVO.entity.Product;
+import com.neusoft.bsp.MVO.mapper.BrandMapper;
+import com.neusoft.bsp.MVO.mapper.ImgMapper;
 import com.neusoft.bsp.MVO.mapper.ProductMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,13 +23,45 @@ import java.util.List;
 public class ProServiceImpl implements ProService {
 
     @Autowired
-    ProductMapper productMapper;
+    ProRepository proRepository;
     @Autowired
     WitRepository witRepository;
+    @Autowired
+    ImgMapper imgMapper;
+    @Autowired
+    BrdRepository brdRepository;
 
     @Override
-    public List<Product> findAllProduct() {
-        return productMapper.getAll();
+    public ProVO findProVOById(Integer proId) {
+        Pro pro = proRepository.getProByProId(proId);
+        if (pro == null || brdRepository.getBrdByBrdId(pro.getBrdId())==null){
+            throw new BvoException("proId有误或数据库有误");
+        }
+        return new ProVO(pro.getProId(),
+                pro.getTitle(),
+                pro.getRetailPrice(),
+                pro.getSkuCd(),
+                brdRepository.getBrdByBrdId(pro.getBrdId()).getNameCn(),
+                pro.getStockseting(),
+                imgMapper.getUrlByProId(pro.getProId()));
+    }
+
+    @Override
+    public List<ProVO> findAllProduct() {
+        List<Pro> pros = proRepository.findAll();
+        List<ProVO> proVOS = new ArrayList<>();
+
+        for (Pro pro : pros) {
+            proVOS.add(new ProVO(pro.getProId(),
+                    pro.getTitle(),
+                    pro.getRetailPrice(),
+                    pro.getSkuCd(),
+                    brdRepository.getBrdByBrdId(pro.getProId()).getNameCn(),
+                    pro.getStockseting(),
+                    imgMapper.getUrlByProId(pro.getProId())));
+        }
+
+        return proVOS;
     }
 
     @Override
@@ -30,14 +70,27 @@ public class ProServiceImpl implements ProService {
     }
 
     @Override
-    public List<Product> findProductByWit(Integer dsrId) {
-        List<Product> products = new ArrayList<>();
+    public List<ProVO> findProductByWit(Integer dsrId) {
+        List<Pro> products = new ArrayList<>();
+        List<ProVO> proVOS = new ArrayList<>();
         List<Wit> wits = witRepository.findAllWitByDsrId(dsrId);
         for (Wit wit : wits) {
-            products.add(productMapper.getById(wit.getProId()));
+            products.add(proRepository.getProByProId(wit.getProId()));
         }
-        return products;
+        for (Pro product : products) {
+            proVOS.add(findProVOById(product.getProId()));
+        }
+        return proVOS;
     }
+
+    @Override
+    public void addWitbyDsrIdAndProId(Integer dsrId, Integer proId) {
+        Wit wit = new Wit();
+        wit.setDsrId(dsrId);
+        wit.setProId(proId);
+        witRepository.saveAndFlush(wit);
+    }
+
 
     @Override
     public void deleteWitById(Integer witId) {
@@ -45,4 +98,6 @@ public class ProServiceImpl implements ProService {
         wits.add(witRepository.findWitByWitId(witId));
         witRepository.deleteInBatch(wits);
     }
+
+
 }

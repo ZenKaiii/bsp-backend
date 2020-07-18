@@ -2,6 +2,7 @@ package com.neusoft.bsp.System.service;
 
 import com.neusoft.bsp.System.entity.Menu;
 import com.neusoft.bsp.System.entity.Role;
+import com.neusoft.bsp.System.entity.MenuTree;
 
 import java.util.List;
 import java.util.Map;
@@ -26,4 +27,9 @@ public interface MenuRoleService{
     int deletRoleMenu(int role_id);
 
     String getRoleById(int role_id);
+
+    List<MenuTree> getMenuTree();
+    List<MenuTree> getRoleMenuTree(int role_id);
+
+    int[] getRoleMenuIds(int role_id);
 }

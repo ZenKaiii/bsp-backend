@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.math.BigDecimal;
 
 @Data
 @Entity
@@ -15,4 +16,7 @@ public class Pro {
     private Integer proId;
     private String title;
     private String skuCd;
+    private Integer brdId;
+    private BigDecimal retailPrice;
+    private Integer stockseting;
 }

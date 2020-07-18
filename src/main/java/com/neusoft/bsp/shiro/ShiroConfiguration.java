@@ -31,12 +31,11 @@ public class ShiroConfiguration {
         Map<String,String> filtetMap = new LinkedHashMap<>();
         filtetMap.put("/","anon");
 
-        filtetMap.put("/login/**","anon");
-        filtetMap.put("/register/**","anon");
 
         //！！！测试完记得删掉
 //        filtetMap.put("/menurole/**","anon");
 //        filtetMap.put("/cdm/**","anon");
+        filtetMap.put("/**","anon");
 
         filtetMap.put("/login/userlist","perms[user:userlist]");
 
@@ -45,7 +44,11 @@ public class ShiroConfiguration {
         filtetMap.put("/v2/**","anon");
         filtetMap.put("/webjars/**","anon");
 
-        filtetMap.put("/**","authc");
+
+        filtetMap.put("/login/**","anon");
+        filtetMap.put("/register/**","anon");
+
+        //filtetMap.put("/**","authc");
 
         shiroFilterFactoryBean.setLoginUrl("/login/relogin");
 
