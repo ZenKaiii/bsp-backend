@@ -5,7 +5,11 @@ import com.neusoft.bsp.BVO.entity.Wit;
 import com.neusoft.bsp.BVO.repository.ProRepository;
 import com.neusoft.bsp.BVO.repository.WitRepository;
 import com.neusoft.bsp.BVO.service.ProService;
+import com.neusoft.bsp.BVO.vo.ProVO;
+import com.neusoft.bsp.MVO.entity.Brand;
 import com.neusoft.bsp.MVO.entity.Product;
+import com.neusoft.bsp.MVO.mapper.BrandMapper;
+import com.neusoft.bsp.MVO.mapper.ImgMapper;
 import com.neusoft.bsp.MVO.mapper.ProductMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,10 +24,39 @@ public class ProServiceImpl implements ProService {
     ProRepository proRepository;
     @Autowired
     WitRepository witRepository;
+    @Autowired
+    ImgMapper imgMapper;
+    @Autowired
+    BrandMapper brandMapper;
 
     @Override
-    public List<Pro> findAllProduct() {
-        return proRepository.findAll();
+    public ProVO findProVOById(Integer proId) {
+        Pro pro = proRepository.getProByProId(proId);
+        return new ProVO(pro.getProId(),
+                pro.getTitle(),
+                pro.getRetailPrice(),
+                pro.getSkuCd(),
+                brandMapper.getById(pro.getBrdId()).getName_cn(),
+                pro.getStockseting(),
+                imgMapper.getUrlByProId(pro.getProId()));
+    }
+
+    @Override
+    public List<ProVO> findAllProduct() {
+        List<Pro> pros = proRepository.findAll();
+        List<ProVO> proVOS = new ArrayList<>();
+
+        for (Pro pro : pros) {
+            proVOS.add(new ProVO(pro.getProId(),
+                    pro.getTitle(),
+                    pro.getRetailPrice(),
+                    pro.getSkuCd(),
+                    brandMapper.getById(pro.getBrdId()).getName_cn(),
+                    pro.getStockseting(),
+                    imgMapper.getUrlByProId(pro.getProId())));
+        }
+
+        return proVOS;
     }
 
     @Override
@@ -32,14 +65,27 @@ public class ProServiceImpl implements ProService {
     }
 
     @Override
-    public List<Pro> findProductByWit(Integer dsrId) {
+    public List<ProVO> findProductByWit(Integer dsrId) {
         List<Pro> products = new ArrayList<>();
+        List<ProVO> proVOS = new ArrayList<>();
         List<Wit> wits = witRepository.findAllWitByDsrId(dsrId);
         for (Wit wit : wits) {
             products.add(proRepository.getProByProId(wit.getProId()));
         }
-        return products;
+        for (Pro product : products) {
+            proVOS.add(findProVOById(product.getProId()));
+        }
+        return proVOS;
     }
+
+    @Override
+    public void addWitbyDsrIdAndProId(Integer dsrId, Integer proId) {
+        Wit wit = new Wit();
+        wit.setDsrId(dsrId);
+        wit.setProId(proId);
+        witRepository.saveAndFlush(wit);
+    }
+
 
     @Override
     public void deleteWitById(Integer witId) {
@@ -47,4 +93,6 @@ public class ProServiceImpl implements ProService {
         wits.add(witRepository.findWitByWitId(witId));
         witRepository.deleteInBatch(wits);
     }
+
+
 }

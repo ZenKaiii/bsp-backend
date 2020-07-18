@@ -16,5 +16,7 @@ public class Pro {
     private Integer proId;
     private String title;
     private String skuCd;
+    private Integer brdId;
     private BigDecimal retailPrice;
+    private Integer stockseting;
 }
