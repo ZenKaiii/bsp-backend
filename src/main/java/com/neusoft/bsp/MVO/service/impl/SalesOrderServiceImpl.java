@@ -32,18 +32,35 @@ public class SalesOrderServiceImpl implements SalesOrderService {
     @Override
     public int alterSalesOrder(SalesOrderVo salesOrderVo, int userId) {
         int i=0;
-        Map<String,Object> map=new HashMap<>();
-        map.put("sku",salesOrderVo.getSku());
-        map.put("orderNo",salesOrderVo.getOrderNo());
+        if(salesOrderVo.getOrderSts()==""){
+            i=this.deliver(salesOrderVo.getSku(),salesOrderVo.getQty());
+        }
+        if(i==1) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("sku", salesOrderVo.getSku());
+            map.put("orderNo", salesOrderVo.getOrderNo());
 
-        SalesOrder salesOrder=this.getSaoByOrderNo(salesOrderVo.getOrderNo());
-        SalesOrderLineItem salesOrderLineItem=salesOrderLineItemService.getSalBySku(map);
+            SalesOrder salesOrder = this.getSaoByOrderNo(salesOrderVo.getOrderNo());
+            SalesOrderLineItem salesOrderLineItem = salesOrderLineItemService.getSalBySku(map);
 
-        salesOrderVo.changeSalesOrder(salesOrder);
-        i=this.update(salesOrder);
+            salesOrderVo.changeSalesOrder(salesOrder);
+            i = this.update(salesOrder);
 
-        salesOrderVo.changeSalesOrderLineItem(salesOrderLineItem);
-        i=salesOrderLineItemService.update(salesOrderLineItem);
+            salesOrderVo.changeSalesOrderLineItem(salesOrderLineItem);
+            i = salesOrderLineItemService.update(salesOrderLineItem);
+        }
+        return i;
+    }
+
+    public int deliver(String sku,int qty){
+        Product product=productService.getBySku(sku);
+        int i=0;
+        if(product!=null){
+            if(product.getStockseting()>qty) {
+                product.setStockseting(product.getStockseting()-qty);
+                i=productService.update(product);
+            }
+        }
         return i;
     }
 
