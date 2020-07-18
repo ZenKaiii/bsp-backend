@@ -30,6 +30,17 @@ public class ProServiceImpl implements ProService {
     BrandMapper brandMapper;
 
     @Override
+    public ProVO findProVOById(Integer proId) {
+        Pro pro = proRepository.getProByProId(proId);
+        return new ProVO(pro.getTitle(),
+                pro.getRetailPrice(),
+                pro.getSkuCd(),
+                brandMapper.getById(pro.getBrdId()).getName_cn(),
+                pro.getStockseting(),
+                imgMapper.getUrlByProId(pro.getProId()));
+    }
+
+    @Override
     public List<ProVO> findAllProduct() {
         List<Pro> pros = proRepository.findAll();
         List<ProVO> proVOS = new ArrayList<>();
@@ -62,9 +73,20 @@ public class ProServiceImpl implements ProService {
     }
 
     @Override
+    public void addWitbyDsrIdAndProId(Integer dsrId, Integer proId) {
+        Wit wit = new Wit();
+        wit.setDsrId(dsrId);
+        wit.setProId(proId);
+        witRepository.saveAndFlush(wit);
+    }
+
+
+    @Override
     public void deleteWitById(Integer witId) {
         List<Wit> wits = new ArrayList<>();
         wits.add(witRepository.findWitByWitId(witId));
         witRepository.deleteInBatch(wits);
     }
+
+
 }

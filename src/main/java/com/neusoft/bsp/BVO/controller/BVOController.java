@@ -63,9 +63,20 @@ public class BVOController {
         return ResultVOUtil.success(productService.findAllProduct());
     }
 
-    @GetMapping("/wit/{id}")
-    public ResultVO findAllWitByDsrId(@PathVariable("id") Integer id){
+    @GetMapping("/product/{proId}")
+    public ResultVO findPro(@PathVariable("proId") Integer id){
+        return ResultVOUtil.success(productService.findProVOById(id));
+    }
+
+    @GetMapping("/wit/{dsrId}")
+    public ResultVO findAllWitByDsrId(@PathVariable("dsrId") Integer id){
         return ResultVOUtil.success(productService.findProductByWit(id));
+    }
+
+    @GetMapping("/addwit/{dsrId}/{proId}")
+    public ResultVO addWit(@PathVariable("dsrId")Integer dsrId,@PathVariable("proId")Integer proId){
+        productService.addWitbyDsrIdAndProId(dsrId,proId);
+        return ResultVOUtil.success(null);
     }
 
     @DeleteMapping("/deleteWit/{id}")
