@@ -38,11 +38,11 @@ public class BrandController extends BaseController {
             throw BusinessException.INSERT_FAIL.newInstance(this.getErrorResponse(bindingResult),
                     new Object[]{brandVo.toString()});
         } else {
-            Map<String,Object> map=new HashMap<>();
+            int i=brandService.alterBrand(brandVo,userId);
+            /*Map<String,Object> map=new HashMap<>();
             map.put("name_en",brandVo.getName_en());
             map.put("userId",userId);
             Brand brand=brandService.getByNameEn(map);
-            int i=0;
             if(brand==null){
                 brand=brandVo.toBrand();
                 brand.setCreated_by(""+userId);
@@ -56,7 +56,7 @@ public class BrandController extends BaseController {
                 brandVo.changeBrand(brand);
                 brand.setLast_update_date(new Date(System.currentTimeMillis()));
                 i=brandService.update(brand);
-            }
+            }*/
             BaseModel result = new BaseModel();
             if(i==1){
                 result.code = 200;
@@ -70,8 +70,11 @@ public class BrandController extends BaseController {
     @GetMapping("/brandList")
     public BaseModelJsonPaging<PageInfo<BrandVo>> getBrandList(Integer pageNum, Integer pageSize,
                                                                @RequestParam int userId) {
-        Map<String,Object> map = new HashMap<>();
-        map.put("user_id",userId);
+
+        List<BrandVo> brandVoList=brandService.brandList(userId);
+        PageHelper.startPage(pageNum,pageSize,true);
+        /*Map<String,Object> map = new HashMap<>();
+        map.put("user_id",userId);*/
         BaseModelJsonPaging<PageInfo<BrandVo>> result = new BaseModelJsonPaging<>();
         if(pageNum == null){
             pageNum = 1;
@@ -79,13 +82,12 @@ public class BrandController extends BaseController {
         if(pageSize == null){
             pageSize = 10;
         }
-        List<Brand> brandList= brandService.getAllByUserId(map);
+        /*List<Brand> brandList= brandService.getAllByUserId(map);
         List<BrandVo> brandVoList=new ArrayList<>();
         for(Brand brand:brandList){
             BrandVo brandVo=new BrandVo();
             brandVoList.add(brandVo.getBrandVO(brand));
-        }
-        PageHelper.startPage(pageNum,pageSize,true);
+        }*/
         PageInfo<BrandVo> brandVoPage=new PageInfo(brandVoList);
         result.code = 200;
         result.data = brandVoPage;
@@ -101,11 +103,12 @@ public class BrandController extends BaseController {
                     new Object[]{brandVo.toString()});
         } else {
             BaseModel result = new BaseModel();
-            Map<String,Object> map=new HashMap<>();
-            map.put("name_en",brandVo.getName_en());
-            map.put("userId",userId);
-            Brand brand=brandService.getByNameEn(map);
-            int i = brandService.delete(brand.getBrd_id());
+//            Map<String,Object> map=new HashMap<>();
+//            map.put("name_en",brandVo.getName_en());
+//            map.put("userId",userId);
+//            Brand brand=brandService.getByNameEn(map);
+//            int i = brandService.delete(brand.getBrd_id());
+            int i=brandService.deleteBrand(brandVo,userId);
             if (i == 1) {
                 result.code = 200;
                 return result;

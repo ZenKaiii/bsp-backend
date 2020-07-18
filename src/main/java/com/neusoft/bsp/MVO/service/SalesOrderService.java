@@ -2,11 +2,17 @@ package com.neusoft.bsp.MVO.service;
 
 import com.github.pagehelper.PageInfo;
 import com.neusoft.bsp.MVO.entity.SalesOrder;
+import com.neusoft.bsp.MVO.entity.SalesOrderLineItem;
+import com.neusoft.bsp.MVO.vo.SalesOrderVo;
 
 import java.util.List;
 import java.util.Map;
 
 public interface SalesOrderService {
+
+    int alterSalesOrder(SalesOrderVo salesOrderVo, int userId);
+
+    List<SalesOrderVo> getSalesOrderList(int userId);
 
     int insert(SalesOrder salesOrder);
 

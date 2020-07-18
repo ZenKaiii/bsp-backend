@@ -45,7 +45,7 @@ public class ProductController extends BaseController {
             throw BusinessException.INSERT_FAIL.newInstance(this.getErrorResponse(bindingResult),
                     new Object[]{productVo.toString()});
         } else {
-            Product product=productService.getBySku(productVo.getSku_cd());
+           /* Product product=productService.getBySku(productVo.getSku_cd());
             int i=0;
             if(product==null){
                 product=productVo.toProduct();
@@ -91,8 +91,9 @@ public class ProductController extends BaseController {
                 ProductDescription productDescription=productDescriptionService.getByProId(product.getPro_id());
                 productVo.changeProductDescription(productDescription);
                 productDescription.setLast_update_date(new Date(System.currentTimeMillis()));
-                i=productDescriptionService.update(productDescription);
-            }
+                i=productDescriptionService.update(productDescription);*/
+//            }
+            int i= productService.alterProduct(productVo,userId);
             BaseModel result = new BaseModel();
             if(i==1){
                 result.code = 200;
@@ -106,12 +107,10 @@ public class ProductController extends BaseController {
     @PostMapping("/alterProductDetail")
     public BaseModel alterProductDetail(@Validated({InsertGroup.class}) @RequestBody ProductDetailVo productDetailVo, @RequestParam int userId, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            System.out.println("aaaaaaaaaaaaaaa");
             throw BusinessException.INSERT_FAIL.newInstance(this.getErrorResponse(bindingResult),
                     new Object[]{productDetailVo.toString()});
         } else {
-            System.out.println("lalallalallallal");
-            int man_id=manufacturerService.getManIdByUserId(userId);
+            /*int man_id=manufacturerService.getManIdByUserId(userId);
             Map<String,Object> map=new HashMap<>();
             map.put("man_id",man_id);
             map.put("title",productDetailVo.getTitle());
@@ -149,8 +148,8 @@ public class ProductController extends BaseController {
                 Img img=imgService.getImgByProId(product.getPro_id());
                 productDetailVo.changeImg(img);
                 i=imgService.update(img);
-            }
-
+            }*/
+            int i=productService.alterProductDetail(productDetailVo,userId);
             BaseModel result = new BaseModel();
             if(i==1){
                 result.code = 200;
@@ -166,21 +165,21 @@ public class ProductController extends BaseController {
     public BaseModelJsonPaging<PageInfo<ProductVo>> getProductList(Integer pageNum, Integer pageSize,
                                                                    @RequestParam int userId) {
         BaseModelJsonPaging<PageInfo<ProductVo>> result = new BaseModelJsonPaging();
-        Map<String,Object> map=new HashMap<>();
-        map.put("userId",userId);
+       /* Map<String,Object> map=new HashMap<>();
+        map.put("userId",userId);*/
         if(pageNum == null){
             pageNum = 1;
         }
         if(pageSize == null){
             pageSize = 10;
         }
-        List<Product> productList=productService.getAllByFilter(map);
-        List<ProductVo> productVoList=new ArrayList<>();
-        for(Product product:productList){
-            ProductVo productVo=new ProductVo();
-            productVoList.add(productVo.getProductVO(product));
-        }
-
+//        List<Product> productList=productService.getAllByFilter(map);
+//        List<ProductVo> productVoList=new ArrayList<>();
+//        for(Product product:productList){
+//            ProductVo productVo=new ProductVo();
+//            productVoList.add(productVo.getProductVO(product));
+//        }
+        List<ProductVo> productVoList=productService.getProductList(userId);
         PageHelper.startPage(pageNum,pageSize,true);
         PageInfo<ProductVo> productVoPage=new PageInfo(productVoList);
         result.code = 200;
@@ -193,15 +192,15 @@ public class ProductController extends BaseController {
     public BaseModelJsonPaging<PageInfo<ProductDetailVo>> getProductDetailList(Integer pageNum, Integer pageSize,
                                                                    @RequestParam int userId) {
         BaseModelJsonPaging<PageInfo<ProductDetailVo>> result = new BaseModelJsonPaging();
-        Map<String,Object> map=new HashMap<>();
-        map.put("userId",userId);
+        /*Map<String,Object> map=new HashMap<>();
+        map.put("userId",userId);*/
         if(pageNum == null){
             pageNum = 1;
         }
         if(pageSize == null){
             pageSize = 10;
         }
-        List<Product> productList=productService.getAllByFilter(map);
+       /* List<Product> productList=productService.getAllByFilter(map);
         List<ProductDetailVo> productDetailVoList=new ArrayList<>();
         for(Product product:productList){
             ProductDetailVo productDetailVo=new ProductDetailVo();
@@ -212,8 +211,8 @@ public class ProductController extends BaseController {
             productDetailVo.setTitle(product.getTitle());
             productDetailVo.setUrl(imgService.getImgByProId(product.getPro_id()).getUrl());
             productDetailVoList.add(productDetailVo);
-        }
-
+        }*/
+        List<ProductDetailVo> productDetailVoList=productService.getProductDetailList(userId);
         PageHelper.startPage(pageNum,pageSize,true);
         PageInfo<ProductDetailVo> productDetailVoPage=new PageInfo(productDetailVoList);
         result.code = 200;
