@@ -11,7 +11,7 @@ public interface ProService {
     public ProVO findProVOById(Integer proId);
     public List<ProVO> findAllProduct();
     public List<Wit> findAllWitByDsrId(Integer dsrId);
-    public List<Pro> findProductByWit(Integer dsrId);
+    public List<ProVO> findProductByWit(Integer dsrId);
     public void addWitbyDsrIdAndProId(Integer dsrId,Integer proId);
     public void deleteWitById(Integer witId);
 }

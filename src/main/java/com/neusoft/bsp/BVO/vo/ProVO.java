@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 public class ProVO {
+    private Integer proId;
     private String name;
     private BigDecimal price;
     private String sku;

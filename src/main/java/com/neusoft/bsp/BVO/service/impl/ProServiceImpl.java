@@ -32,7 +32,8 @@ public class ProServiceImpl implements ProService {
     @Override
     public ProVO findProVOById(Integer proId) {
         Pro pro = proRepository.getProByProId(proId);
-        return new ProVO(pro.getTitle(),
+        return new ProVO(pro.getProId(),
+                pro.getTitle(),
                 pro.getRetailPrice(),
                 pro.getSkuCd(),
                 brandMapper.getById(pro.getBrdId()).getName_cn(),
@@ -46,7 +47,8 @@ public class ProServiceImpl implements ProService {
         List<ProVO> proVOS = new ArrayList<>();
 
         for (Pro pro : pros) {
-            proVOS.add(new ProVO(pro.getTitle(),
+            proVOS.add(new ProVO(pro.getProId(),
+                    pro.getTitle(),
                     pro.getRetailPrice(),
                     pro.getSkuCd(),
                     brandMapper.getById(pro.getBrdId()).getName_cn(),
@@ -63,13 +65,17 @@ public class ProServiceImpl implements ProService {
     }
 
     @Override
-    public List<Pro> findProductByWit(Integer dsrId) {
+    public List<ProVO> findProductByWit(Integer dsrId) {
         List<Pro> products = new ArrayList<>();
+        List<ProVO> proVOS = new ArrayList<>();
         List<Wit> wits = witRepository.findAllWitByDsrId(dsrId);
         for (Wit wit : wits) {
             products.add(proRepository.getProByProId(wit.getProId()));
         }
-        return products;
+        for (Pro product : products) {
+            proVOS.add(findProVOById(product.getProId()));
+        }
+        return proVOS;
     }
 
     @Override
