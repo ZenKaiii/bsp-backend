@@ -26,6 +26,9 @@ public class ManufacturerServiceImpl implements ManufacturerService {
         Map<String,Object> map = new HashMap<>();
         Manufacturer manufacturer=this.selectByUserId(userId);
 //            Manufacturer manufacturer=new Manufacturer();
+        if(manufacturer==null){
+            manufacturer=new Manufacturer();
+        }
         manufacturer=manufacturerVo.changeManufacturer(manufacturer);
         map.put("man_id",manufacturer.getMan_id());
         map.put("name_en",manufacturer.getName_en());
@@ -47,7 +50,7 @@ public class ManufacturerServiceImpl implements ManufacturerService {
             map.put("created_date",new Date(System.currentTimeMillis()).toString());
             i=this.insert(map);
         }
-        return 0;
+        return i;
     }
 
 
