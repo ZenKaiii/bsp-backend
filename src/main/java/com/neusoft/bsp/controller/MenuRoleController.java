@@ -1,16 +1,15 @@
 package com.neusoft.bsp.controller;
 
 
-import com.github.pagehelper.PageInfo;
 import com.neusoft.bsp.System.entity.Menu;
 import com.neusoft.bsp.System.entity.Role;
-import com.neusoft.bsp.System.entity.User;
 import com.neusoft.bsp.System.service.MenuRoleService;
 import com.neusoft.bsp.System.vo.MenuListJson;
+import com.neusoft.bsp.System.entity.MenuTree;
 import com.neusoft.bsp.System.vo.RoleListJson;
 import com.neusoft.bsp.common.base.BaseController;
 import com.neusoft.bsp.common.base.BaseModel;
-import com.neusoft.bsp.common.base.BaseModelJsonPaging;
+import com.neusoft.bsp.common.base.BaseModelJson;
 import com.neusoft.bsp.common.exception.BusinessException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +38,24 @@ public class MenuRoleController extends BaseController {
         return result;
     }
 
+    @GetMapping("/menutree")
+    public BaseModelJson<List<MenuTree>> getMenuTree() {
+        BaseModelJson<List<MenuTree>> result = new BaseModelJson<List<MenuTree>>();
+        result.code = 200;
+        result.message = "fetch success";
+        result.data = menuRoleService.getMenuTree();
+        return result;
+    }
+
+    @GetMapping("/menutreerole")
+    public BaseModelJson<List<MenuTree>> getRoleMenuTree(@RequestParam int role_id) {
+        BaseModelJson<List<MenuTree>> result = new BaseModelJson<List<MenuTree>>();
+        result.code = 200;
+        result.message = "fetch success";
+        result.data = menuRoleService.getRoleMenuTree(role_id);
+        return result;
+    }
+
     @RequiresPermissions("menu:menulist")
     @GetMapping("/getRoleMenulist")
     public MenuListJson getRoleMenuList(@RequestParam int role_id) {
@@ -49,8 +66,30 @@ public class MenuRoleController extends BaseController {
         return result;
     }
 
-    @PostMapping("/addmenu")
-    public BaseModel addMenu(@RequestBody Menu menu){
+    @GetMapping("/getRoleMenuIds")
+    public BaseModelJson<int[]> getRoleMenuIds(@RequestParam int role_id) {
+        BaseModelJson<int[]> result = new BaseModelJson<int[]>();
+        result.code = 200;
+        result.message = "fetch success";
+        result.data = menuRoleService.getRoleMenuIds(role_id);
+        return result;
+    }
+
+    @PostMapping("/addmenu1")
+    public BaseModel addMenu1(@RequestBody Menu menu){
+        menu.setParent_id(0);
+        if(menuRoleService.insertMenu(menu)==1){
+            BaseModel result = new BaseModel();
+            result.message = "add success";
+            result.code = 200;
+            return result;
+        }else{
+            throw new BusinessException().INSERT_FAIL;
+        }
+    }
+
+    @PostMapping("/addmenu2")
+    public BaseModel addMenu2(@RequestBody Menu menu){
         if(menuRoleService.insertMenu(menu)==1){
             BaseModel result = new BaseModel();
             result.message = "add success";

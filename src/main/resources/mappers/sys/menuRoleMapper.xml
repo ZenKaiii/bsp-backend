@@ -17,14 +17,26 @@
     </update>
 
     <delete id="deleteMenu" parameterType="Integer">
-        delete from sys_menu where menu_id = #{menu_id}
+         delete from sys_menu where menu_id = #{menu_id} or parent_id = #{menu_id}
     </delete>
 
     <select id="getAllMenus" resultType="Menu">
         select * from sys_menu
     </select>
 
+    <select id="getMenuTree" resultType="MenuTree">
+        select * from sys_menu
+    </select>
+
     <select id="getRoleMenus" parameterType="Integer" resultType="Menu">
+        select * from sys_menu where menu_id in (select menu_id from role_menu where role_id= #{role_id})
+    </select>
+
+    <select id="getRoleMenuIds" parameterType="Integer" resultType="Integer">
+        select menu_id from sys_menu where menu_id in (select menu_id from role_menu where role_id= #{role_id})
+    </select>
+
+    <select id="getRoleMenuTree" parameterType="Integer" resultType="MenuTree">
         select * from sys_menu where menu_id in (select menu_id from role_menu where role_id= #{role_id})
     </select>
 
