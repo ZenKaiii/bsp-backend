@@ -2,7 +2,7 @@ package com.neusoft.bsp.System.mapper;
 
 import com.neusoft.bsp.System.entity.Menu;
 import com.neusoft.bsp.System.entity.Role;
-import com.neusoft.bsp.common.base.BaseMapper;
+import com.neusoft.bsp.System.entity.MenuTree;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -29,4 +29,9 @@ public interface MenuRoleMapper{
 
     String getRoleById(int role_id);
 
+    List<MenuTree> getMenuTree();
+
+    List<MenuTree> getRoleMenuTree(int role_id);
+
+    int[] getRoleMenuIds(int role_id);
 }

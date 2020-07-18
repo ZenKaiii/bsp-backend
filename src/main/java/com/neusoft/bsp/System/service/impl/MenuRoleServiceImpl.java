@@ -4,6 +4,7 @@ import com.neusoft.bsp.System.entity.Menu;
 import com.neusoft.bsp.System.entity.Role;
 import com.neusoft.bsp.System.mapper.MenuRoleMapper;
 import com.neusoft.bsp.System.service.MenuRoleService;
+import com.neusoft.bsp.System.entity.MenuTree;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -53,7 +54,7 @@ public class MenuRoleServiceImpl implements MenuRoleService {
             if(pid!=0){
                 for(Menu menu2: list){
                     if(menu2.getMenu_id()==pid){
-                        System.out.println(menu2.getMenu_name());
+                        //System.out.println(menu2.getMenu_name());
                         menu2.getSubs().add(menu);
                         menu.setSubs(null);
                         continue;
@@ -88,7 +89,7 @@ public class MenuRoleServiceImpl implements MenuRoleService {
             if(pid!=0){
                 for(Menu menu2: list){
                     if(menu2.getMenu_id()==pid){
-                        System.out.println(menu2.getMenu_name());
+                        //System.out.println(menu2.getMenu_name());
                         menu2.getSubs().add(menu);
                         menu.setSubs(null);
                         continue;
@@ -139,6 +140,71 @@ public class MenuRoleServiceImpl implements MenuRoleService {
     @Override
     public String getRoleById(int role_id) {
         return menuRoleMapper.getRoleById(role_id);
+    }
+
+    @Override
+    public List<MenuTree> getMenuTree() {
+        List<MenuTree> list = menuRoleMapper.getMenuTree();
+        for(MenuTree menu: list){
+            int pid= menu.getParent_id();
+            if(pid!=0){
+                for(MenuTree menu2: list){
+                    if(menu2.getMenu_id()==pid){
+                        //System.out.println(menu2.getMenu_name());
+                        menu2.getChildren().add(menu);
+                        menu.setChildren(null);
+                        continue;
+                    }
+                }
+            }
+        }
+        Iterator<MenuTree> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            MenuTree menu = iterator.next();
+            if (menu.getParent_id()!=0) {
+                iterator.remove();
+            }else{
+                if(menu.getChildren()!=null&&menu.getChildren().size()==0){
+                    menu.setChildren(null);
+                }
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public List<MenuTree> getRoleMenuTree(int role_id) {
+        List<MenuTree> list = menuRoleMapper.getRoleMenuTree(role_id);
+        for(MenuTree menu: list){
+            int pid= menu.getParent_id();
+            if(pid!=0){
+                for(MenuTree menu2: list){
+                    if(menu2.getMenu_id()==pid){
+                        //System.out.println(menu2.getMenu_name());
+                        menu2.getChildren().add(menu);
+                        menu.setChildren(null);
+                        continue;
+                    }
+                }
+            }
+        }
+        Iterator<MenuTree> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            MenuTree menu = iterator.next();
+            if (menu.getParent_id()!=0) {
+                iterator.remove();
+            }else{
+                if(menu.getChildren()!=null&&menu.getChildren().size()==0){
+                    menu.setChildren(null);
+                }
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public int[] getRoleMenuIds(int role_id) {
+        return menuRoleMapper.getRoleMenuIds(role_id);
     }
 
 }
