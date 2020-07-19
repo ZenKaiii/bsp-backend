@@ -3,6 +3,7 @@ package com.neusoft.bsp.MVO.vo;
 import com.neusoft.bsp.MVO.entity.*;
 
 public class ProductVo {
+    int proId;
     String sku_cd;
     String title;
     String upc;
@@ -21,7 +22,8 @@ public class ProductVo {
     @Override
     public String toString() {
         return "ProductVo{" +
-                "sku_cd='" + sku_cd + '\'' +
+                "proId=" + proId +
+                ", sku_cd='" + sku_cd + '\'' +
                 ", title='" + title + '\'' +
                 ", upc='" + upc + '\'' +
                 ", Ean='" + Ean + '\'' +
@@ -36,6 +38,14 @@ public class ProductVo {
                 ", stock=" + stock +
                 ", sts_cd=" + sts_cd +
                 '}';
+    }
+
+    public int getProId() {
+        return proId;
+    }
+
+    public void setProId(int proId) {
+        this.proId = proId;
     }
 
     public char getSts_cd() {
@@ -161,6 +171,7 @@ public class ProductVo {
         productVo.setRetail_price(product.getRetail_price());
         productVo.setStock(product.getStockseting());
         productVo.setSts_cd(product.getSts_cd());
+        productVo.setProId(product.getPro_id());
         return productVo;
     }
 
@@ -175,6 +186,7 @@ public class ProductVo {
         product.setRetail_price(this.getRetail_price());
         product.setStockseting(this.getStock());
         product.setSts_cd(this.getSts_cd());
+        product.setPro_id(this.getProId());
         return product;
     }
 
@@ -188,6 +200,7 @@ public class ProductVo {
         product.setRetail_price(this.getRetail_price());
         product.setStockseting(this.getStock());
         product.setSts_cd(this.getSts_cd());
+        product.setPro_id(this.getProId());
         return product;
     }
 

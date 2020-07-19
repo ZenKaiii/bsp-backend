@@ -1,5 +1,6 @@
 package com.neusoft.bsp.MVO.vo;
 
+import com.neusoft.bsp.BVO.entity.Pro;
 import com.neusoft.bsp.MVO.entity.Img;
 import com.neusoft.bsp.MVO.entity.Product;
 import com.neusoft.bsp.MVO.entity.ProductCategory;
@@ -12,6 +13,7 @@ import java.util.Map;
 
 public class ProductDetailVo {
 
+    int proId;
     String title;
     String url;
     String category_name;
@@ -20,11 +22,20 @@ public class ProductDetailVo {
     @Override
     public String toString() {
         return "ProductDetailVo{" +
-                "title='" + title + '\'' +
+                "proId=" + proId +
+                ", title='" + title + '\'' +
                 ", url='" + url + '\'' +
                 ", category_name='" + category_name + '\'' +
                 ", sts_cd=" + sts_cd +
                 '}';
+    }
+
+    public int getProId() {
+        return proId;
+    }
+
+    public void setProId(int proId) {
+        this.proId = proId;
     }
 
     public char getSts_cd() {
@@ -64,6 +75,21 @@ public class ProductDetailVo {
         img.setName("pro");
         img.setUrl(this.getUrl());
         return img;
+    }
+
+    public Product toProduct(){
+        Product product=new Product();
+        product.setPro_id(this.getProId());
+        product.setTitle(this.getTitle());
+        product.setSts_cd(this.getSts_cd());
+        return product;
+    }
+
+    public Product changeProduct(Product product){
+        product.setPro_id(this.getProId());
+        product.setTitle(this.getTitle());
+        product.setSts_cd(this.getSts_cd());
+        return product;
     }
 
     public ProductCategory toProductCategory(){

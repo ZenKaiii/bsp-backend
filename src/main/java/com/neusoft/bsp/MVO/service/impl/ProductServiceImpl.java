@@ -32,10 +32,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public int alterProduct(ProductVo productVo, int userId) {
-        Product product=this.getBySku(productVo.getSku_cd());
         int i=0;
-        if(product==null){
-            product=productVo.toProduct();
+        Product product=productVo.toProduct();
+        if(productVo.getProId()==0){
             product.setCreated_by(""+userId);
             product.setLast_update_by(""+userId);
             product.setCreation_date(new Date(System.currentTimeMillis()));
@@ -43,43 +42,62 @@ public class ProductServiceImpl implements ProductService {
             int man_id=manufacturerService.getManIdByUserId(userId);
             product.setMan_id(man_id);
             i=this.insert(product);
-            if(i==1){
-                product=this.getBySku(productVo.getSku_cd());
-
-                ProductDescription productDescription=productVo.toProductDescription();
-                productDescription.setPro_id(product.getPro_id());
-                productDescription.setCreated_by(""+userId);
-                productDescription.setLast_update_by(""+userId);
-                productDescription.setCreation_date(new Date(System.currentTimeMillis()));
-                productDescription.setLast_update_date(new Date(System.currentTimeMillis()));
-                i=productDescriptionService.insert(productDescription);
-
-
-                PackageInfo packageInfo=productVo.toPackageInfo();
-                packageInfo.setPro_id(product.getPro_id());
-                packageInfo.setCreated_by(""+userId);
-                packageInfo.setLast_update_by(""+userId);
-                packageInfo.setCreation_date(new Date(System.currentTimeMillis()));
-                packageInfo.setLast_update_date(new Date(System.currentTimeMillis()));
-                i=packageInfoService.insert(packageInfo);
+            if(i==0) {
+                return 0;
             }
         }
-        else {
+        else{
             productVo.changeProduct(product);
             product.setLast_update_date(new Date(System.currentTimeMillis()));
             i = this.update(product);
-
+            if(i==0) {
+                return 0;
+            }
+        }
+        product=this.getBySku(productVo.getSku_cd());
+        if(packageInfoService.getByProId(product.getPro_id())==null) {
+            PackageInfo packageInfo = productVo.toPackageInfo();
+            packageInfo.setPro_id(product.getPro_id());
+            packageInfo.setCreated_by("" + userId);
+            packageInfo.setLast_update_by("" + userId);
+            packageInfo.setCreation_date(new Date(System.currentTimeMillis()));
+            packageInfo.setLast_update_date(new Date(System.currentTimeMillis()));
+            i = packageInfoService.insert(packageInfo);
+            if(i==0) {
+                return 0;
+            }
+        }
+        else{
             PackageInfo packageInfo = packageInfoService.getByProId(product.getPro_id());
             productVo.changePackageInfo(packageInfo);
             packageInfo.setLast_update_date(new Date(System.currentTimeMillis()));
             i = packageInfoService.update(packageInfo);
-
+            if(i==0) {
+                return 0;
+            }
+        }
+        if(productDescriptionService.getByProId(product.getPro_id())==null){
+            ProductDescription productDescription = productVo.toProductDescription();
+            productDescription.setPro_id(product.getPro_id());
+            productDescription.setCreated_by("" + userId);
+            productDescription.setLast_update_by("" + userId);
+            productDescription.setCreation_date(new Date(System.currentTimeMillis()));
+            productDescription.setLast_update_date(new Date(System.currentTimeMillis()));
+            i = productDescriptionService.insert(productDescription);
+            if(i==0) {
+                return 0;
+            }
+        }
+        else {
             ProductDescription productDescription = productDescriptionService.getByProId(product.getPro_id());
             productVo.changeProductDescription(productDescription);
             productDescription.setLast_update_date(new Date(System.currentTimeMillis()));
             i = productDescriptionService.update(productDescription);
+            if(i==0) {
+                return 0;
+            }
         }
-        return i;
+        return 1;
     }
 
     @Override
@@ -88,15 +106,13 @@ public class ProductServiceImpl implements ProductService {
         if(man_id==0){
             return 0;
         }
-        Map<String,Object> map=new HashMap<>();
-        map.put("man_id",man_id);
-        map.put("title",productDetailVo.getTitle());
-        Product product=this.getByTitle(map);
+        Product product=this.getById(productDetailVo.getProId());
         if(product==null){
             return 0;
         }
+        productDetailVo.changeProduct(product);
+
         int i = 0;
-        product.setSts_cd(productDetailVo.getSts_cd());
 
         this.update(product);
 
