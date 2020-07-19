@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
@@ -102,9 +101,9 @@ public class BVOController {
         return ResultVOUtil.success(orderService.getAllOrderByDsrId(id));
     }
 
-    @GetMapping("/getAllOrderByDsrIdAndOrderSts/{dsrid}/{ordersts}")
-    public ResultVO getAllOrderByDsrIdAndOrderSts(@PathVariable("dsrid")Integer dsrId, @PathVariable("ordersts")String orderSts){
-        return ResultVOUtil.success(orderService.getAllOrderByDsrIdAndStatus(dsrId,orderSts));
+    @GetMapping("/getAllOrderByUserIdAndOrderSts/{userid}/{ordersts}")
+    public ResultVO getAllOrderByDsrIdAndOrderSts(@PathVariable("userid")Integer userId, @PathVariable("ordersts")String orderSts){
+        return ResultVOUtil.success(orderService.getAllOrderByUserIdAndStatus(userId,orderSts));
     }
 
     @GetMapping("/wallet/{buyerId}")

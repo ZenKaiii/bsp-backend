@@ -11,7 +11,7 @@ public interface OrderService {
 
     public List<OrderVO> getAllOrderByDsrId(Integer dsrId);
 
-    public List<OrderVO> getAllOrderByDsrIdAndStatus(Integer dsrId, String orderSts);
+    public List<OrderVO> getAllOrderByUserIdAndStatus(Integer userId, String orderSts);
 
     public void payOrder(Integer saoId);
 }
