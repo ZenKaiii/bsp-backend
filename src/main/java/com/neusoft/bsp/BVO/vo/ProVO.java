@@ -14,5 +14,6 @@ public class ProVO {
     private String sku;
     private String brand;
     private Integer stock;
+    private String description;
     private String imgPath;
 }
