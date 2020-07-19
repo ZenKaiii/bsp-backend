@@ -51,6 +51,8 @@ public class LoginController extends BaseController {
     @Autowired
     MenuRoleService menuRoleService;
 
+    TokenUtil tokenUtil;
+
 
     @PostMapping("/checkUser")
     public UserLoginJson checkUser(@RequestParam String username, @RequestParam String password, HttpServletRequest request) {
@@ -85,9 +87,11 @@ public class LoginController extends BaseController {
             UserLoginJson result = new UserLoginJson();
             result.code = 200;
             result.data = user;
-            result.role_id = new int[]{user.getRole_id()};
+            result.user_id = user.getUser_id();
+            result.role_id = user.getRole_id();
             result.menu = menuRoleService.getRoleMenus(user.getRole_id());
-            //String token = TokenUtil.getToken(username,user.getRole_id(),request.getRemoteAddr());
+            String token = TokenUtil.getToken(username,user.getUser_id(),ip);
+            result.token = token;
             result.message = JSONArray.toJSONString(user);
             return result;
 
