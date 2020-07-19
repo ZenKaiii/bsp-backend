@@ -6,7 +6,7 @@ public class ProductVo {
     String sku_cd;
     String title;
     String upc;
-    String ean;
+    String Ean;
     String model;
     String warranty_day;
     Double retail_price;
@@ -15,6 +15,8 @@ public class ProductVo {
     double height;
     double length;
     double weight;
+    int stock;
+    char sts_cd;
 
     @Override
     public String toString() {
@@ -22,7 +24,7 @@ public class ProductVo {
                 "sku_cd='" + sku_cd + '\'' +
                 ", title='" + title + '\'' +
                 ", upc='" + upc + '\'' +
-                ", ean='" + ean + '\'' +
+                ", Ean='" + Ean + '\'' +
                 ", model='" + model + '\'' +
                 ", warranty_day='" + warranty_day + '\'' +
                 ", retail_price=" + retail_price +
@@ -31,7 +33,33 @@ public class ProductVo {
                 ", height=" + height +
                 ", length=" + length +
                 ", weight=" + weight +
+                ", stock=" + stock +
+                ", sts_cd=" + sts_cd +
                 '}';
+    }
+
+    public char getSts_cd() {
+        return sts_cd;
+    }
+
+    public void setSts_cd(char sts_cd) {
+        this.sts_cd = sts_cd;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public String getEan() {
+        return Ean;
+    }
+
+    public void setEan(String Ean) {
+        this.Ean = Ean;
     }
 
     public String getSku_cd() {
@@ -57,15 +85,7 @@ public class ProductVo {
     public void setUpc(String upc) {
         this.upc = upc;
     }
-
-    public String getEan() {
-        return ean;
-    }
-
-    public void setEan(String ean) {
-        this.ean = ean;
-    }
-
+    
     public String getModel() {
         return model;
     }
@@ -139,6 +159,8 @@ public class ProductVo {
         productVo.setUpc(product.getUpc());
         productVo.setWarranty_day(product.getWarranty_day());
         productVo.setRetail_price(product.getRetail_price());
+        productVo.setStock(product.getStockseting());
+        productVo.setSts_cd(product.getSts_cd());
         return productVo;
     }
 
@@ -151,6 +173,8 @@ public class ProductVo {
         product.setUpc(this.getUpc());
         product.setWarranty_day(this.getWarranty_day());
         product.setRetail_price(this.getRetail_price());
+        product.setStockseting(this.getStock());
+        product.setSts_cd(this.getSts_cd());
         return product;
     }
 
@@ -162,6 +186,8 @@ public class ProductVo {
         product.setUpc(this.getUpc());
         product.setWarranty_day(this.getWarranty_day());
         product.setRetail_price(this.getRetail_price());
+        product.setStockseting(this.getStock());
+        product.setSts_cd(this.getSts_cd());
         return product;
     }
 
