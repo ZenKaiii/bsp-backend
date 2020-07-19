@@ -17,6 +17,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 
 @RestController
 @RequestMapping("/bvo")
@@ -68,8 +70,8 @@ public class BVOController {
         return ResultVOUtil.success(productService.findProVOById(id));
     }
 
-    @GetMapping("/wit/{dsrId}")
-    public ResultVO findAllWitByDsrId(@PathVariable("dsrId") Integer id){
+    @GetMapping("/wit/{userId}")
+    public ResultVO findAllWitByDsrId(@PathVariable("userId") Integer id){
         return ResultVOUtil.success(productService.findProductByWit(id));
     }
 
@@ -85,14 +87,23 @@ public class BVOController {
         return ResultVOUtil.success(null);
     }
 
+    @DeleteMapping("/deleteWits/{ids}")
+    public ResultVO deleteWitByIds(@PathVariable("ids") String ids){
+        List<String> idsStringList = Arrays.asList(ids.split(","));
+        for (String s : idsStringList) {
+            productService.deleteWitById(Integer.valueOf(s));
+        }
+        return ResultVOUtil.success(null);
+    }
+
     @GetMapping("/getAllOrderByDsrId/{id}")
     public ResultVO getAllOrder(@PathVariable("id") Integer id){
         return ResultVOUtil.success(orderService.getAllOrderByDsrId(id));
     }
 
-    @GetMapping("/getAllOrderByDsrIdAndOrderSts/{dsrid}/{ordersts}")
-    public ResultVO getAllOrderByDsrIdAndOrderSts(@PathVariable("dsrid")Integer dsrId, @PathVariable("ordersts")String orderSts){
-        return ResultVOUtil.success(orderService.getAllOrderByDsrIdAndStatus(dsrId,orderSts));
+    @GetMapping("/getAllOrderByUserIdAndOrderSts/{userid}/{ordersts}")
+    public ResultVO getAllOrderByDsrIdAndOrderSts(@PathVariable("userid")Integer userId, @PathVariable("ordersts")String orderSts){
+        return ResultVOUtil.success(orderService.getAllOrderByUserIdAndStatus(userId,orderSts));
     }
 
     @GetMapping("/wallet/{buyerId}")

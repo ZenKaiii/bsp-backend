@@ -31,6 +31,8 @@ public class OrderServiceImpl implements OrderService {
     SalRepository salRepository;
     @Autowired
     ProRepository proRepository;
+    @Autowired
+    SysUserRepository sysUserRepository;
 
     @Override
     public OrderVO getOrderVOBySalAndSao(Sal sal, Sao sao) {
@@ -63,8 +65,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderVO> getAllOrderByDsrIdAndStatus(Integer dsrId, String orderSts) {
-        List<Str> strs = strRepository.getStrByDsrId(dsrId);
+    public List<OrderVO> getAllOrderByUserIdAndStatus(Integer userId, String orderSts) {
+        List<Str> strs = strRepository.getStrByDsrId(sysUserRepository.getSysUserByUserId(userId).getManBuyerId());
         List<Sto> stos = new ArrayList<>();
         List<Sao> saos = new ArrayList<>();
         List<Sal> sals = new ArrayList<>();

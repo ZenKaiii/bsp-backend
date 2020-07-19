@@ -1,12 +1,10 @@
 package com.neusoft.bsp.BVO.service.impl;
 
 import com.neusoft.bsp.BVO.entity.Pro;
+import com.neusoft.bsp.BVO.entity.SysUser;
 import com.neusoft.bsp.BVO.entity.Wit;
 import com.neusoft.bsp.BVO.exception.BvoException;
-import com.neusoft.bsp.BVO.repository.BrdRepository;
-import com.neusoft.bsp.BVO.repository.PdnRepository;
-import com.neusoft.bsp.BVO.repository.ProRepository;
-import com.neusoft.bsp.BVO.repository.WitRepository;
+import com.neusoft.bsp.BVO.repository.*;
 import com.neusoft.bsp.BVO.service.ProService;
 import com.neusoft.bsp.BVO.vo.ProVO;
 import com.neusoft.bsp.MVO.entity.Brand;
@@ -33,6 +31,8 @@ public class ProServiceImpl implements ProService {
     BrdRepository brdRepository;
     @Autowired
     PdnRepository pdnRepository;
+    @Autowired
+    SysUserRepository sysUserRepository;
 
     @Override
     public ProVO findProVOById(Integer proId) {
@@ -73,15 +73,15 @@ public class ProServiceImpl implements ProService {
     }
 
     @Override
-    public List<Wit> findAllWitByDsrId(Integer dsrId) {
-        return witRepository.findAllWitByDsrId(dsrId);
+    public List<Wit> findAllWitByUserId(Integer userId) {
+        return witRepository.findAllWitByDsrId(sysUserRepository.getSysUserByUserId(userId).getManBuyerId());
     }
 
     @Override
-    public List<ProVO> findProductByWit(Integer dsrId) {
+    public List<ProVO> findProductByWit(Integer userId) {
         List<Pro> products = new ArrayList<>();
         List<ProVO> proVOS = new ArrayList<>();
-        List<Wit> wits = witRepository.findAllWitByDsrId(dsrId);
+        List<Wit> wits = witRepository.findAllWitByDsrId(sysUserRepository.getSysUserByUserId(userId).getManBuyerId());
         for (Wit wit : wits) {
             products.add(proRepository.getProByProId(wit.getProId()));
         }
@@ -92,9 +92,10 @@ public class ProServiceImpl implements ProService {
     }
 
     @Override
-    public void addWitbyDsrIdAndProId(Integer dsrId, Integer proId) {
+    public void addWitbyDsrIdAndProId(Integer userId, Integer proId) {
         Wit wit = new Wit();
-        wit.setDsrId(dsrId);
+        SysUser sysUser = sysUserRepository.getSysUserByUserId(userId);
+        wit.setDsrId(sysUser.getManBuyerId());
         wit.setProId(proId);
         witRepository.saveAndFlush(wit);
     }
