@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class OrderVO {
     private Integer saoId;
+    private Integer proId;
     private String title;
     private BigDecimal price;
     private Integer qty;

@@ -98,13 +98,13 @@ public class SalesOrderServiceImpl implements SalesOrderService {
         return salesOrderVo;
     }
 
-    public SalesOrderVo getExpressInfo(SalesOrderVo salesOrderVo){
-        ExpressQuery expressQuery=new ExpressQuery();
-        String expressInfo=expressQuery.queryLogistics(salesOrderVo.getWspName(),salesOrderVo.getOrderNo());
-        JSONObject jsonData = JSONObject.parseObject(expressInfo);
-        salesOrderVo.setOrderSts(""+jsonData.getString("state"));
-        return salesOrderVo;
-    }
+//    public SalesOrderVo getExpressInfo(SalesOrderVo salesOrderVo){
+//        ExpressQuery expressQuery=new ExpressQuery();
+//        String expressInfo=expressQuery.queryLogistics(salesOrderVo.getWspName(),salesOrderVo.getOrderNo());
+//        JSONObject jsonData = JSONObject.parseObject(expressInfo);
+//        salesOrderVo.setOrderSts(""+jsonData.getString("state"));
+//        return salesOrderVo;
+//    }
 
 
     @Override
