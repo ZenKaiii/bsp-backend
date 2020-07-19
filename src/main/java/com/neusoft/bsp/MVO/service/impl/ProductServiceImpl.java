@@ -85,16 +85,22 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public int alterProductDetail(ProductDetailVo productDetailVo, int userId) {
         int man_id=manufacturerService.getManIdByUserId(userId);
+        if(man_id==0){
+            return 0;
+        }
         Map<String,Object> map=new HashMap<>();
         map.put("man_id",man_id);
         map.put("title",productDetailVo.getTitle());
         Product product=this.getByTitle(map);
-        product.setSts_cd(productDetailVo.getSts_cd());
+        if(product==null){
+            return 0;
+        }
         int i = 0;
+        product.setSts_cd(productDetailVo.getSts_cd());
 
         this.update(product);
 
-        if(productCategoryService.getPrcByProId(product.getPro_id())==null) {
+        if (productCategoryService.getPrcByProId(product.getPro_id()) == null) {
             ProductCategory productCategory = productDetailVo.toProductCategory();
             productCategory.setProId(product.getPro_id());
             productCategory.setCreatedBy("" + userId);
@@ -102,13 +108,12 @@ public class ProductServiceImpl implements ProductService {
             productCategory.setCreationDate(new Date(System.currentTimeMillis()));
             productCategory.setLastUpdateDate(new Date(System.currentTimeMillis()));
             i = productCategoryService.insert(productCategory);
-        }
-        else{
-            ProductCategory productCategory=productCategoryService.getPrcByProId(product.getPro_id());
+        } else {
+            ProductCategory productCategory = productCategoryService.getPrcByProId(product.getPro_id());
             productDetailVo.changeProductCategory(productCategory);
-            i=productCategoryService.update(productCategory);
+            i = productCategoryService.update(productCategory);
         }
-        if(imgService.getImgByProId(product.getPro_id())==null) {
+        if (imgService.getImgByProId(product.getPro_id()) == null) {
             Img img = productDetailVo.toImg();
             img.setEntityId(product.getPro_id());
             img.setCreatedBy("" + userId);
@@ -117,12 +122,12 @@ public class ProductServiceImpl implements ProductService {
             img.setLastUpdateDate(new Date(System.currentTimeMillis()));
             img.setName("pro");
             i = imgService.insert(img);
-        }
-        else{
-            Img img=imgService.getImgByProId(product.getPro_id());
+        } else {
+            Img img = imgService.getImgByProId(product.getPro_id());
             productDetailVo.changeImg(img);
-            i=imgService.update(img);
+            i = imgService.update(img);
         }
+
         return i;
     }
 
