@@ -50,7 +50,7 @@
         right join pro p
         on p.man_id=m.man_id
         where s.user_id=#{userId}
-        and p.sts_cd!='D'
+        and p.sts_cd!='4'
     </select>
 
     <select id="getBySku" parameterType="java.lang.String" resultType="Product">
