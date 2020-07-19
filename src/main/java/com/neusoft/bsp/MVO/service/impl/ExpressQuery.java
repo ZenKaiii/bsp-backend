@@ -1,6 +1,6 @@
 package com.neusoft.bsp.MVO.service.impl;
 
-import com.neusoft.bsp.MVO.utils.MD5Utils;
+//import com.neusoft.bsp.MVO.utils.MD5Utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -50,35 +50,35 @@ public class ExpressQuery{
     }
 */
 
-    public String queryLogistics(String com, String num/*, String phone, String from, String to, int resultv2*/) {
-        String key = "sCjjeSzo2189";				//贵司的授权key
-        String customer = "9AC78EDE36FE439AB1C39B2A3DEE8D92";			//贵司的查询公司编号
-        String phone = "";				//手机号码后四位
-        String from = "";				//出发地
-        String to = "";					//目的地
-        int resultv2 = 0;				//开启行政规划解析
-        StringBuilder param = new StringBuilder("{");
-        param.append("\"com\":\"").append(com).append("\"");
-        param.append(",\"num\":\"").append(num).append("\"");
-        param.append(",\"phone\":\"").append(phone).append("\"");
-        param.append(",\"from\":\"").append(from).append("\"");
-        param.append(",\"to\":\"").append(to).append("\"");
-        if(1 == resultv2) {
-            param.append(",\"resultv2\":1");
-        } else {
-            param.append(",\"resultv2\":0");
-        }
-        param.append("}");
-
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("customer", customer);
-        MD5Utils mD5Utils = null;
-        String sign = mD5Utils.encode(param + key + customer);
-        params.put("sign", sign);
-        params.put("param", param.toString());
-
-        return this.post(params);
-    }
+//    public String queryLogistics(String com, String num/*, String phone, String from, String to, int resultv2*/) {
+//        String key = "sCjjeSzo2189";				//贵司的授权key
+//        String customer = "9AC78EDE36FE439AB1C39B2A3DEE8D92";			//贵司的查询公司编号
+//        String phone = "";				//手机号码后四位
+//        String from = "";				//出发地
+//        String to = "";					//目的地
+//        int resultv2 = 0;				//开启行政规划解析
+//        StringBuilder param = new StringBuilder("{");
+//        param.append("\"com\":\"").append(com).append("\"");
+//        param.append(",\"num\":\"").append(num).append("\"");
+//        param.append(",\"phone\":\"").append(phone).append("\"");
+//        param.append(",\"from\":\"").append(from).append("\"");
+//        param.append(",\"to\":\"").append(to).append("\"");
+//        if(1 == resultv2) {
+//            param.append(",\"resultv2\":1");
+//        } else {
+//            param.append(",\"resultv2\":0");
+//        }
+//        param.append("}");
+//
+//        Map<String, String> params = new HashMap<String, String>();
+//        params.put("customer", customer);
+//        MD5Utils mD5Utils = null;
+//        String sign = mD5Utils.encode(param + key + customer);
+//        params.put("sign", sign);
+//        params.put("param", param.toString());
+//
+//        return this.post(params);
+//    }
 
     /**
      * 发送post请求
