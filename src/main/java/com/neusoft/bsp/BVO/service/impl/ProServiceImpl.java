@@ -73,15 +73,15 @@ public class ProServiceImpl implements ProService {
     }
 
     @Override
-    public List<Wit> findAllWitByDsrId(Integer dsrId) {
-        return witRepository.findAllWitByDsrId(dsrId);
+    public List<Wit> findAllWitByUserId(Integer userId) {
+        return witRepository.findAllWitByDsrId(sysUserRepository.getSysUserByUserId(userId).getManBuyerId());
     }
 
     @Override
-    public List<ProVO> findProductByWit(Integer dsrId) {
+    public List<ProVO> findProductByWit(Integer userId) {
         List<Pro> products = new ArrayList<>();
         List<ProVO> proVOS = new ArrayList<>();
-        List<Wit> wits = witRepository.findAllWitByDsrId(dsrId);
+        List<Wit> wits = witRepository.findAllWitByDsrId(sysUserRepository.getSysUserByUserId(userId).getManBuyerId());
         for (Wit wit : wits) {
             products.add(proRepository.getProByProId(wit.getProId()));
         }

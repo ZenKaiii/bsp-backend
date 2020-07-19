@@ -71,8 +71,8 @@ public class BVOController {
         return ResultVOUtil.success(productService.findProVOById(id));
     }
 
-    @GetMapping("/wit/{dsrId}")
-    public ResultVO findAllWitByDsrId(@PathVariable("dsrId") Integer id){
+    @GetMapping("/wit/{userId}")
+    public ResultVO findAllWitByDsrId(@PathVariable("userId") Integer id){
         return ResultVOUtil.success(productService.findProductByWit(id));
     }
 
