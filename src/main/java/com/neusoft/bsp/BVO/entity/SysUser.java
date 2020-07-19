@@ -13,4 +13,5 @@ public class SysUser {
     private String name;
     private String email;
     private String phone;
+    private Integer manBuyerId;
 }
