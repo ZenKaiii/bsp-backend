@@ -16,7 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 
 @RestController
 @RequestMapping("/bvo")
@@ -82,6 +85,15 @@ public class BVOController {
     @DeleteMapping("/deleteWit/{id}")
     public ResultVO deleteWitById(@PathVariable("id")Integer id){
         productService.deleteWitById(id);
+        return ResultVOUtil.success(null);
+    }
+
+    @DeleteMapping("/deleteWits/{ids}")
+    public ResultVO deleteWitByIds(@PathVariable("ids") String ids){
+        List<String> idsStringList = Arrays.asList(ids.split(","));
+        for (String s : idsStringList) {
+            productService.deleteWitById(Integer.valueOf(s));
+        }
         return ResultVOUtil.success(null);
     }
 
