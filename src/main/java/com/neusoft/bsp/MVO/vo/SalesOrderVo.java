@@ -17,6 +17,7 @@ public class SalesOrderVo {
     Date createdTime;
     String trackingNo;
     String orderSts;
+    String wspName;
 
 
     @Override
@@ -30,7 +31,16 @@ public class SalesOrderVo {
                 ", createdTime=" + createdTime +
                 ", trackingNo='" + trackingNo + '\'' +
                 ", orderSts='" + orderSts + '\'' +
+                ", wspName='" + wspName + '\'' +
                 '}';
+    }
+
+    public String getWspName() {
+        return wspName;
+    }
+
+    public void setWspName(String wspName) {
+        this.wspName = wspName;
     }
 
     public int getQty() {
@@ -102,6 +112,7 @@ public class SalesOrderVo {
         salesOrderLineItem.setQty(this.getQty());
         salesOrderLineItem.setTrackingNo(this.getTrackingNo());
         salesOrderLineItem.setPrice(this.getPrice());
+        salesOrderLineItem.setWspName(this.getWspName());
         return  salesOrderLineItem;
     }
 
@@ -109,6 +120,7 @@ public class SalesOrderVo {
         salesOrderLineItem.setQty(this.getQty());
         salesOrderLineItem.setTrackingNo(this.getTrackingNo());
         salesOrderLineItem.setPrice(this.getPrice());
+        salesOrderLineItem.setWspName(this.getWspName());
         return  salesOrderLineItem;
     }
 

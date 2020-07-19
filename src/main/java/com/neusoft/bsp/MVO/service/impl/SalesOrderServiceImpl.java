@@ -1,5 +1,7 @@
 package com.neusoft.bsp.MVO.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.neusoft.bsp.MVO.entity.Product;
@@ -35,20 +37,23 @@ public class SalesOrderServiceImpl implements SalesOrderService {
         if(salesOrderVo.getOrderSts()==""){
             i=this.deliver(salesOrderVo.getSku(),salesOrderVo.getQty());
         }
-        if(i==1) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("sku", salesOrderVo.getSku());
-            map.put("orderNo", salesOrderVo.getOrderNo());
-
-            SalesOrder salesOrder = this.getSaoByOrderNo(salesOrderVo.getOrderNo());
-            SalesOrderLineItem salesOrderLineItem = salesOrderLineItemService.getSalBySku(map);
-
-            salesOrderVo.changeSalesOrder(salesOrder);
-            i = this.update(salesOrder);
-
-            salesOrderVo.changeSalesOrderLineItem(salesOrderLineItem);
-            i = salesOrderLineItemService.update(salesOrderLineItem);
+        if(i==0){
+            return 0;
         }
+        Map<String, Object> map = new HashMap<>();
+        map.put("sku", salesOrderVo.getSku());
+        map.put("orderNo", salesOrderVo.getOrderNo());
+
+        SalesOrder salesOrder = this.getSaoByOrderNo(salesOrderVo.getOrderNo());
+
+        SalesOrderLineItem salesOrderLineItem = salesOrderLineItemService.getSalBySku(map);
+
+        salesOrderVo.changeSalesOrder(salesOrder);
+        i = this.update(salesOrder);
+
+        salesOrderVo.changeSalesOrderLineItem(salesOrderLineItem);
+        i = salesOrderLineItemService.update(salesOrderLineItem);
+
         return i;
     }
 
@@ -89,6 +94,15 @@ public class SalesOrderServiceImpl implements SalesOrderService {
         salesOrderVo.setSku(product.getSku_cd());
         salesOrderVo.setTrackingNo(salesOrderLineItem.getTrackingNo());
         salesOrderVo.setPrice(product.getRetail_price());
+//        this.getExpressInfo(salesOrderVo);
+        return salesOrderVo;
+    }
+
+    public SalesOrderVo getExpressInfo(SalesOrderVo salesOrderVo){
+        ExpressQuery expressQuery=new ExpressQuery();
+        String expressInfo=expressQuery.queryLogistics(salesOrderVo.getWspName(),salesOrderVo.getOrderNo());
+        JSONObject jsonData = JSONObject.parseObject(expressInfo);
+        salesOrderVo.setOrderSts(""+jsonData.getString("state"));
         return salesOrderVo;
     }
 
