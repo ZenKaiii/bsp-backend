@@ -180,5 +180,19 @@
         and name="pro"
     </select>
 
+    <select id="getImgByBrdId" parameterType="java.lang.Integer" resultMap="ImgMap">
+        select *
+        from img
+        where entity_id=#{brdId}
+        and name="brd"
+    </select>
+
+    <select id="getUrlByBrdId" parameterType="java.lang.Integer" resultType="java.lang.String">
+        select url
+        from img
+        where entity_id=#{brdId}
+        and name="brd"
+    </select>
+
 
 </mapper>

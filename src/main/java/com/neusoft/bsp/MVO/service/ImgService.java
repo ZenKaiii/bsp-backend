@@ -20,6 +20,10 @@ public interface ImgService {
 
     String getUrlByProId(int proId);
 
+    String getUrlByBrdId(int brdId);
+
+    Img getImgByBrdId(int brdId);
+
     Img getImgByProId(int proId);
 
     List<Img> getAll();
@@ -29,4 +33,5 @@ public interface ImgService {
     PageInfo<Img> getAllByFilter(Integer pageNum, Integer pageSize);
 
     PageInfo<Img> getAllByFilter(Integer pageNum, Integer pageSize, Map<String, Object> map);
+
 }

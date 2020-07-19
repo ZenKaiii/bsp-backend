@@ -3,8 +3,10 @@ package com.neusoft.bsp.MVO.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.neusoft.bsp.MVO.entity.Brand;
+import com.neusoft.bsp.MVO.entity.Img;
 import com.neusoft.bsp.MVO.mapper.BrandMapper;
 import com.neusoft.bsp.MVO.service.BrandService;
+import com.neusoft.bsp.MVO.service.ImgService;
 import com.neusoft.bsp.MVO.service.ManufacturerService;
 import com.neusoft.bsp.MVO.vo.BrandVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ public class BrandServiceImpl implements BrandService {
 
     @Autowired
     ManufacturerService manufacturerService;
+    @Autowired
+    ImgService imgService;
 
 
     @Override
@@ -42,6 +46,21 @@ public class BrandServiceImpl implements BrandService {
             brand.setLast_update_date(new Date(System.currentTimeMillis()));
             i=this.update(brand);
         }
+        if(imgService.getImgByProId(brand.getBrd_id())==null) {
+            Img img = brandVo.toImg();
+            img.setEntityId(brand.getBrd_id());
+            img.setCreatedBy("" + userId);
+            img.setLastUpdateBy("" + userId);
+            img.setCreationDate(new Date(System.currentTimeMillis()));
+            img.setLastUpdateDate(new Date(System.currentTimeMillis()));
+            img.setName("brd");
+            i = imgService.insert(img);
+        }
+        else{
+            Img img=imgService.getImgByProId(brand.getBrd_id());
+            brandVo.changeImg(img);
+            i=imgService.update(img);
+        }
         return i;
     }
 
@@ -55,7 +74,9 @@ public class BrandServiceImpl implements BrandService {
         if(brandList.size()!=0) {
             for (Brand brand : brandList) {
                 BrandVo brandVo = new BrandVo();
-                brandVoList.add(brandVo.getBrandVO(brand));
+                brandVo=brandVo.getBrandVO(brand);
+                brandVo.setUrl(imgService.getUrlByBrdId(brand.getBrd_id()));
+                brandVoList.add(brandVo);
             }
         }
         return brandVoList;

@@ -54,4 +54,10 @@ public class BrandVo {
         img.setUrl(this.getUrl());
         return img;
     }
+
+    public Img changeImg(Img img){
+        img.setName("brd");
+        img.setUrl(this.getUrl());
+        return img;
+    }
 }

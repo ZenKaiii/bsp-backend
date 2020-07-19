@@ -48,6 +48,16 @@ public class ImgServiceImpl implements ImgService {
     }
 
     @Override
+    public String getUrlByBrdId(int brdId) {
+        return imgMapper.getUrlByBrdId(brdId);
+    }
+
+    @Override
+    public Img getImgByBrdId(int brdId) {
+        return imgMapper.getImgByProId(brdId);
+    }
+
+    @Override
     public Img getImgByProId(int proId) {
         return imgMapper.getImgByProId(proId);
     }
