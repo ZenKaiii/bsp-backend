@@ -9,16 +9,8 @@ import java.util.List;
 
 public class UserLoginJson extends BaseModelJson<User> {
     public List<Menu> menu;
-    public int[] role_id;
+    public int role_id;
+    public int user_id;
+    public String token;
 
-    @Override
-    public String toString() {
-        return "UserLoginJson{" +
-                "menu=" + menu +
-                ", role_id=" + Arrays.toString(role_id) +
-                ", data=" + data +
-                ", code=" + code +
-                ", message='" + message + '\'' +
-                '}';
-    }
 }

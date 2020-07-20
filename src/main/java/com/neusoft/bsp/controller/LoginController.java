@@ -51,6 +51,8 @@ public class LoginController extends BaseController {
     @Autowired
     MenuRoleService menuRoleService;
 
+    TokenUtil tokenUtil;
+
 
     @PostMapping("/checkUser")
     public UserLoginJson checkUser(@RequestParam String username, @RequestParam String password, HttpServletRequest request) {
@@ -85,9 +87,11 @@ public class LoginController extends BaseController {
             UserLoginJson result = new UserLoginJson();
             result.code = 200;
             result.data = user;
-            result.role_id = new int[]{user.getRole_id()};
+            result.user_id = user.getUser_id();
+            result.role_id = user.getRole_id();
             result.menu = menuRoleService.getRoleMenus(user.getRole_id());
-            //String token = TokenUtil.getToken(username,user.getRole_id(),request.getRemoteAddr());
+            String token = TokenUtil.getToken(username,user.getUser_id(),ip);
+            result.token = token;
             result.message = JSONArray.toJSONString(user);
             return result;
 
@@ -136,7 +140,8 @@ public class LoginController extends BaseController {
     @GetMapping("/getInfo")
     public BaseModelJson<Map> getInfoForVue(@RequestParam String token) {
         //System.out.println(token);
-        User user_if = JSONArray.parseObject(token, User.class);
+        int user_id = TokenUtil.getId(token);
+        User user_if = userService.getById(user_id);
         Map<String, Object> map = new HashMap<>();
         map.put("roles", this.getRole(user_if.getRole_id()));
         map.put("introduction", user_if.getEmail());
@@ -166,7 +171,8 @@ public class LoginController extends BaseController {
     public BaseModelJson<User> relogin(@RequestParam String token) {
         try{
             System.out.println("______"+token+"_________");
-            User user_rl = JSONArray.parseObject(token,User.class);
+            int user_id = TokenUtil.getId(token);
+            User user_rl = userService.getById(user_id);
             return this.checkUser(user_rl.getUsername(),user_rl.getPassword(),null);
             //return this.checkUser("zhx","171024");
         }catch(Exception e){
@@ -189,5 +195,6 @@ public class LoginController extends BaseController {
         String[] roles = new String[]{role};
         return roles;
     }
+
 
 }

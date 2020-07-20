@@ -35,7 +35,7 @@ public class ShiroConfiguration {
         //！！！测试完记得删掉
 //        filtetMap.put("/menurole/**","anon");
 //        filtetMap.put("/cdm/**","anon");
-        filtetMap.put("/**","anon");
+        //filtetMap.put("/**","anon");
 
         filtetMap.put("/login/userlist","perms[user:userlist]");
 
