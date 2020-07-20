@@ -59,14 +59,26 @@ public class ProServiceImpl implements ProService {
             if (brdRepository.getBrdByBrdId(pro.getBrdId())==null){
                 throw new BvoException("pro数据库中brdId有误");
             }
-            proVOS.add(new ProVO(pro.getProId(),
-                    pro.getTitle(),
-                    pro.getRetailPrice(),
-                    pro.getSkuCd(),
-                    brdRepository.getBrdByBrdId(pro.getBrdId()).getNameCn(),
-                    pro.getStockseting(),
-                    pdnRepository.getPdnByProId(pro.getProId()).getDescription(),
-                    imgMapper.getUrlByProId(pro.getProId())));
+            if (imgMapper.getUrlByProId(pro.getProId()) == null){
+                proVOS.add(new ProVO(pro.getProId(),
+                        pro.getTitle(),
+                        pro.getRetailPrice(),
+                        pro.getSkuCd(),
+                        brdRepository.getBrdByBrdId(pro.getBrdId()).getNameCn(),
+                        pro.getStockseting(),
+                        pdnRepository.getPdnByProId(pro.getProId()).getDescription(),
+                        ""));
+            } else {
+                proVOS.add(new ProVO(pro.getProId(),
+                        pro.getTitle(),
+                        pro.getRetailPrice(),
+                        pro.getSkuCd(),
+                        brdRepository.getBrdByBrdId(pro.getBrdId()).getNameCn(),
+                        pro.getStockseting(),
+                        pdnRepository.getPdnByProId(pro.getProId()).getDescription(),
+                        imgMapper.getUrlByProId(pro.getProId())));
+
+            }
         }
 
         return proVOS;
