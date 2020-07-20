@@ -7,6 +7,7 @@ import com.neusoft.bsp.MVO.mapper.ManufacturerMapper;
 import com.neusoft.bsp.MVO.service.ManufacturerService;
 import com.neusoft.bsp.MVO.vo.ManufacturerVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -14,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Repository
 @Service ("manufacturerService")
 public class ManufacturerServiceImpl implements ManufacturerService {
     @Autowired
