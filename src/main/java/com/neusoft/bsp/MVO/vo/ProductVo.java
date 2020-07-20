@@ -207,12 +207,12 @@ public class ProductVo {
 
     public ProductDescription toProductDescription(){
         ProductDescription productDescription=new ProductDescription();
-        productDescription.setDescrition(this.getDescription());
+        productDescription.setDescription(this.getDescription());
         return productDescription;
     }
 
     public ProductDescription changeProductDescription(ProductDescription productDescription){
-        productDescription.setDescrition(this.getDescription());
+        productDescription.setDescription(this.getDescription());
         return productDescription;
     }
 

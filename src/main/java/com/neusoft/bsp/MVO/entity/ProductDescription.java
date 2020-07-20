@@ -6,7 +6,7 @@ public class ProductDescription {
     int pdn_id;
     int pro_id;
     String type_cd;
-    String descrition;
+    String description;
     String created_by;
     Date creation_date;
     String last_update_by;
@@ -21,7 +21,7 @@ public class ProductDescription {
                 "pdn_id=" + pdn_id +
                 ", pro_id=" + pro_id +
                 ", type_cd='" + type_cd + '\'' +
-                ", descrition='" + descrition + '\'' +
+                ", descrition='" + description + '\'' +
                 ", created_by='" + created_by + '\'' +
                 ", creation_date=" + creation_date +
                 ", last_update_by='" + last_update_by + '\'' +
@@ -56,12 +56,12 @@ public class ProductDescription {
         this.type_cd = type_cd;
     }
 
-    public String getDescrition() {
-        return descrition;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescrition(String descrition) {
-        this.descrition = descrition;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getCreated_by() {

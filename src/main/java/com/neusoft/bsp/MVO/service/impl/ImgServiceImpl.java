@@ -58,6 +58,11 @@ public class ImgServiceImpl implements ImgService {
     }
 
     @Override
+    public int deleteByBrdId(int brdId) {
+        return imgMapper.deleteByBrdId(brdId);
+    }
+
+    @Override
     public Img getImgByProId(int proId) {
         return imgMapper.getImgByProId(proId);
     }
