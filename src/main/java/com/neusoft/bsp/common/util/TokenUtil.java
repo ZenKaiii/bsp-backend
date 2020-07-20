@@ -30,9 +30,15 @@ public class TokenUtil {
         return body;
     }
 
-    public static String getName(String token) {
+//    public static String getName(String token) {
+//        Claims body = getTokenBody(token);
+//        String id = body.getId();
+//        return id;
+//    }
+
+    public static int getId(String token) {
         Claims body = getTokenBody(token);
-        String id = body.getId();
+        int id = Integer.parseInt(body.getId());
         return id;
     }
 }

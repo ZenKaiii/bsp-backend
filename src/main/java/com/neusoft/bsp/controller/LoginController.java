@@ -140,7 +140,8 @@ public class LoginController extends BaseController {
     @GetMapping("/getInfo")
     public BaseModelJson<Map> getInfoForVue(@RequestParam String token) {
         //System.out.println(token);
-        User user_if = JSONArray.parseObject(token, User.class);
+        int user_id = TokenUtil.getId(token);
+        User user_if = userService.getById(user_id);
         Map<String, Object> map = new HashMap<>();
         map.put("roles", this.getRole(user_if.getRole_id()));
         map.put("introduction", user_if.getEmail());
@@ -170,7 +171,8 @@ public class LoginController extends BaseController {
     public BaseModelJson<User> relogin(@RequestParam String token) {
         try{
             System.out.println("______"+token+"_________");
-            User user_rl = JSONArray.parseObject(token,User.class);
+            int user_id = TokenUtil.getId(token);
+            User user_rl = userService.getById(user_id);
             return this.checkUser(user_rl.getUsername(),user_rl.getPassword(),null);
             //return this.checkUser("zhx","171024");
         }catch(Exception e){
@@ -193,5 +195,6 @@ public class LoginController extends BaseController {
         String[] roles = new String[]{role};
         return roles;
     }
+
 
 }
