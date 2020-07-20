@@ -43,11 +43,10 @@ public class SalesOrderServiceImpl implements SalesOrderService {
         Map<String, Object> map = new HashMap<>();
         map.put("sku", salesOrderVo.getSku());
         map.put("orderNo", salesOrderVo.getOrderNo());
-
-        SalesOrder salesOrder = this.getSaoByOrderNo(salesOrderVo.getOrderNo());
-
         SalesOrderLineItem salesOrderLineItem = salesOrderLineItemService.getSalBySku(map);
 
+
+        SalesOrder salesOrder = this.getSaoByOrderNo(salesOrderVo.getOrderNo());
         salesOrderVo.changeSalesOrder(salesOrder);
         i = this.update(salesOrder);
         if(i==0){
