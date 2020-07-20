@@ -34,7 +34,7 @@ public class SalesOrderServiceImpl implements SalesOrderService {
     @Override
     public int alterSalesOrder(SalesOrderVo salesOrderVo, int userId) {
         int i=0;
-        if(salesOrderVo.getOrderSts()==""){
+        if(salesOrderVo.getOrderSts()=="3"){
             i=this.deliver(salesOrderVo.getSku(),salesOrderVo.getQty());
         }
         if(i==0){
@@ -50,9 +50,15 @@ public class SalesOrderServiceImpl implements SalesOrderService {
 
         salesOrderVo.changeSalesOrder(salesOrder);
         i = this.update(salesOrder);
+        if(i==0){
+            return 0;
+        }
 
         salesOrderVo.changeSalesOrderLineItem(salesOrderLineItem);
         i = salesOrderLineItemService.update(salesOrderLineItem);
+        if(i==0){
+            return 0;
+        }
 
         return i;
     }
@@ -83,17 +89,23 @@ public class SalesOrderServiceImpl implements SalesOrderService {
     }
 
     public SalesOrderVo getSalesOrderVo(SalesOrderLineItem salesOrderLineItem){
-        SalesOrder salesOrder=this.getById(salesOrderLineItem.getSaoId());
-        Product product=productService.getById(salesOrderLineItem.getProId());
-        SalesOrderVo salesOrderVo=new SalesOrderVo();
-        salesOrderVo.setTitle(product.getTitle());
-        salesOrderVo.setCreatedTime(salesOrder.getCreationDate());
-        salesOrderVo.setOrderSts(salesOrder.getOrderSts());
-        salesOrderVo.setOrderNo(salesOrder.getOrderNo());
-        salesOrderVo.setQty(salesOrderLineItem.getQty());
-        salesOrderVo.setSku(product.getSku_cd());
-        salesOrderVo.setTrackingNo(salesOrderLineItem.getTrackingNo());
-        salesOrderVo.setPrice(product.getRetail_price());
+        SalesOrderVo salesOrderVo = new SalesOrderVo();
+        if(salesOrderLineItem!=null) {
+            SalesOrder salesOrder = this.getById(salesOrderLineItem.getSaoId());
+            Product product = productService.getById(salesOrderLineItem.getProId());
+            if (product != null) {
+                salesOrderVo.setTitle(product.getTitle());
+                salesOrderVo.setSku(product.getSku_cd());
+                salesOrderVo.setPrice(product.getRetail_price());
+            }
+            if (salesOrder != null) {
+                salesOrderVo.setCreatedTime(salesOrder.getCreationDate());
+                salesOrderVo.setOrderSts(salesOrder.getOrderSts());
+                salesOrderVo.setOrderNo(salesOrder.getOrderNo());
+            }
+            salesOrderVo.setQty(salesOrderLineItem.getQty());
+            salesOrderVo.setTrackingNo(salesOrderLineItem.getTrackingNo());
+        }
 //        this.getExpressInfo(salesOrderVo);
         return salesOrderVo;
     }
