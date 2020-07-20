@@ -36,9 +36,9 @@ public class SalesOrderServiceImpl implements SalesOrderService {
         int i=0;
         if(salesOrderVo.getOrderSts()=="3"){
             i=this.deliver(salesOrderVo.getSku(),salesOrderVo.getQty());
-        }
-        if(i==0){
-            return 0;
+            if(i==0){
+                return 0;
+            }
         }
         Map<String, Object> map = new HashMap<>();
         map.put("sku", salesOrderVo.getSku());
@@ -76,8 +76,11 @@ public class SalesOrderServiceImpl implements SalesOrderService {
     }
 
     @Override
-    public List<SalesOrderVo> getSalesOrderList(int userId) {
-        List<SalesOrderLineItem> salesOrderLineItems = salesOrderLineItemService.getByUserId(userId);
+    public List<SalesOrderVo> getSalesOrderList(int userId,String orderSts) {
+        Map<String,Object> map=new HashMap<>();
+        map.put("userId",userId);
+        map.put("orderSts",orderSts);
+        List<SalesOrderLineItem> salesOrderLineItems = salesOrderLineItemService.getByOrder(map);
         List<SalesOrderVo> salesOrderVoList = new ArrayList<>();
         if(salesOrderLineItems.size()!=0) {
             for (SalesOrderLineItem salesOrderLineItem : salesOrderLineItems) {
@@ -105,6 +108,7 @@ public class SalesOrderServiceImpl implements SalesOrderService {
             }
             salesOrderVo.setQty(salesOrderLineItem.getQty());
             salesOrderVo.setTrackingNo(salesOrderLineItem.getTrackingNo());
+            salesOrderVo.setWspName(salesOrderLineItem.getWspName());
         }
 //        this.getExpressInfo(salesOrderVo);
         return salesOrderVo;

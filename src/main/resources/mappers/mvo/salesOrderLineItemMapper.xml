@@ -181,6 +181,17 @@
         and pro.sku_cd=#{sku}
     </select>
 
+    <select id="getByOrder" parameterType="java.util.Map" resultMap="SalMap">
+        select sal.*
+        from sal
+        join sao
+        on sal.sao_id=sao.sao_id
+        left join sys_user
+        on sao.man_id=sys_user.man_buyer_id
+        where sys_user.user_id=#{userId}
+        and sao.order_Sts=#{orderSts}
+    </select>
+
 
 
 </mapper>

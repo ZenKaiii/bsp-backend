@@ -12,7 +12,8 @@ public interface SalesOrderService {
 
     int alterSalesOrder(SalesOrderVo salesOrderVo, int userId);
 
-    List<SalesOrderVo> getSalesOrderList(int userId);
+    List<SalesOrderVo> getSalesOrderList(int userId,String orderSts);
+
 
     int insert(SalesOrder salesOrder);
 

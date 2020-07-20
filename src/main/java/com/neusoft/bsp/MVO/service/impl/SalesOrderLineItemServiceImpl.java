@@ -34,6 +34,10 @@ public class SalesOrderLineItemServiceImpl implements SalesOrderLineItemService 
         return salesOrderLineItemMapper.delete(salesOrderLineItemid);
     }
 
+    @Override
+    public List<SalesOrderLineItem> getByOrder(Map map) {
+        return salesOrderLineItemMapper.getByOrder(map);
+    }
 
 
     @Override

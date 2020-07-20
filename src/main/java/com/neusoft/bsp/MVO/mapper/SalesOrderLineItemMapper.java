@@ -16,4 +16,6 @@ public interface SalesOrderLineItemMapper extends BaseMapper<Integer, SalesOrder
     List<SalesOrderLineItem> getByUserId(int userId);
 
     SalesOrderLineItem getSalBySku(Map map);
+
+    List<SalesOrderLineItem> getByOrder(Map map);
 }

@@ -12,6 +12,7 @@ import com.neusoft.bsp.MVO.service.SalesOrderService;
 import com.neusoft.bsp.MVO.vo.SalesOrderVo;
 import com.neusoft.bsp.common.base.BaseController;
 import com.neusoft.bsp.common.base.BaseModel;
+import com.neusoft.bsp.common.base.BaseModelJson;
 import com.neusoft.bsp.common.base.BaseModelJsonPaging;
 import com.neusoft.bsp.common.exception.BusinessException;
 import com.neusoft.bsp.common.validationGroup.InsertGroup;
@@ -107,29 +108,21 @@ public class SalesOrderController extends BaseController {
 
 
     @GetMapping("/salesOrderList")
-    public BaseModelJsonPaging<PageInfo<SalesOrderVo>> getSalesOrderList(Integer pageNum, Integer pageSize,
-                                                                         @RequestParam int userId) {
+    public BaseModelJson<List<SalesOrderVo>> getSalesOrderList(@RequestParam int userId, @RequestParam String orderSts) {
         /*List<SalesOrderLineItem> salesOrderLineItems = salesOrderLineItemService.getByUserId(userId);*/
-        BaseModelJsonPaging<PageInfo<SalesOrderVo>> result = new BaseModelJsonPaging();
+        BaseModelJson<List<SalesOrderVo>> result = new BaseModelJson();
 //        Map<String,Object> map=new HashMap<>();
 //        map.put("userId",userId);
-        if(pageNum == null){
-            pageNum = 1;
-        }
-        if(pageSize == null){
-            pageSize = 10;
-        }
+
         /*List<SalesOrderVo> salesOrderVoList=new ArrayList<>();
         for(SalesOrderLineItem salesOrderLineItem:salesOrderLineItems){
 //            SalesOrderVo salesOrderVo=new SalesOrderVo();
             salesOrderVoList.add(this.getSalesOrderVo(salesOrderLineItem));
         }*/
-        List<SalesOrderVo> salesOrderVoList=salesOrderService.getSalesOrderList(userId);
-        PageHelper.startPage(pageNum, pageSize, true);
+        List<SalesOrderVo> salesOrderVoList=salesOrderService.getSalesOrderList(userId,orderSts);
         if(salesOrderVoList.size()!=0) {
-            PageInfo<SalesOrderVo> salesOrderVoPage = new PageInfo(salesOrderVoList);
-            result.data = salesOrderVoPage;
-            result.message= JSONArray.toJSONString(salesOrderVoPage);
+            result.data = salesOrderVoList;
+            result.message= JSONArray.toJSONString(salesOrderVoList);
         }
         else{
             result.message="no sales order info";

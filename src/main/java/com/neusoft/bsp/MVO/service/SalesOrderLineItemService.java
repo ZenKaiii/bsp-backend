@@ -16,6 +16,7 @@ public interface SalesOrderLineItemService {
 
     int delete(int salesOrderLineItemid);
 
+    List<SalesOrderLineItem> getByOrder(Map map);
 
     SalesOrderLineItem getSalBySku(Map map);
 
