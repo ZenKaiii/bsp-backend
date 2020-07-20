@@ -16,4 +16,7 @@ public interface ImgMapper extends BaseMapper<Integer, Img> {
     String getUrlByBrdId(int brdId);
 
     Img getImgByBrdId(int brdId);
+
+    int deleteByBrdId(int brdId);
+
 }

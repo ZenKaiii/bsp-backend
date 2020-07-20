@@ -47,6 +47,7 @@ public class ProductServiceImpl implements ProductService {
             }
         }
         else{
+            product=this.getById(productVo.getProId());
             productVo.changeProduct(product);
             product.setLast_update_date(new Date(System.currentTimeMillis()));
             i = this.update(product);
@@ -156,7 +157,9 @@ public class ProductServiceImpl implements ProductService {
         if(productList.size()!=0){
             for (Product product : productList) {
                 ProductVo productVo = new ProductVo();
-                productVoList.add(productVo.getProductVO(product));
+                productVo=productVo.getProductVO(product);
+                productVo.setDescription(productDescriptionService.getByProId(product.getPro_id()).getDescription());
+                productVoList.add(productVo);
             }
         }
         return  productVoList;
@@ -174,10 +177,16 @@ public class ProductServiceImpl implements ProductService {
                 ProductDetailVo productDetailVo = new ProductDetailVo();
                 int pro_id = product.getPro_id();
                 ProductCategory productCategory = productCategoryService.getPrcByProId(pro_id);
-                productDetailVo.setCategory_name(productCategoryService.getPrcByProId(product.getPro_id()).getCategoryName());
+                if(productCategory!=null) {
+                    productDetailVo.setCategory_name(productCategoryService.getPrcByProId(product.getPro_id()).getCategoryName());
+                }
                 productDetailVo.setSts_cd(product.getSts_cd());
                 productDetailVo.setTitle(product.getTitle());
-                productDetailVo.setUrl(imgService.getImgByProId(product.getPro_id()).getUrl());
+                productDetailVo.setProId(pro_id);
+                Img img=imgService.getImgByProId(product.getPro_id());
+                if(img!=null) {
+                    productDetailVo.setUrl(img.getUrl());
+                }
                 productDetailVoList.add(productDetailVo);
             }
         }

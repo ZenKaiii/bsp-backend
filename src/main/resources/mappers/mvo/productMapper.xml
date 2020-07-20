@@ -6,7 +6,7 @@
 
     <insert id="insert" parameterType="Product">
         insert into pro values(
-        default,#{sku_cd},#{brd_id},#{man_id},#{title},#{upc},#{ean},
+        default,#{sku_cd},1,#{man_id},#{title},#{upc},#{ean},
         #{model},#{warranty_day},#{retail_price},#{created_by},
         #{creation_date},#{last_update_by},#{last_update_date},#{call_cnt},
         #{remark},#{sts_cd},#{mininum_retail_price},#{replenishment_period},
@@ -16,7 +16,7 @@
 
     <update id="update" parameterType="Product">
         update pro set
-        sku_cd = #{sku_cd},`brd_id` = #{brd_id},man_id = #{man_id},
+        sku_cd = #{sku_cd},`brd_id` = 1,man_id = #{man_id},
         title = #{title},upc= #{upc} ,ean = #{ean},model = #{model},
         warranty_day = #{warranty_day},retail_price = #{retail_price},
         created_by = #{created_by},creation_date = #{creation_date},

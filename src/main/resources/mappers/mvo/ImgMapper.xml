@@ -159,6 +159,12 @@
         delete from bsp.img where IMG_ID = #{imgId}
     </delete>
 
+    <delete id="deleteByBrdId" parameterType="java.lang.Integer">
+        delete from bsp.img
+        where entity_id=#{brdId}
+        and name="brd"
+    </delete>
+
     <select id="getByProId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
         select *
         from img

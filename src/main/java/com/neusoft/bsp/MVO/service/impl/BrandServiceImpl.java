@@ -27,10 +27,7 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public int alterBrand(BrandVo brandVo, int userId) {
-        Map<String,Object> map=new HashMap<>();
-        map.put("name_en",brandVo.getName_en());
-        map.put("userId",userId);
-        Brand brand=this.getByNameEn(map);
+        Brand brand=this.getById(brandVo.getBrd_id());
         int i=0;
         if(brand==null){
             brand=brandVo.toBrand();
@@ -40,12 +37,22 @@ public class BrandServiceImpl implements BrandService {
             brand.setLast_update_date(new Date(System.currentTimeMillis()));
             brand.setMan_id(manufacturerService.getManIdByUserId(userId));
             i=this.insert(brand);
+            if(i==0){
+                return 0;
+            }
         }
         else{
             brandVo.changeBrand(brand);
             brand.setLast_update_date(new Date(System.currentTimeMillis()));
             i=this.update(brand);
+            if(i==0){
+                return 0;
+            }
         }
+        Map<String,Object> map=new HashMap<>();
+        map.put("userId",userId);
+        map.put("name_en",brandVo.getName_en());
+        brand=this.getByNameEn(map);
         if(imgService.getImgByProId(brand.getBrd_id())==null) {
             Img img = brandVo.toImg();
             img.setEntityId(brand.getBrd_id());
@@ -55,13 +62,19 @@ public class BrandServiceImpl implements BrandService {
             img.setLastUpdateDate(new Date(System.currentTimeMillis()));
             img.setName("brd");
             i = imgService.insert(img);
+            if(i==0){
+                return 0;
+            }
         }
         else{
             Img img=imgService.getImgByProId(brand.getBrd_id());
             brandVo.changeImg(img);
             i=imgService.update(img);
+            if(i==0){
+                return 0;
+            }
         }
-        return i;
+        return 1;
     }
 
     @Override
@@ -85,11 +98,12 @@ public class BrandServiceImpl implements BrandService {
     @Override
     public int deleteBrand(BrandVo brandVo, int userId) {
         int i=0;
-        Map<String,Object> map=new HashMap<>();
-        map.put("name_en",brandVo.getName_en());
-        map.put("userId",userId);
-        Brand brand=this.getByNameEn(map);
-        i = this.delete(brand.getBrd_id());
+        i = this.delete(brandVo.getBrd_id());
+        if(i==0){
+            return 0;
+        }
+        imgService.deleteByBrdId(brandVo.getBrd_id());
+
         return i;
     }
 

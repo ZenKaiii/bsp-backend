@@ -24,6 +24,8 @@ public interface ImgService {
 
     Img getImgByBrdId(int brdId);
 
+    int deleteByBrdId(int brdId);
+
     Img getImgByProId(int proId);
 
     List<Img> getAll();

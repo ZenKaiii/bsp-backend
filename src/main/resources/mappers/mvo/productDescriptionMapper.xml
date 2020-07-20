@@ -6,7 +6,7 @@
         <result property="pdn_id" column="PDN_ID" jdbcType="INTEGER"/>
         <result property="pro_id" column="PRO_ID" jdbcType="INTEGER"/>
         <result property="type_cd" column="TYPE_CD" jdbcType="VARCHAR"/>
-        <result property="descrition" column="DESCRITION" jdbcType="OTHER"/>
+        <result property="description" column="DESCRIPTION" jdbcType="OTHER"/>
         <result property="created_by" column="CREATED_BY" jdbcType="VARCHAR"/>
         <result property="creation_date" column="CREATION_DATE" jdbcType="TIMESTAMP"/>
         <result property="last_update_by" column="LAST_UPDATE_BY" jdbcType="VARCHAR"/>
@@ -19,7 +19,7 @@
     <!--查询单个-->
     <select id="getById" resultMap="PdnMap">
         select
-          PDN_ID, PRO_ID, TYPE_CD, DESCRITION, CREATED_BY, CREATION_DATE, LAST_UPDATE_BY, LAST_UPDATE_DATE, CALL_CNT, REMARK, STS_CD
+          PDN_ID, PRO_ID, TYPE_CD, DESCRIPTION, CREATED_BY, CREATION_DATE, LAST_UPDATE_BY, LAST_UPDATE_DATE, CALL_CNT, REMARK, STS_CD
         from bsp.pdn
         where PDN_ID = #{pdnId}
     </select>
@@ -28,7 +28,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="getAll" resultMap="PdnMap">
         select
-        PDN_ID, PRO_ID, TYPE_CD, DESCRITION, CREATED_BY, CREATION_DATE, LAST_UPDATE_BY, LAST_UPDATE_DATE, CALL_CNT,
+        PDN_ID, PRO_ID, TYPE_CD, DESCRIPTION, CREATED_BY, CREATION_DATE, LAST_UPDATE_BY, LAST_UPDATE_DATE, CALL_CNT,
         REMARK, STS_CD
         from bsp.pdn
         <where>
@@ -41,8 +41,8 @@
             <if test="type_cd != null and typeCd != ''">
                 and TYPE_CD = #{type_cd}
             </if>
-            <if test="descrition != null">
-                and DESCRITION = #{descrition}
+            <if test="description != null">
+                and DESCRIPTION = #{description}
             </if>
             <if test="created_by != null and createdBy != ''">
                 and CREATED_BY = #{created_by}
@@ -70,8 +70,8 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="pdn_id" useGeneratedKeys="true">
-        insert into bsp.pdn(PRO_ID, TYPE_CD, DESCRITION, CREATED_BY, CREATION_DATE, LAST_UPDATE_BY, LAST_UPDATE_DATE, CALL_CNT, REMARK, STS_CD)
-        values (#{pro_id}, #{type_cd}, #{descrition}, #{created_by}, #{creation_date}, #{last_update_by}, #{last_update_date}, #{call_cnt}, #{remark}, #{sts_cd})
+        insert into bsp.pdn(PRO_ID, TYPE_CD, DESCRIPTION, CREATED_BY, CREATION_DATE, LAST_UPDATE_BY, LAST_UPDATE_DATE, CALL_CNT, REMARK, STS_CD)
+        values (#{pro_id}, #{type_cd}, #{description}, #{created_by}, #{creation_date}, #{last_update_by}, #{last_update_date}, #{call_cnt}, #{remark}, #{sts_cd})
     </insert>
 
     <!--通过主键修改数据-->
@@ -84,8 +84,8 @@
             <if test="type_cd != null and type_cd != ''">
                 TYPE_CD = #{type_cd},
             </if>
-            <if test="descrition != null">
-                DESCRITION = #{descrition},
+            <if test="description != null">
+                DESCRIPTION = #{description},
             </if>
             <if test="created_by != null and created_by != ''">
                 CREATED_BY = #{created_by},
