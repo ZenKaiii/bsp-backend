@@ -108,6 +108,7 @@ public class SalesOrderServiceImpl implements SalesOrderService {
             salesOrderVo.setQty(salesOrderLineItem.getQty());
             salesOrderVo.setTrackingNo(salesOrderLineItem.getTrackingNo());
             salesOrderVo.setWspName(salesOrderLineItem.getWspName());
+            salesOrderVo.setProId(salesOrderLineItem.getProId());
         }
 //        this.getExpressInfo(salesOrderVo);
         return salesOrderVo;

@@ -10,6 +10,7 @@ import java.util.Date;
 
 public class SalesOrderVo {
     int qty;
+    int proId;
     double price;
     String title;
     String sku;
@@ -24,6 +25,7 @@ public class SalesOrderVo {
     public String toString() {
         return "SalesOrderVo{" +
                 "qty=" + qty +
+                ", proId=" + proId +
                 ", price=" + price +
                 ", title='" + title + '\'' +
                 ", sku='" + sku + '\'' +
@@ -33,6 +35,14 @@ public class SalesOrderVo {
                 ", orderSts='" + orderSts + '\'' +
                 ", wspName='" + wspName + '\'' +
                 '}';
+    }
+
+    public int getProId() {
+        return proId;
+    }
+
+    public void setProId(int proId) {
+        this.proId = proId;
     }
 
     public String getWspName() {

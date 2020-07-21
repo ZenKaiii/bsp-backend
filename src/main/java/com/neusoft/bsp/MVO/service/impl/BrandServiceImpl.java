@@ -27,6 +27,9 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public int alterBrand(BrandVo brandVo, int userId) {
+        if(brandVo==null){
+            return 0;
+        }
         Brand brand=this.getById(brandVo.getBrd_id());
         int i=0;
         if(brand==null){
