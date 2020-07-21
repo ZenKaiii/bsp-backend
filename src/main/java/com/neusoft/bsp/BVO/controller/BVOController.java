@@ -47,7 +47,7 @@ public class BVOController {
 
     @GetMapping("/store/{id}")
     public ResultVO findStores(@PathVariable("id") Integer id){
-        return ResultVOUtil.success(infoService.getStoresByDsrId(id));
+        return ResultVOUtil.success(infoService.getStoresByUserId(id));
     }
 
     @PostMapping("/addstore")
