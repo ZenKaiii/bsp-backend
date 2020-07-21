@@ -122,7 +122,7 @@ public class ProServiceImpl implements ProService {
                 delWits.add(wit);
             }
         }
-        witRepository.deleteInBatch(wits);
+        witRepository.deleteInBatch(delWits);
     }
 
 
