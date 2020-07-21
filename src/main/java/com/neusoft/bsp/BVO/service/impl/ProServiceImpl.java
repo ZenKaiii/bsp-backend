@@ -114,10 +114,15 @@ public class ProServiceImpl implements ProService {
 
 
     @Override
-    public void deleteWitById(Integer witId) {
-        List<Wit> wits = new ArrayList<>();
-        wits.add(witRepository.findWitByWitId(witId));
-        witRepository.deleteInBatch(wits);
+    public void deleteWitById(Integer userId,Integer proId) {
+        List<Wit> wits = witRepository.findAllWitByDsrId(sysUserRepository.getSysUserByUserId(userId).getManBuyerId());
+        List<Wit> delWits = new ArrayList<>();
+        for (Wit wit : wits) {
+            if (wit.getProId().equals(proId)){
+                delWits.add(wit);
+            }
+        }
+        witRepository.deleteInBatch(delWits);
     }
 
 

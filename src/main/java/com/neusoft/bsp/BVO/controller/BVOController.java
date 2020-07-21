@@ -47,7 +47,7 @@ public class BVOController {
 
     @GetMapping("/store/{id}")
     public ResultVO findStores(@PathVariable("id") Integer id){
-        return ResultVOUtil.success(infoService.getStoresByDsrId(id));
+        return ResultVOUtil.success(infoService.getStoresByUserId(id));
     }
 
     @PostMapping("/addstore")
@@ -81,17 +81,17 @@ public class BVOController {
         return ResultVOUtil.success(null);
     }
 
-    @DeleteMapping("/deleteWit/{id}")
-    public ResultVO deleteWitById(@PathVariable("id")Integer id){
-        productService.deleteWitById(id);
+    @DeleteMapping("/deleteWit/{userId}/{proId}")
+    public ResultVO deleteWitById(@PathVariable("userId")Integer userId,@PathVariable("proId")Integer proId){
+        productService.deleteWitById(userId,proId);
         return ResultVOUtil.success(null);
     }
 
-    @DeleteMapping("/deleteWits/{ids}")
-    public ResultVO deleteWitByIds(@PathVariable("ids") String ids){
+    @DeleteMapping("/deleteWits/{userId}/{ids}")
+    public ResultVO deleteWitByIds(@PathVariable("userId")Integer userId,@PathVariable("ids") String ids){
         List<String> idsStringList = Arrays.asList(ids.split(","));
         for (String s : idsStringList) {
-            productService.deleteWitById(Integer.valueOf(s));
+            productService.deleteWitById(userId,Integer.valueOf(s));
         }
         return ResultVOUtil.success(null);
     }

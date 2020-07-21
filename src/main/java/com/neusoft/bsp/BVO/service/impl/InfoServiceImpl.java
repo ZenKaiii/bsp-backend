@@ -40,8 +40,8 @@ public class InfoServiceImpl implements InfoService {
     }
 
     @Override
-    public List<Str> getStoresByDsrId(Integer id) {
-        return strRepository.getStrByDsrId(id);
+    public List<Str> getStoresByUserId(Integer userid) {
+        return strRepository.getStrByDsrId(sysUserRepository.getSysUserByUserId(userid).getManBuyerId());
     }
 
     @Override
