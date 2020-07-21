@@ -8,5 +8,6 @@ import java.util.List;
 public interface WitRepository extends JpaRepository<Wit,Integer> {
     public Wit findWitByWitId(Integer witId);
     public List<Wit> findAllWitByDsrId(Integer dsrId);
+    public List<Wit> findWitByProId(Integer proId);
     public void removeByWitId(Integer witId);
 }
