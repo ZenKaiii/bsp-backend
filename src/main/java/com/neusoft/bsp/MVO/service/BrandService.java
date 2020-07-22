@@ -33,5 +33,5 @@ public interface BrandService {
 
     PageInfo<Brand> getAll(Integer pageNum, Integer pageSize);
 
-    PageInfo<Brand> getAllByUserID(Integer pageNum, Integer pageSize, Map<String, Object> map);
+    PageInfo<Brand> getAllByUserId(Integer pageNum, Integer pageSize, Map<String, Object> map);
 }
