@@ -16,6 +16,5 @@ public class Sao {
     private Integer saoId;
     private String orderNo;
     private String orderSts;
-//    private String refund
     private Integer stoId;
 }
