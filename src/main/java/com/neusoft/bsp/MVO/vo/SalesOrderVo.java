@@ -127,6 +127,13 @@ public class SalesOrderVo {
         return  salesOrderLineItem;
     }
 
+    public SalesOrder toSalesOrder(){
+        SalesOrder salesOrder=new SalesOrder();
+        salesOrder.setOrderSts(this.getOrderSts());
+        salesOrder.setOrderNo(this.getOrderNo());
+        return salesOrder;
+    }
+
     public SalesOrderLineItem changeSalesOrderLineItem(SalesOrderLineItem salesOrderLineItem){
         salesOrderLineItem.setQty(this.getQty());
         salesOrderLineItem.setTrackingNo(this.getTrackingNo());

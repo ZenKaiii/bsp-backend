@@ -255,9 +255,9 @@
         select sao.*
         from sys_user s
         join man m
-        where s.man_buyer_id=m.man_id
+        on s.man_buyer_id=m.man_id
         join sao
-        where m.man_id=sao.man_id
+        on m.man_id=sao.man_id
         where s.user_id=#{userId}
     </select>
 

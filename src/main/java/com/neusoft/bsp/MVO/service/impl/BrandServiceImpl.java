@@ -101,6 +101,9 @@ public class BrandServiceImpl implements BrandService {
     @Override
     public int deleteBrand(BrandVo brandVo, int userId) {
         int i=0;
+        if(brandVo.getBrd_id()==0){
+            return 0;
+        }
         i = this.delete(brandVo.getBrd_id());
         if(i==0){
             return 0;
@@ -160,7 +163,7 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public PageInfo<Brand> getAllByUserID(Integer pageNum, Integer pageSize, Map<String, Object> map) {
+    public PageInfo<Brand> getAllByUserId(Integer pageNum, Integer pageSize, Map<String, Object> map) {
        PageHelper.startPage(pageNum,pageSize,true);
        List<Brand> Brands = brandMapper.getAllByUserId(map);
        return new PageInfo<>(Brands);

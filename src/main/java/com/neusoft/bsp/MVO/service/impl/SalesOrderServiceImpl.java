@@ -34,6 +34,9 @@ public class SalesOrderServiceImpl implements SalesOrderService {
     @Override
     public int alterSalesOrder(SalesOrderVo salesOrderVo, int userId) {
         int i=0;
+        if(salesOrderVo==null){
+            return 0;
+        }
         if(salesOrderVo.getOrderSts()=="3"){
             i=this.deliver(salesOrderVo.getSku(),salesOrderVo.getQty());
             if(i==0){

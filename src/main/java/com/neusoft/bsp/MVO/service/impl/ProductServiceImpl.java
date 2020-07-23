@@ -33,6 +33,9 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public int alterProduct(ProductVo productVo, int userId) {
         int i=0;
+        if(productVo==null){
+            return 0;
+        }
         Product product=productVo.toProduct();
         if(productVo.getProId()==0){
             product.setCreated_by(""+userId);
@@ -105,6 +108,9 @@ public class ProductServiceImpl implements ProductService {
     public int alterProductDetail(ProductDetailVo productDetailVo, int userId) {
         int man_id=manufacturerService.getManIdByUserId(userId);
         if(man_id==0){
+            return 0;
+        }
+        if(productDetailVo==null){
             return 0;
         }
         Product product=this.getById(productDetailVo.getProId());
