@@ -77,7 +77,6 @@ public class RegisterController extends BaseController {
                result.message = "register success";
                return result;
            }
-
        }else{
             throw BusinessException.USERNAME_EXISTS;
        }

@@ -117,6 +117,7 @@ public class SalesOrderVo {
         this.orderSts = orderSts;
     }
 
+
     public SalesOrderLineItem toSalesOrderLineItem(){
         SalesOrderLineItem salesOrderLineItem=new SalesOrderLineItem();
         salesOrderLineItem.setQty(this.getQty());

@@ -56,7 +56,7 @@ public class CodeController extends BaseController {
     }
 
     @PostMapping("/updateCode")
-    public BaseModel deleteCode(@Validated({UpdateGroup.class})@RequestBody Code code){
+    public BaseModel updateCode(@Validated({UpdateGroup.class})@RequestBody Code code){
         if(codeService.update(code)==1){
             BaseModel result = new BaseModel();
             result.code = 200;

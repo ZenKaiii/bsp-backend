@@ -114,7 +114,7 @@ public class MenuRoleController extends BaseController {
 
     @PostMapping("/deletemenu")
     public BaseModel deleteMenu(@RequestParam  int menu_id) {
-        if(menuRoleService.deleteMenu(menu_id)==1){
+        if(menuRoleService.deleteMenu(menu_id)!=0){
             BaseModel result = new BaseModel();
             result.message = "delete success";
             result.code = 200;
@@ -181,7 +181,7 @@ public class MenuRoleController extends BaseController {
         menuRoleService.deletRoleMenu(role_id);
         int res = menuRoleService.setRoleMenu(rolemenu);
         System.out.println(res);
-        if(res==1){
+        if(res!=0){
             BaseModel result = new BaseModel();
             result.message = "set success";
             result.code = 200;
